@@ -171,6 +171,47 @@ File > Packages > Reset Package Caches
 ### Simulator で NFC が動作しない
 NFC 機能は実機でのみ動作します。iPhone 7 以降の実機でテストしてください。
 
+### ❌ "The network connection was lost" エラー
+
+**症状**: ログイン時に "The connection was lost" エラーが表示される
+
+**原因**: `Info.plist` が Xcode プロジェクトに正しく追加されていない
+
+**解決方法**:
+
+1. **Info.plist の存在確認**:
+   ```bash
+   ls -la TravelExpense/Resources/Info.plist
+   ```
+
+2. **Xcode で Info.plist を追加**:
+   - プロジェクトナビゲーターで `Resources` フォルダを右クリック
+   - "Add Files to "TravelExpense"..." を選択
+   - `Info.plist` を選択
+   - "Copy items if needed" をチェック
+   - "Add" をクリック
+
+3. **ターゲット設定を確認**:
+   - Xcode でプロジェクトを選択
+   - **TARGETS** → **TravelExpense** → **Build Settings**
+   - "Info.plist File" を検索
+   - 値が `TravelExpense/Resources/Info.plist` になっているか確認
+
+4. **クリーンビルド**:
+   ```
+   Product > Clean Build Folder (⌘⇧K)
+   ```
+   その後、再ビルド (⌘B)
+
+5. **設定値の確認**:
+   `Info.plist` に以下が含まれているか確認：
+   ```xml
+   <key>SUPABASE_URL</key>
+   <string>https://qooygcznuptnlzxjfemg.supabase.co</string>
+   <key>SUPABASE_ANON_KEY</key>
+   <string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</string>
+   ```
+
 ### Supabase 接続エラー
 `Info.plist` の `SUPABASE_URL` と `SUPABASE_ANON_KEY` が正しいか確認してください。
 
