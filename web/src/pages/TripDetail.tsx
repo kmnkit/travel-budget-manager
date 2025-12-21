@@ -208,9 +208,17 @@ export function TripDetail() {
         <div className="bg-white rounded-xl shadow-md p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-neutral-dark">支出記録</h2>
-            <Button onClick={() => navigate(`/trips/${trip.id}/expenses/new`)}>
-              + 支出を追加
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => navigate(`/trips/${trip.id}/report`)}
+              >
+                📊 レポート
+              </Button>
+              <Button onClick={() => navigate(`/trips/${trip.id}/expenses/new`)}>
+                + 支出を追加
+              </Button>
+            </div>
           </div>
 
           {expenses.length > 0 ? (

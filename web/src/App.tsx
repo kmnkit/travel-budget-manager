@@ -12,6 +12,7 @@ import { ExpenseForm } from './pages/ExpenseForm'
 import { ExpenseDetail } from './pages/ExpenseDetail'
 import { CategoryList } from './pages/CategoryList'
 import { CategoryForm } from './pages/CategoryForm'
+import { TripReport } from './pages/TripReport'
 
 function App() {
   return (
@@ -93,6 +94,15 @@ function App() {
             element={
               <PrivateRoute>
                 <TripForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/trips/:id/report"
+            element={
+              <PrivateRoute>
+                <TripReport />
               </PrivateRoute>
             }
           />
