@@ -1,0 +1,329 @@
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Layout } from '../components/Layout'
+import { Input } from '../components/Input'
+import { Button } from '../components/Button'
+import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/supabase'
+import toast from 'react-hot-toast'
+
+interface Category {
+  id: string
+  name: string
+  icon: string | null
+  color: string | null
+  is_default: boolean
+}
+
+export function ExpenseForm() {
+  const { tripId } = useParams<{ tripId: string }>()
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [tripCurrency, setTripCurrency] = useState('JPY')
+
+  const [formData, setFormData] = useState({
+    amount: '',
+    currency: 'JPY',
+    category_id: '',
+    description: '',
+    expense_date: new Date().toISOString().split('T')[0],
+    location: '',
+    payment_method: '',
+    notes: ''
+  })
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    if (tripId && user) {
+      fetchTripCurrency()
+      fetchCategories()
+    }
+  }, [tripId, user])
+
+  const fetchTripCurrency = async () => {
+    if (!tripId || !user) return
+
+    try {
+      const { data, error } = await supabase
+        .from('trips')
+        .select('currency')
+        .eq('id', tripId)
+        .eq('user_id', user.id)
+        .single()
+
+      if (error) {
+        console.error('Error fetching trip:', error)
+        return
+      }
+
+      setTripCurrency(data.currency)
+      setFormData(prev => ({ ...prev, currency: data.currency }))
+    } catch (error) {
+      console.error('Error fetching trip currency:', error)
+    }
+  }
+
+  const fetchCategories = async () => {
+    if (!user) return
+
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .or(`is_default.eq.true,user_id.eq.${user.id}`)
+        .order('is_default', { ascending: false })
+        .order('name')
+
+      if (error) {
+        console.error('Error fetching categories:', error)
+        return
+      }
+
+      setCategories(data || [])
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.amount || parseFloat(formData.amount) <= 0) {
+      newErrors.amount = '金額を入力してください（0より大きい値）'
+    }
+
+    if (!formData.expense_date) {
+      newErrors.expense_date = '日付を選択してください'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!validateForm()) {
+      return
+    }
+
+    if (!user || !tripId) {
+      toast.error('ログインが必要です')
+      navigate('/login')
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      const expenseData = {
+        trip_id: tripId,
+        user_id: user.id,
+        amount: parseFloat(formData.amount),
+        currency: formData.currency,
+        category_id: formData.category_id || null,
+        description: formData.description.trim() || null,
+        expense_date: formData.expense_date,
+        location: formData.location.trim() || null,
+        payment_method: formData.payment_method || null,
+        notes: formData.notes.trim() || null
+      }
+
+      const { error } = await supabase
+        .from('expenses')
+        .insert([expenseData])
+
+      if (error) {
+        console.error('Error creating expense:', error)
+        toast.error('支出の記録に失敗しました')
+        setIsLoading(false)
+        return
+      }
+
+      toast.success('支出を記録しました！')
+      navigate(`/trips/${tripId}`)
+    } catch (error) {
+      console.error('Error creating expense:', error)
+      toast.error('エラーが発生しました')
+      setIsLoading(false)
+    }
+  }
+
+  const handleCancel = () => {
+    navigate(`/trips/${tripId}`)
+  }
+
+  return (
+    <Layout>
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-neutral-dark mb-2">
+            支出を記録
+          </h1>
+          <p className="text-neutral">
+            支出の詳細を入力してください
+          </p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-8 space-y-6">
+          {/* Amount and Currency */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              type="number"
+              name="amount"
+              label="金額"
+              placeholder="1000"
+              value={formData.amount}
+              onChange={handleChange}
+              error={errors.amount}
+              required
+              min="0"
+              step="0.01"
+            />
+
+            <div>
+              <label className="block text-sm font-medium text-neutral-dark mb-2">
+                通貨
+              </label>
+              <select
+                name="currency"
+                value={formData.currency}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
+              >
+                <option value="JPY">¥ 日本円 (JPY)</option>
+                <option value="USD">$ 米ドル (USD)</option>
+                <option value="EUR">€ ユーロ (EUR)</option>
+                <option value="GBP">£ ポンド (GBP)</option>
+                <option value="AUD">A$ 豪ドル (AUD)</option>
+                <option value="CNY">¥ 人民元 (CNY)</option>
+                <option value="KRW">₩ ウォン (KRW)</option>
+                <option value="THB">฿ バーツ (THB)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-medium text-neutral-dark mb-2">
+              カテゴリー（オプション）
+            </label>
+            <select
+              name="category_id"
+              value={formData.category_id}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
+            >
+              <option value="">カテゴリーなし</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.icon} {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Description */}
+          <Input
+            type="text"
+            name="description"
+            label="説明（オプション）"
+            placeholder="例: ランチ"
+            value={formData.description}
+            onChange={handleChange}
+          />
+
+          {/* Date and Location */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              type="date"
+              name="expense_date"
+              label="日付"
+              value={formData.expense_date}
+              onChange={handleChange}
+              error={errors.expense_date}
+              required
+            />
+
+            <Input
+              type="text"
+              name="location"
+              label="場所（オプション）"
+              placeholder="例: エッフェル塔近くのカフェ"
+              value={formData.location}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Payment Method */}
+          <div>
+            <label className="block text-sm font-medium text-neutral-dark mb-2">
+              支払い方法（オプション）
+            </label>
+            <select
+              name="payment_method"
+              value={formData.payment_method}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
+            >
+              <option value="">選択してください</option>
+              <option value="cash">現金</option>
+              <option value="credit_card">クレジットカード</option>
+              <option value="debit_card">デビットカード</option>
+              <option value="mobile_payment">モバイル決済</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+
+          {/* Notes */}
+          <div>
+            <label className="block text-sm font-medium text-neutral-dark mb-2">
+              メモ（オプション）
+            </label>
+            <textarea
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              placeholder="追加情報があれば..."
+              rows={3}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200 resize-none"
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-4 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+              className="flex-1"
+            >
+              キャンセル
+            </Button>
+            <Button
+              type="submit"
+              isLoading={isLoading}
+              className="flex-1"
+            >
+              記録
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Layout>
+  )
+}
