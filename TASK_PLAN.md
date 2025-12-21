@@ -10,11 +10,248 @@
 
 ---
 
+## 🛠️ 開発ツール・Subagent活用ガイド
+
+このセクションでは、各フェーズで活用できるツールとSubagentを紹介します。
+効率的に開発を進めるために、適切なツールを使い分けましょう。
+
+### 利用可能なツール
+
+#### ファイル操作ツール
+- **Read**: ファイルの内容を読み込む
+- **Write**: 新しいファイルを作成する
+- **Edit**: 既存ファイルの一部を編集する（推奨）
+- **Glob**: ファイルパターンで検索（例: `**/*.tsx`）
+- **Grep**: ファイル内容をキーワード検索
+
+#### コマンド実行
+- **Bash**: シェルコマンドの実行（npm, git, supabase CLI等）
+
+#### コード探索・計画
+- **Task (Explore agent)**: コードベースの探索、構造理解
+- **Task (Plan agent)**: 実装計画の立案
+
+### フェーズ別ツール活用ガイド
+
+#### Phase 0: プロジェクトセットアップ
+**推奨ツール**:
+- `Bash`: npm/yarn コマンドでプロジェクト初期化
+  ```bash
+  npm create vite@latest travel-expense-tracker -- --template react-ts
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+  ```
+- `Write`: 設定ファイルの作成（.env, .gitignore, tailwind.config.js等）
+- `Bash`: Supabase CLI のインストール・設定
+  ```bash
+  npm install @supabase/supabase-js
+  ```
+
+#### Phase 1: バックエンド（Supabase）
+**推奨ツール**:
+- `Write`: SQLファイルの作成（schema.sql, seed.sql等）
+- `Bash`: Supabase CLI でマイグレーション実行
+  ```bash
+  supabase migration new create_tables
+  supabase db push
+  ```
+- `Read`: 既存のスキーマ確認
+
+**ヒント**:
+- SQLスキーマは `/supabase/migrations/` ディレクトリに保存
+- テーブル作成後は、Supabase Studioで確認
+
+#### Phase 2-8: フロントエンド開発
+**推奨ツール**:
+- `Task (Explore)`: プロジェクト構造の理解、既存コンポーネントの探索
+  - 例: 「認証関連のコンポーネントを探す」
+  - 例: 「Supabaseクライアントの初期化コードを探す」
+
+- `Write`: 新しいコンポーネント・ページの作成
+  - 例: `/src/components/auth/LoginForm.tsx`
+  - 例: `/src/pages/TripList.tsx`
+
+- `Edit`: 既存ファイルの修正（推奨）
+  - 既存のコンポーネントに機能追加
+  - バグ修正
+
+- `Grep`: 特定の関数・変数の使用箇所を検索
+  ```
+  pattern: "useAuth"
+  ```
+
+- `Glob`: ファイルパターンで検索
+  ```
+  pattern: "**/*Trip*.tsx"
+  ```
+
+- `Bash`: 開発サーバーの起動、ビルド、テスト実行
+  ```bash
+  npm run dev        # 開発サーバー起動
+  npm run build      # ビルド
+  npm run test       # テスト実行
+  npm run lint       # Lint実行
+  ```
+
+**ワークフロー例**:
+1. `Task (Explore)` で既存のコード構造を理解
+2. `Write` で新しいコンポーネントを作成
+3. `Edit` で既存のルーティングに追加
+4. `Bash` で開発サーバーを起動して確認
+5. `Bash` で git commit & push
+
+#### Phase 11: テスト
+**推奨ツール**:
+- `Write`: テストファイルの作成（*.test.tsx, *.spec.ts）
+- `Bash`: テストの実行
+  ```bash
+  npm run test              # 全テスト実行
+  npm run test:watch        # ウォッチモード
+  npm run test:coverage     # カバレッジレポート
+  ```
+- `Read`: テスト結果の確認
+
+#### Phase 12: デプロイ
+**推奨ツール**:
+- `Bash`: ビルド＆デプロイコマンド
+  ```bash
+  npm run build
+  vercel --prod
+  # または
+  netlify deploy --prod
+  ```
+- `Read`: デプロイログの確認
+- `Write`: デプロイ設定ファイル（vercel.json, netlify.toml）
+
+### Subagent活用のベストプラクティス
+
+#### Task (Explore agent) を使うタイミング
+✅ **使うべき場面**:
+- 新しいプロジェクトの構造を理解したい
+- 特定の機能がどこに実装されているか探したい
+- 既存のパターン・慣習を学びたい
+- 複数ファイルにまたがる実装を理解したい
+
+❌ **使わない方が良い場面**:
+- 特定のファイルパスが分かっている場合 → `Read` を使う
+- 特定のクラス定義を探す場合 → `Grep` を使う
+- 単純なファイル検索 → `Glob` を使う
+
+**使用例**:
+```
+Task (Explore): "認証フローの実装を調査してください"
+Task (Explore): "Supabaseクライアントの初期化方法を調べてください"
+Task (Explore): "既存のフォームコンポーネントのパターンを理解してください"
+```
+
+#### Task (Plan agent) を使うタイミング
+✅ **使うべき場面**:
+- 複雑な機能の実装計画を立てたい
+- アーキテクチャの選択肢を検討したい
+- 大規模なリファクタリングを計画したい
+
+**使用例**:
+```
+Task (Plan): "OCR機能の実装アプローチを計画してください"
+Task (Plan): "状態管理の設計を検討してください（Context API vs Zustand）"
+```
+
+### 効率的な開発ワークフロー
+
+#### 1. 新機能の実装
+```
+1. Task (Explore) で既存のコードパターンを理解
+2. 必要に応じて Task (Plan) で実装計画を立てる
+3. Write で新しいファイルを作成
+4. Edit で既存ファイルに統合
+5. Bash で動作確認（npm run dev）
+6. Bash で git commit & push
+```
+
+#### 2. バグ修正
+```
+1. Grep でエラーメッセージ・関数名を検索
+2. Read で該当ファイルを確認
+3. Edit で修正
+4. Bash で動作確認
+5. Bash で git commit & push
+```
+
+#### 3. リファクタリング
+```
+1. Task (Explore) で対象範囲を把握
+2. Task (Plan) でリファクタリング計画を立てる
+3. Edit で段階的に修正
+4. Bash でテスト実行（npm run test）
+5. Bash で git commit & push
+```
+
+### Git ワークフロー
+
+**推奨コミット方法**:
+```bash
+# 変更をステージング
+git add <file1> <file2>
+
+# コミット（Conventional Commits形式推奨）
+git commit -m "feat: レシートOCR機能を追加"
+git commit -m "fix: 予算計算のバグを修正"
+git commit -m "refactor: 認証ロジックをカスタムフックに分離"
+
+# プッシュ
+git push -u origin <branch-name>
+```
+
+**コミットプレフィックス**:
+- `feat:` 新機能
+- `fix:` バグ修正
+- `refactor:` リファクタリング
+- `style:` コードスタイルの変更
+- `test:` テスト追加・修正
+- `docs:` ドキュメント更新
+- `chore:` ビルド・設定の変更
+
+### トラブルシューティング
+
+#### ビルドエラー
+1. `Read` でエラーログを確認
+2. `Grep` でエラーメッセージを検索
+3. `Bash` で依存関係を再インストール
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+
+#### 型エラー
+1. `Read` で該当ファイルの型定義を確認
+2. `Grep` で型の使用箇所を検索
+3. `Edit` で型定義を修正
+
+#### Supabaseエラー
+1. Supabase Studioでログを確認
+2. RLSポリシーを確認
+3. `Bash` でマイグレーションを再実行
+
+---
+
 ## Phase 0: プロジェクトセットアップ 🛠️
+
+**使用ツール**: `Bash`, `Write`
 
 ### 0.1 開発環境の準備
 - [ ] Node.js / npm のインストール確認
+  ```bash
+  # Bash tool で確認
+  node --version
+  npm --version
+  ```
 - [ ] Git の設定確認
+  ```bash
+  # Bash tool で確認
+  git --version
+  git config --global user.name
+  git config --global user.email
+  ```
 - [ ] エディタ/IDE のセットアップ（VSCode推奨）
 - [ ] 必要な拡張機能のインストール
   - [ ] ESLint
@@ -23,20 +260,55 @@
   - [ ] Tailwind CSS IntelliSense
 
 ### 0.2 Supabase プロジェクトのセットアップ
-- [ ] Supabase アカウント作成
+- [ ] Supabase アカウント作成（https://supabase.com）
 - [ ] 新しいプロジェクトの作成
 - [ ] プロジェクトURL、API Keyの取得
 - [ ] 環境変数ファイル（.env）の作成
+  ```bash
+  # Write tool で .env ファイルを作成
+  VITE_SUPABASE_URL=https://your-project.supabase.co
+  VITE_SUPABASE_ANON_KEY=your-anon-key
+  ```
 
 ### 0.3 各プラットフォームのプロジェクト初期化
 
 #### Web アプリ
 - [ ] Vite + React + TypeScript プロジェクトの作成
+  ```bash
+  # Bash tool で実行
+  npm create vite@latest travel-expense-tracker -- --template react-ts
+  cd travel-expense-tracker
+  npm install
+  ```
 - [ ] Tailwind CSS のセットアップ
+  ```bash
+  # Bash tool で実行
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+  ```
+  ```javascript
+  // Write tool で tailwind.config.js を編集
+  ```
 - [ ] shadcn/ui のインストール
+  ```bash
+  # Bash tool で実行
+  npx shadcn-ui@latest init
+  ```
 - [ ] ディレクトリ構造の作成（/src/components, /src/pages, etc.）
+  ```bash
+  # Bash tool で実行
+  mkdir -p src/{components,pages,hooks,lib,types,contexts}
+  ```
 - [ ] ESLint, Prettier の設定
+  ```bash
+  # Bash tool で実行
+  npm install -D eslint prettier eslint-config-prettier
+  ```
 - [ ] Supabase JS クライアントのインストール
+  ```bash
+  # Bash tool で実行
+  npm install @supabase/supabase-js
+  ```
 
 #### iOS アプリ（オプション：後回し可）
 - [ ] Xcode プロジェクトの作成（SwiftUI）
@@ -56,6 +328,12 @@
 ---
 
 ## Phase 1: バックエンド（Supabase）🗄️
+
+**使用ツール**: `Write` (SQLファイル), `Bash` (Supabase CLI)
+
+**ヒント**:
+- Supabase StudioのSQL Editorを使うか、ローカルでSQLファイルを作成してマイグレーション
+- PRDの「6. データモデル」セクションを参照
 
 ### 1.1 データベーススキーマの作成
 
@@ -164,8 +442,20 @@
 
 ## Phase 2: Webアプリ - 認証機能 🔐
 
+**使用ツール**: `Write` (新規コンポーネント), `Edit` (ルーティング追加), `Bash` (依存関係インストール)
+
+**ワークフロー**:
+1. `Write` で認証コンポーネントを作成
+2. `Write` で Supabase クライアント設定ファイルを作成
+3. `Write` で AuthContext を作成
+4. `Edit` で App.tsx にルーティングを追加
+
 ### 2.1 認証UIコンポーネントの作成
 - [ ] ログイン画面の作成
+  ```typescript
+  // Write tool で src/pages/Login.tsx を作成
+  // shadcn/ui のコンポーネントを活用
+  ```
   - [ ] メールアドレス入力フォーム
   - [ ] パスワード入力フォーム
   - [ ] ログインボタン
@@ -310,6 +600,22 @@
 
 ## Phase 5: Webアプリ - 支出記録機能 💰
 
+**使用ツール**: `Write` (コンポーネント), `Bash` (Tesseract.js インストール), `Task (Plan)` (OCR実装計画)
+
+**重要タスク**: OCR機能の実装（最も複雑）
+
+**依存関係のインストール**:
+```bash
+# Bash tool で実行
+npm install tesseract.js
+npm install react-webcam  # カメラアクセス用
+```
+
+**ヒント**:
+- OCR精度を上げるため、画像の前処理（グレースケール化、コントラスト調整）が重要
+- 金額・日付の抽出には正規表現を活用
+- Task (Plan) agent でOCR実装アプローチを計画すると効率的
+
 ### 5.1 カテゴリー機能
 - [ ] カテゴリー一覧の取得（デフォルト + カスタム）
 - [ ] カテゴリー選択コンポーネントの作成
@@ -409,6 +715,20 @@
 ---
 
 ## Phase 7: Webアプリ - レポート・分析機能 📈
+
+**使用ツール**: `Write` (グラフコンポーネント), `Bash` (Chart.js インストール)
+
+**依存関係のインストール**:
+```bash
+# Bash tool で実行
+npm install recharts
+# または
+npm install chart.js react-chartjs-2
+```
+
+**ヒント**:
+- Rechartsは React に最適化されていて使いやすい
+- 集計ロジックは useMemo でメモ化してパフォーマンス向上
 
 ### 7.1 サマリー表示
 - [ ] サマリーカードコンポーネントの作成
