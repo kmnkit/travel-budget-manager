@@ -86,9 +86,17 @@ function App() {
             }
           />
 
+          <Route
+            path="/trips/:id/edit"
+            element={
+              <PrivateRoute>
+                <TripForm />
+              </PrivateRoute>
+            }
+          />
+
           {/* TODO: Add more protected routes */}
           {/*
-          <Route path="/trips/:id/edit" element={<PrivateRoute><TripForm /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           */}
 
