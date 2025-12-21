@@ -16,12 +16,13 @@ interface Category {
 }
 
 export function ExpenseForm() {
-  const { tripId } = useParams<{ tripId: string }>()
+  const { tripId, expenseId } = useParams<{ tripId: string; expenseId?: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
   const [tripCurrency, setTripCurrency] = useState('JPY')
+  const isEditMode = !!expenseId
 
   const [formData, setFormData] = useState({
     amount: '',
@@ -40,8 +41,11 @@ export function ExpenseForm() {
     if (tripId && user) {
       fetchTripCurrency()
       fetchCategories()
+      if (isEditMode && expenseId) {
+        fetchExpenseData()
+      }
     }
-  }, [tripId, user])
+  }, [tripId, user, isEditMode, expenseId])
 
   const fetchTripCurrency = async () => {
     if (!tripId || !user) return
@@ -88,6 +92,41 @@ export function ExpenseForm() {
     }
   }
 
+  const fetchExpenseData = async () => {
+    if (!expenseId || !user) return
+
+    try {
+      const { data, error } = await supabase
+        .from('expenses')
+        .select('*')
+        .eq('id', expenseId)
+        .eq('user_id', user.id)
+        .single()
+
+      if (error) {
+        console.error('Error fetching expense:', error)
+        toast.error('支出が見つかりません')
+        navigate(`/trips/${tripId}`)
+        return
+      }
+
+      // Pre-populate form with existing data
+      setFormData({
+        amount: data.amount.toString(),
+        currency: data.currency,
+        category_id: data.category_id || '',
+        description: data.description || '',
+        expense_date: data.expense_date,
+        location: data.location || '',
+        payment_method: data.payment_method || '',
+        notes: data.notes || ''
+      })
+    } catch (error) {
+      console.error('Error fetching expense:', error)
+      toast.error('エラーが発生しました')
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -129,8 +168,6 @@ export function ExpenseForm() {
 
     try {
       const expenseData = {
-        trip_id: tripId,
-        user_id: user.id,
         amount: parseFloat(formData.amount),
         currency: formData.currency,
         category_id: formData.category_id || null,
@@ -141,28 +178,58 @@ export function ExpenseForm() {
         notes: formData.notes.trim() || null
       }
 
-      const { error } = await supabase
-        .from('expenses')
-        .insert([expenseData])
+      if (isEditMode && expenseId) {
+        // Update existing expense
+        const { error } = await supabase
+          .from('expenses')
+          .update(expenseData)
+          .eq('id', expenseId)
+          .eq('user_id', user.id)
 
-      if (error) {
-        console.error('Error creating expense:', error)
-        toast.error('支出の記録に失敗しました')
-        setIsLoading(false)
-        return
+        if (error) {
+          console.error('Error updating expense:', error)
+          toast.error('支出の更新に失敗しました')
+          setIsLoading(false)
+          return
+        }
+
+        toast.success('支出を更新しました！')
+        navigate(`/trips/${tripId}/expenses/${expenseId}`)
+      } else {
+        // Create new expense
+        const newExpenseData = {
+          ...expenseData,
+          trip_id: tripId,
+          user_id: user.id
+        }
+
+        const { error } = await supabase
+          .from('expenses')
+          .insert([newExpenseData])
+
+        if (error) {
+          console.error('Error creating expense:', error)
+          toast.error('支出の記録に失敗しました')
+          setIsLoading(false)
+          return
+        }
+
+        toast.success('支出を記録しました！')
+        navigate(`/trips/${tripId}`)
       }
-
-      toast.success('支出を記録しました！')
-      navigate(`/trips/${tripId}`)
     } catch (error) {
-      console.error('Error creating expense:', error)
+      console.error('Error saving expense:', error)
       toast.error('エラーが発生しました')
       setIsLoading(false)
     }
   }
 
   const handleCancel = () => {
-    navigate(`/trips/${tripId}`)
+    if (isEditMode && expenseId) {
+      navigate(`/trips/${tripId}/expenses/${expenseId}`)
+    } else {
+      navigate(`/trips/${tripId}`)
+    }
   }
 
   return (
@@ -171,10 +238,10 @@ export function ExpenseForm() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-neutral-dark mb-2">
-            支出を記録
+            {isEditMode ? '支出を編集' : '支出を記録'}
           </h1>
           <p className="text-neutral">
-            支出の詳細を入力してください
+            {isEditMode ? '支出の詳細を更新してください' : '支出の詳細を入力してください'}
           </p>
         </div>
 
@@ -319,7 +386,7 @@ export function ExpenseForm() {
               isLoading={isLoading}
               className="flex-1"
             >
-              記録
+              {isEditMode ? '更新' : '記録'}
             </Button>
           </div>
         </form>

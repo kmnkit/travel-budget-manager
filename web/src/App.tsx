@@ -9,6 +9,7 @@ import { TripList } from './pages/TripList'
 import { TripForm } from './pages/TripForm'
 import { TripDetail } from './pages/TripDetail'
 import { ExpenseForm } from './pages/ExpenseForm'
+import { ExpenseDetail } from './pages/ExpenseDetail'
 
 function App() {
   return (
@@ -67,10 +68,27 @@ function App() {
             }
           />
 
+          <Route
+            path="/trips/:tripId/expenses/:expenseId"
+            element={
+              <PrivateRoute>
+                <ExpenseDetail />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/trips/:tripId/expenses/:expenseId/edit"
+            element={
+              <PrivateRoute>
+                <ExpenseForm />
+              </PrivateRoute>
+            }
+          />
+
           {/* TODO: Add more protected routes */}
           {/*
           <Route path="/trips/:id/edit" element={<PrivateRoute><TripForm /></PrivateRoute>} />
-          <Route path="/trips/:tripId/expenses/:expenseId" element={<PrivateRoute><ExpenseDetail /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           */}
 
