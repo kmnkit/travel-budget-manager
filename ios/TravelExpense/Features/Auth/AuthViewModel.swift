@@ -18,6 +18,7 @@ class AuthViewModel: ObservableObject {
     @Published var password = ""
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var successMessage: String?
 
     private let supabase = SupabaseManager.shared
     private var cancellables = Set<AnyCancellable>()
@@ -103,10 +104,19 @@ class AuthViewModel: ObservableObject {
 
         isLoading = true
         errorMessage = nil
+        successMessage = nil
 
         do {
             let user = try await supabase.signUp(email: email, password: password)
-            authState = .authenticated(user)
+
+            // メール確認が必要な場合はメッセージを表示
+            successMessage = "登録が完了しました。メールアドレスに送信された確認リンクをクリックしてください。"
+
+            // メール確認が有効な場合、認証状態は更新しない
+            // 確認後に自動的にログインされる
+            if user.emailConfirmedAt != nil {
+                authState = .authenticated(user)
+            }
         } catch {
             errorMessage = "サインアップに失敗しました: \(error.localizedDescription)"
             authState = .error(error)

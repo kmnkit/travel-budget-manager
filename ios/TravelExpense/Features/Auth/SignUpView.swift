@@ -59,6 +59,15 @@ struct SignUpView: View {
                                 .multilineTextAlignment(.center)
                         }
 
+                        // 成功メッセージ
+                        if let successMessage = viewModel.successMessage {
+                            Text(successMessage)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .padding(.horizontal)
+                                .multilineTextAlignment(.center)
+                        }
+
                         // サインアップボタン
                         Button(action: {
                             Task {
