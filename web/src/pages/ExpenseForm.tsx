@@ -21,7 +21,7 @@ export function ExpenseForm() {
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
-  const [tripCurrency, setTripCurrency] = useState('JPY')
+  const [, setTripCurrency] = useState('JPY')
   const isEditMode = !!expenseId
 
   const [formData, setFormData] = useState({

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 interface Trip {
   id: string
   name: string
-  destination: string
+  destination: string | null
   start_date: string
   end_date: string | null
   budget: number | null
@@ -46,7 +46,7 @@ export function TripCard({ trip }: TripCardProps) {
         <h3 className="text-xl font-bold mb-1">{trip.name}</h3>
         <p className="text-primary-light flex items-center gap-2">
           <span>📍</span>
-          <span>{trip.destination}</span>
+          <span>{trip.destination || '目的地未設定'}</span>
         </p>
       </div>
 

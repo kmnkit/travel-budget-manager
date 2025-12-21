@@ -1,0 +1,10 @@
+// Example configuration for Travel Expense Tracker
+// Copy this file to Debug.xcconfig and Release.xcconfig
+// and fill in your actual values
+
+// Supabase Configuration
+// Get these values from your Supabase dashboard
+SUPABASE_URL = https:/$()/your-project-id.supabase.co
+SUPABASE_ANON_KEY = your-supabase-anon-key
+
+// Note: The $() is required for URL escaping in xcconfig files

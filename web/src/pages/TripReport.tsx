@@ -50,6 +50,7 @@ interface CategoryData {
   value: number
   color: string
   icon: string
+  [key: string]: string | number
 }
 
 interface DailyData {
@@ -148,7 +149,6 @@ export function TripReport() {
 
   // Calculate statistics
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0)
-  const averagePerExpense = expenses.length > 0 ? totalExpenses / expenses.length : 0
 
   const tripDays = trip.end_date
     ? Math.ceil((new Date(trip.end_date).getTime() - new Date(trip.start_date).getTime()) / (1000 * 60 * 60 * 24)) + 1
@@ -156,7 +156,6 @@ export function TripReport() {
   const averagePerDay = tripDays > 0 ? totalExpenses / tripDays : totalExpenses
 
   const budgetUsage = trip.budget ? (totalExpenses / trip.budget) * 100 : 0
-  const remaining = (trip.budget || 0) - totalExpenses
 
   // Category breakdown
   const categoryMap = new Map<string, CategoryData>()
@@ -286,7 +285,7 @@ export function TripReport() {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                      label={({ name, percent }) => `${name} (${((percent ?? 0) * 100).toFixed(0)}%)`}
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
@@ -296,7 +295,7 @@ export function TripReport() {
                       ))}
                     </Pie>
                     <Tooltip
-                      formatter={(value: number) => `${trip.currency} ${value.toLocaleString()}`}
+                      formatter={(value) => `${trip.currency} ${(value as number).toLocaleString()}`}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -313,7 +312,7 @@ export function TripReport() {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip
-                      formatter={(value: number) => `${trip.currency} ${value.toLocaleString()}`}
+                      formatter={(value) => `${trip.currency} ${(value as number).toLocaleString()}`}
                     />
                     <Bar dataKey="value" fill="#E63946" />
                   </BarChart>
@@ -333,7 +332,7 @@ export function TripReport() {
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip
-                      formatter={(value: number) => `${trip.currency} ${value.toLocaleString()}`}
+                      formatter={(value) => `${trip.currency} ${(value as number).toLocaleString()}`}
                     />
                     <Legend />
                     <Line

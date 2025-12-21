@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 import { Button } from '../components/Button'
 import { useAuth } from '../contexts/AuthContext'

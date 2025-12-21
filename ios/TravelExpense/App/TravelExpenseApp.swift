@@ -6,18 +6,28 @@ struct TravelExpenseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                switch authViewModel.authState {
-                case .loading:
-                    ProgressView()
-                        .scaleEffect(1.5)
+            ContentView()
+                .environmentObject(authViewModel)
+        }
+    }
+}
 
-                case .authenticated:
-                    MainTabView()
+/// コンテンツビュー（認証状態に応じて画面を切り替え）
+struct ContentView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
 
-                case .unauthenticated, .error:
-                    LoginView()
-                }
+    var body: some View {
+        Group {
+            switch authViewModel.authState {
+            case .loading:
+                ProgressView()
+                    .scaleEffect(1.5)
+
+            case .authenticated:
+                MainTabView()
+
+            case .unauthenticated, .error:
+                LoginView()
             }
         }
     }
@@ -46,9 +56,9 @@ struct MainTabView: View {
     }
 }
 
-/// プロフィール画面（仮実装）
+/// プロフィール画面
 struct ProfileView: View {
-    @StateObject private var authViewModel = AuthViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         NavigationView {
@@ -86,7 +96,7 @@ struct ProfileView: View {
     }
 }
 
-/// 旅行詳細画面（仮実装）
+/// 旅行詳細画面
 struct TripDetailView: View {
     let trip: Trip
 
@@ -123,7 +133,7 @@ struct TripDetailView: View {
     }
 }
 
-/// 旅行作成フォーム（仮実装）
+/// 旅行作成フォーム
 struct TripFormView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var name = ""
@@ -155,4 +165,9 @@ struct TripFormView: View {
             }
         }
     }
+}
+
+#Preview {
+    ContentView()
+        .environmentObject(AuthViewModel())
 }
