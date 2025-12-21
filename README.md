@@ -28,6 +28,7 @@
 
 - **[PRD.md](./PRD.md)**: 詳細な製品要件定義
 - **[TASK_PLAN.md](./TASK_PLAN.md)**: 開発タスクプラン（進捗管理）
+- **[CLAUDE.md](./CLAUDE.md)**: Claude開発ガイド（AI開発者向け）
 
 ## 🚀 開発ステータス
 
