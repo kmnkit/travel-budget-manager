@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
@@ -8,9 +8,11 @@ import { supabase } from '../lib/supabase'
 import toast from 'react-hot-toast'
 
 export function TripForm() {
+  const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const isEditMode = !!id
 
   const [formData, setFormData] = useState({
     name: '',
@@ -23,6 +25,46 @@ export function TripForm() {
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    if (isEditMode && id && user) {
+      fetchTripData()
+    }
+  }, [isEditMode, id, user])
+
+  const fetchTripData = async () => {
+    if (!id || !user) return
+
+    try {
+      const { data, error } = await supabase
+        .from('trips')
+        .select('*')
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .single()
+
+      if (error) {
+        console.error('Error fetching trip:', error)
+        toast.error('旅行が見つかりません')
+        navigate('/trips')
+        return
+      }
+
+      // Pre-populate form with existing data
+      setFormData({
+        name: data.name,
+        destination: data.destination || '',
+        start_date: data.start_date,
+        end_date: data.end_date || '',
+        budget: data.budget ? data.budget.toString() : '',
+        currency: data.currency,
+        description: data.description || ''
+      })
+    } catch (error) {
+      console.error('Error fetching trip:', error)
+      toast.error('エラーが発生しました')
+    }
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -78,7 +120,6 @@ export function TripForm() {
 
     try {
       const tripData = {
-        user_id: user.id,
         name: formData.name.trim(),
         destination: formData.destination.trim() || null,
         start_date: formData.start_date,
@@ -88,30 +129,59 @@ export function TripForm() {
         description: formData.description.trim() || null
       }
 
-      const { data, error } = await supabase
-        .from('trips')
-        .insert([tripData])
-        .select()
-        .single()
+      if (isEditMode && id) {
+        // Update existing trip
+        const { error } = await supabase
+          .from('trips')
+          .update(tripData)
+          .eq('id', id)
+          .eq('user_id', user.id)
 
-      if (error) {
-        console.error('Error creating trip:', error)
-        toast.error('旅行の作成に失敗しました')
-        setIsLoading(false)
-        return
+        if (error) {
+          console.error('Error updating trip:', error)
+          toast.error('旅行の更新に失敗しました')
+          setIsLoading(false)
+          return
+        }
+
+        toast.success('旅行を更新しました！')
+        navigate(`/trips/${id}`)
+      } else {
+        // Create new trip
+        const newTripData = {
+          ...tripData,
+          user_id: user.id
+        }
+
+        const { data, error } = await supabase
+          .from('trips')
+          .insert([newTripData])
+          .select()
+          .single()
+
+        if (error) {
+          console.error('Error creating trip:', error)
+          toast.error('旅行の作成に失敗しました')
+          setIsLoading(false)
+          return
+        }
+
+        toast.success('旅行を作成しました！')
+        navigate(`/trips/${data.id}`)
       }
-
-      toast.success('旅行を作成しました！')
-      navigate(`/trips/${data.id}`)
     } catch (error) {
-      console.error('Error creating trip:', error)
+      console.error('Error saving trip:', error)
       toast.error('エラーが発生しました')
       setIsLoading(false)
     }
   }
 
   const handleCancel = () => {
-    navigate('/trips')
+    if (isEditMode && id) {
+      navigate(`/trips/${id}`)
+    } else {
+      navigate('/trips')
+    }
   }
 
   return (
@@ -120,10 +190,10 @@ export function TripForm() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-neutral-dark mb-2">
-            新しい旅行を作成
+            {isEditMode ? '旅行を編集' : '新しい旅行を作成'}
           </h1>
           <p className="text-neutral">
-            旅行の詳細を入力して、支出の記録を始めましょう
+            {isEditMode ? '旅行の詳細を更新してください' : '旅行の詳細を入力して、支出の記録を始めましょう'}
           </p>
         </div>
 
@@ -240,7 +310,7 @@ export function TripForm() {
               isLoading={isLoading}
               className="flex-1"
             >
-              作成
+              {isEditMode ? '更新' : '作成'}
             </Button>
           </div>
         </form>

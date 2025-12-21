@@ -35,6 +35,12 @@ export function Navbar() {
               旅行
             </Link>
             <Link
+              to="/categories"
+              className="text-neutral-dark hover:text-primary font-medium transition-colors"
+            >
+              カテゴリー
+            </Link>
+            <Link
               to="/profile"
               className="text-neutral-dark hover:text-primary font-medium transition-colors"
             >

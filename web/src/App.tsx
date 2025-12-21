@@ -9,6 +9,10 @@ import { TripList } from './pages/TripList'
 import { TripForm } from './pages/TripForm'
 import { TripDetail } from './pages/TripDetail'
 import { ExpenseForm } from './pages/ExpenseForm'
+import { ExpenseDetail } from './pages/ExpenseDetail'
+import { CategoryList } from './pages/CategoryList'
+import { CategoryForm } from './pages/CategoryForm'
+import { TripReport } from './pages/TripReport'
 
 function App() {
   return (
@@ -67,10 +71,71 @@ function App() {
             }
           />
 
+          <Route
+            path="/trips/:tripId/expenses/:expenseId"
+            element={
+              <PrivateRoute>
+                <ExpenseDetail />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/trips/:tripId/expenses/:expenseId/edit"
+            element={
+              <PrivateRoute>
+                <ExpenseForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/trips/:id/edit"
+            element={
+              <PrivateRoute>
+                <TripForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/trips/:id/report"
+            element={
+              <PrivateRoute>
+                <TripReport />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories"
+            element={
+              <PrivateRoute>
+                <CategoryList />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories/new"
+            element={
+              <PrivateRoute>
+                <CategoryForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories/:id/edit"
+            element={
+              <PrivateRoute>
+                <CategoryForm />
+              </PrivateRoute>
+            }
+          />
+
           {/* TODO: Add more protected routes */}
           {/*
-          <Route path="/trips/:id/edit" element={<PrivateRoute><TripForm /></PrivateRoute>} />
-          <Route path="/trips/:tripId/expenses/:expenseId" element={<PrivateRoute><ExpenseDetail /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           */}
 
