@@ -269,32 +269,32 @@ class ICCardReader: NSObject, NFCTagReaderSessionDelegate {
             to: Date(timeIntervalSince1970: 946684800) // 2000-01-01
         )!
 
-        // 駅コードから駅名を取得（駅マスタ必要）
-        let entryStation = getStationName(code: UInt16(data[4]) << 8 | UInt16(data[5]))
-        let exitStation = getStationName(code: UInt16(data[6]) << 8 | UInt16(data[7]))
+        // 駅コード取得（生データとして保存）
+        let entryCode = UInt16(data[4]) << 8 | UInt16(data[5])
+        let exitCode = UInt16(data[6]) << 8 | UInt16(data[7])
 
         // 金額
         let amount = Int(UInt16(data[10]) << 8 | UInt16(data[11]))
 
+        // 残高
+        let balance = Int(UInt16(data[8]) << 8 | UInt16(data[9]))
+
         return TransactionHistory(
             date: date,
-            from: entryStation,
-            to: exitStation,
-            amount: amount
+            entryCode: entryCode,
+            exitCode: exitCode,
+            amount: amount,
+            balance: balance
         )
-    }
-
-    private func getStationName(code: UInt16) -> String {
-        // TODO: 駅コードマスタから取得
-        return "駅コード: \(code)"
     }
 }
 
 struct TransactionHistory {
     let date: Date
-    let from: String
-    let to: String
+    let entryCode: UInt16  // 生データとして保存
+    let exitCode: UInt16   // 生データとして保存
     let amount: Int
+    let balance: Int
 }
 ```
 
@@ -410,72 +410,152 @@ class ICCardReader(private val activity: Activity) {
         val dateCode = ((data[2].toInt() and 0xFF) shl 8) or (data[3].toInt() and 0xFF)
         val date = LocalDate.of(2000, 1, 1).plusDays(dateCode.toLong())
 
-        // 駅コード
+        // 駅コード（生データとして保存）
         val entryCode = ((data[4].toInt() and 0xFF) shl 8) or (data[5].toInt() and 0xFF)
         val exitCode = ((data[6].toInt() and 0xFF) shl 8) or (data[7].toInt() and 0xFF)
+
+        // 残高
+        val balance = ((data[8].toInt() and 0xFF) shl 8) or (data[9].toInt() and 0xFF)
 
         // 金額
         val amount = ((data[10].toInt() and 0xFF) shl 8) or (data[11].toInt() and 0xFF)
 
         return TransactionHistory(
             date = date,
-            from = getStationName(entryCode),
-            to = getStationName(exitCode),
-            amount = amount
+            entryCode = entryCode,
+            exitCode = exitCode,
+            amount = amount,
+            balance = balance
         )
-    }
-
-    private fun getStationName(code: Int): String {
-        // TODO: 駅コードマスタから取得
-        return "駅コード: $code"
     }
 }
 
 data class TransactionHistory(
     val date: LocalDate,
-    val from: String,
-    val to: String,
-    val amount: Int
+    val entryCode: Int,  // 生データとして保存
+    val exitCode: Int,   // 生データとして保存
+    val amount: Int,
+    val balance: Int
 )
 ```
 
 ---
 
-## 📊 駅コードマスタデータ
+## 💾 データ保存と表示
 
-### データベース設計
+### 生データ保存アプローチ（推奨）
 
-```sql
--- 駅マスタテーブル
-CREATE TABLE station_codes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    country_code VARCHAR(2) NOT NULL,  -- JP, HK, TW, SG
-    station_code INT NOT NULL,
-    station_name_ja VARCHAR(100),
-    station_name_en VARCHAR(100),
-    line_name VARCHAR(100),
-    latitude DECIMAL(10, 8),
-    longitude DECIMAL(11, 8),
-    created_at TIMESTAMP DEFAULT NOW(),
+ICカードから読み取ったデータは**生データとして保存**し、ユーザーが必要に応じて編集できるようにします。
 
-    UNIQUE(country_code, station_code)
-);
+#### Expenseテーブル拡張
 
--- インデックス
-CREATE INDEX idx_station_codes_lookup ON station_codes(country_code, station_code);
+```typescript
+// 既存のExpenseに追加するメタデータ
+interface ExpenseMetadata {
+  ic_card_transaction?: {
+    entry_code: number     // 入場駅コード（生データ）
+    exit_code: number      // 出場駅コード（生データ）
+    balance: number        // カード残高
+    card_type: string      // 'suica' | 'pasmo' | 'octopus' | 'easycard'
+    raw_data?: string      // 完全な生データ（デバッグ用）
+  }
+}
+
+// Expense作成時
+const expense = {
+  amount: transaction.amount,
+  currency: 'JPY',
+  category_id: transportCategoryId,
+  description: '交通費（ICカード）',  // デフォルト
+  notes: `区間: ${transaction.entryCode} → ${transaction.exitCode}`,
+  expense_date: transaction.date,
+  payment_method: 'IC Card',
+  metadata: {
+    ic_card_transaction: {
+      entry_code: transaction.entryCode,
+      exit_code: transaction.exitCode,
+      balance: transaction.balance,
+      card_type: 'suica'
+    }
+  }
+}
 ```
 
-### データソース
+#### UI表示例
 
-**日本 (Suica/Pasmo):**
-- [駅データ.jp](https://ekidata.jp/)
-- [国土交通省 駅データ](https://nlftp.mlit.go.jp/ksj/)
+```swift
+// iOS - 支出詳細画面
+struct ExpenseDetailView: View {
+    let expense: Expense
+    @State private var isEditing = false
 
-**香港 (Octopus):**
-- MTR公式APIまたはオープンデータ
+    var body: some View {
+        VStack(alignment: .leading) {
+            // タイトル（ユーザー編集可能）
+            if isEditing {
+                TextField("説明", text: $expense.description)
+            } else {
+                Text(expense.description ?? "交通費（ICカード）")
+                    .font(.headline)
+            }
 
-**台湾 (EasyCard):**
-- 台北捷運公開データ
+            // 生データ表示（編集前）
+            if let icData = expense.metadata?.ic_card_transaction,
+               expense.description == "交通費（ICカード）" {
+                Text("区間: \(icData.entry_code) → \(icData.exit_code)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+
+                Button("駅名を入力") {
+                    isEditing = true
+                }
+            }
+
+            // 金額
+            Text("¥\(expense.amount)")
+                .font(.title)
+
+            // 残高表示
+            if let balance = expense.metadata?.ic_card_transaction?.balance {
+                Text("カード残高: ¥\(balance)")
+                    .font(.caption)
+            }
+        }
+    }
+}
+```
+
+### 将来の拡張: 外部API連携（Phase 10+）
+
+ユーザーフィードバックに基づいて、後から外部APIを追加可能：
+
+```swift
+// オプション: 駅名解決API
+func resolveStationName(code: Int, country: String) async -> String? {
+    // Google Places API、駅すぱあとAPI等
+    let url = "https://api.example.com/station/\(country)/\(code)"
+    // ... API呼び出し
+    return stationName
+}
+
+// キャッシング
+private var stationCache: [String: String] = [:]
+
+func getStationDisplay(code: Int, country: String) async -> String {
+    let key = "\(country)-\(code)"
+
+    if let cached = stationCache[key] {
+        return cached
+    }
+
+    if let resolved = await resolveStationName(code: code, country: country) {
+        stationCache[key] = resolved
+        return resolved
+    }
+
+    return "駅コード: \(code)"
+}
+```
 
 ---
 
@@ -535,7 +615,7 @@ func detectDuplicate(
 └─────────────────────────────┘
 ```
 
-### スキャン結果画面
+### スキャン結果画面（初回スキャン時）
 
 ```
 ┌─────────────────────────────┐
@@ -545,14 +625,39 @@ func detectDuplicate(
 │  [ すべて(15) ][ 新規(12) ] │
 │  [ 重複(3) ]                │
 ├─────────────────────────────┤
-│  ☑️ 新宿駅 → 渋谷駅         │
+│  ☑️ 交通費（ICカード）      │
+│     区間: 0305 → 0601       │
 │     ¥220 | 12/21 14:23     │
 ├─────────────────────────────┤
-│  ⚠️ 東京駅 → 品川駅(重複)   │
+│  ⚠️ 交通費（ICカード）(重複) │
+│     区間: 0302 → 0401       │
 │     ¥170 | 12/20 09:15     │
 │     [既存データと統合]      │
 ├─────────────────────────────┤
 │  [ 選択した12件を追加 ]     │
+└─────────────────────────────┘
+```
+
+### 支出編集画面（ユーザーが駅名を入力）
+
+```
+┌─────────────────────────────┐
+│  ✏️ 支出を編集              │
+├─────────────────────────────┤
+│  説明:                      │
+│  [新宿駅 → 渋谷駅        ]  │
+│                             │
+│  金額: ¥220                 │
+│  日付: 2025/12/21 14:23    │
+│  カテゴリー: 交通費         │
+│                             │
+│  メモ:                      │
+│  [山手線利用           ]    │
+│                             │
+│  元データ: 0305 → 0601      │
+│  残高: ¥3,450               │
+│                             │
+│  [   保存   ]               │
 └─────────────────────────────┘
 ```
 
