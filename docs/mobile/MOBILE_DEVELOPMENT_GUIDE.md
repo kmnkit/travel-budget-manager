@@ -1,0 +1,622 @@
+# モバイルアプリ開発ガイド - Travel Expense Tracker
+
+## 📱 プロジェクト概要
+
+### アーキテクチャ
+
+```
+travel-budget-manager/
+├── web/                    # React Webアプリ (完成)
+├── ios/                    # iOS SwiftUIアプリ
+│   ├── TravelExpense/
+│   │   ├── App/           # アプリケーション層
+│   │   ├── Features/      # 機能別モジュール
+│   │   ├── Core/          # コア機能（Supabase, NFC）
+│   │   ├── Models/        # データモデル
+│   │   └── Resources/     # リソース（画像、色）
+│   └── TravelExpense.xcodeproj
+│
+├── android/               # Android Kotlinアプリ
+│   ├── app/
+│   │   └── src/
+│   │       └── main/
+│   │           ├── java/com/travelexpense/
+│   │           │   ├── ui/           # UI層 (Jetpack Compose)
+│   │           │   ├── data/         # データ層 (Repository)
+│   │           │   ├── domain/       # ドメイン層
+│   │           │   └── nfc/          # NFC機能
+│   │           └── res/
+│   └── build.gradle
+│
+└── docs/mobile/           # モバイル開発ドキュメント
+```
+
+---
+
+## 🎯 開発フェーズ
+
+### Phase 9a: プロジェクトセットアップ
+
+#### iOS (SwiftUI)
+```bash
+# Xcodeでプロジェクト作成
+- Product Name: TravelExpense
+- Organization: TravelExpenseTracker
+- Interface: SwiftUI
+- Language: Swift
+- Minimum Deployment: iOS 15.0
+```
+
+**必要なライブラリ:**
+```swift
+// Package.swift dependencies
+dependencies: [
+    .package(url: "https://github.com/supabase/supabase-swift", from: "1.0.0"),
+    .package(url: "https://github.com/Alamofire/Alamofire", from: "5.8.0")
+]
+```
+
+#### Android (Kotlin + Jetpack Compose)
+```kotlin
+// build.gradle (Project)
+buildscript {
+    ext {
+        kotlin_version = "1.9.0"
+        compose_version = "1.5.0"
+        supabase_version = "1.0.0"
+    }
+}
+
+// build.gradle (Module:app)
+dependencies {
+    // Jetpack Compose
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material3:material3:1.1.0"
+
+    // Supabase
+    implementation "io.github.jan-tennert.supabase:postgrest-kt:$supabase_version"
+    implementation "io.github.jan-tennert.supabase:auth-kt:$supabase_version"
+
+    // NFC
+    implementation "androidx.core:core-ktx:1.12.0"
+}
+```
+
+---
+
+## 🔧 Supabase統合
+
+### 設定ファイル
+
+#### iOS: `Config.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN">
+<plist version="1.0">
+<dict>
+    <key>SUPABASE_URL</key>
+    <string>https://qooygcznuptnlzxjfemg.supabase.co</string>
+    <key>SUPABASE_ANON_KEY</key>
+    <string>YOUR_ANON_KEY_HERE</string>
+</dict>
+</plist>
+```
+
+#### Android: `local.properties`
+```properties
+SUPABASE_URL=https://qooygcznuptnlzxjfemg.supabase.co
+SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE
+```
+
+### Supabaseクライアント初期化
+
+#### iOS (Swift)
+```swift
+import Supabase
+
+class SupabaseManager {
+    static let shared = SupabaseManager()
+
+    let client: SupabaseClient
+
+    private init() {
+        guard let url = Bundle.main.object(forInfoDictionaryKey: "SUPABASE_URL") as? String,
+              let key = Bundle.main.object(forInfoDictionaryKey: "SUPABASE_ANON_KEY") as? String else {
+            fatalError("Supabase configuration missing")
+        }
+
+        client = SupabaseClient(
+            supabaseURL: URL(string: url)!,
+            supabaseKey: key
+        )
+    }
+}
+```
+
+#### Android (Kotlin)
+```kotlin
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.auth.Auth
+
+object SupabaseManager {
+    val client = createSupabaseClient(
+        supabaseUrl = BuildConfig.SUPABASE_URL,
+        supabaseKey = BuildConfig.SUPABASE_ANON_KEY
+    ) {
+        install(Postgrest)
+        install(Auth)
+    }
+}
+```
+
+---
+
+## 💳 IC Card (NFC) 機能実装
+
+### 対応カード・国
+
+| 国 | カード名 | 技術 | 実装優先度 |
+|----|---------|------|----------|
+| 🇯🇵 日本 | Suica, Pasmo, ICOCA | FeliCa | ⭐⭐⭐ (Phase 9b) |
+| 🇭🇰 香港 | Octopus Card | FeliCa | ⭐⭐⭐ (Phase 9b) |
+| 🇹🇼 台湾 | EasyCard | FeliCa | ⭐⭐⭐ (Phase 9b) |
+| 🇸🇬 シンガポール | EZ-Link | CEPAS | ⭐⭐ (Phase 9c) |
+| 🇰🇷 韓国 | T-money | MIFARE | ⭐ (Phase 10) |
+
+### iOS NFC実装
+
+#### Info.plist設定
+```xml
+<key>NFCReaderUsageDescription</key>
+<string>交通カードの利用履歴を読み取るためにNFCを使用します</string>
+
+<key>com.apple.developer.nfc.readersession.felica.systemcodes</key>
+<array>
+    <string>0003</string>  <!-- Suica/Pasmo -->
+    <string>8008</string>  <!-- Octopus -->
+</array>
+```
+
+#### FeliCa読み取りコード
+```swift
+import CoreNFC
+
+class ICCardReader: NSObject, NFCTagReaderSessionDelegate {
+    var session: NFCTagReaderSession?
+    var onComplete: (([TransactionHistory]) -> Void)?
+
+    func startReading() {
+        session = NFCTagReaderSession(
+            pollingOption: .iso18092,
+            delegate: self
+        )
+        session?.alertMessage = "カードをiPhoneの上部に近づけてください"
+        session?.begin()
+    }
+
+    func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+        guard let tag = tags.first else { return }
+
+        session.connect(to: tag) { error in
+            if error != nil {
+                session.invalidate(errorMessage: "接続に失敗しました")
+                return
+            }
+
+            if case let .feliCa(feliCaTag) = tag {
+                self.readFeliCa(tag: feliCaTag, session: session)
+            }
+        }
+    }
+
+    private func readFeliCa(tag: NFCFeliCaTag, session: NFCTagReaderSession) {
+        // IDmを取得
+        let idm = tag.currentIDm
+
+        // Suica/Pasmoの履歴読み取り (サービスコード: 090F)
+        let serviceCode: [UInt8] = [0x09, 0x0F]
+
+        tag.readWithoutEncryption(
+            serviceCodeList: [Data(serviceCode)],
+            blockList: [
+                NFCFeliCaReadWithoutEncryptionCommandPacket.Block(
+                    blockNumber: 0,
+                    blockType: .list
+                )
+            ]
+        ) { status1, status2, blockData, error in
+            if let data = blockData.first {
+                let history = self.parseTransactionHistory(data: data)
+                self.onComplete?(history)
+                session.invalidate()
+            }
+        }
+    }
+
+    private func parseTransactionHistory(data: Data) -> [TransactionHistory] {
+        var transactions: [TransactionHistory] = []
+
+        // Suica/Pasmoのデータフォーマットをパース
+        // 16バイトずつ処理
+        let recordSize = 16
+        for i in stride(from: 0, to: data.count, by: recordSize) {
+            let record = data.subdata(in: i..<min(i + recordSize, data.count))
+
+            // バイト0-1: 端末種別・処理
+            // バイト2-3: 利用日付
+            // バイト4-5: 入場駅コード
+            // バイト6-7: 出場駅コード
+            // バイト8-9: 残額
+            // バイト10-11: 取引額
+
+            if let transaction = parseRecord(record) {
+                transactions.append(transaction)
+            }
+        }
+
+        return transactions
+    }
+
+    private func parseRecord(_ data: Data) -> TransactionHistory? {
+        guard data.count >= 16 else { return nil }
+
+        // 日付パース (Suica形式: 2000年1月1日からの日数)
+        let dateCode = UInt16(data[2]) << 8 | UInt16(data[3])
+        let date = Calendar.current.date(
+            byAdding: .day,
+            value: Int(dateCode),
+            to: Date(timeIntervalSince1970: 946684800) // 2000-01-01
+        )!
+
+        // 駅コードから駅名を取得（駅マスタ必要）
+        let entryStation = getStationName(code: UInt16(data[4]) << 8 | UInt16(data[5]))
+        let exitStation = getStationName(code: UInt16(data[6]) << 8 | UInt16(data[7]))
+
+        // 金額
+        let amount = Int(UInt16(data[10]) << 8 | UInt16(data[11]))
+
+        return TransactionHistory(
+            date: date,
+            from: entryStation,
+            to: exitStation,
+            amount: amount
+        )
+    }
+
+    private func getStationName(code: UInt16) -> String {
+        // TODO: 駅コードマスタから取得
+        return "駅コード: \(code)"
+    }
+}
+
+struct TransactionHistory {
+    let date: Date
+    let from: String
+    let to: String
+    let amount: Int
+}
+```
+
+### Android NFC実装
+
+#### AndroidManifest.xml
+```xml
+<uses-permission android:name="android.permission.NFC" />
+
+<application>
+    <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.nfc.action.TECH_DISCOVERED" />
+        </intent-filter>
+
+        <meta-data
+            android:name="android.nfc.action.TECH_DISCOVERED"
+            android:resource="@xml/nfc_tech_filter" />
+    </activity>
+</application>
+```
+
+#### res/xml/nfc_tech_filter.xml
+```xml
+<resources>
+    <tech-list>
+        <tech>android.nfc.tech.NfcF</tech>
+    </tech-list>
+</resources>
+```
+
+#### FeliCa読み取りコード
+```kotlin
+import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.nfc.tech.NfcF
+
+class ICCardReader(private val activity: Activity) {
+    private val nfcAdapter: NfcAdapter? = NfcAdapter.getDefaultAdapter(activity)
+
+    fun enableReaderMode(callback: (List<TransactionHistory>) -> Unit) {
+        nfcAdapter?.enableReaderMode(
+            activity,
+            { tag -> readFeliCa(tag, callback) },
+            NfcAdapter.FLAG_READER_NFC_F,
+            null
+        )
+    }
+
+    fun disableReaderMode() {
+        nfcAdapter?.disableReaderMode(activity)
+    }
+
+    private fun readFeliCa(tag: Tag, callback: (List<TransactionHistory>) -> Unit) {
+        val felica = NfcF.get(tag) ?: return
+
+        try {
+            felica.connect()
+
+            // IDm取得
+            val idm = felica.tag.id
+
+            // Suica/Pasmo履歴読み取り (サービスコード: 090F)
+            val serviceCode = byteArrayOf(0x09, 0x0F)
+
+            // コマンド構築
+            val command = buildReadCommand(idm, serviceCode)
+            val response = felica.transceive(command)
+
+            val history = parseTransactionHistory(response)
+            callback(history)
+
+            felica.close()
+        } catch (e: Exception) {
+            Log.e("ICCardReader", "Error reading card", e)
+        }
+    }
+
+    private fun buildReadCommand(idm: ByteArray, serviceCode: ByteArray): ByteArray {
+        // FeliCa Read Without Encryptionコマンド
+        return byteArrayOf(
+            0x06.toByte(),  // コマンドコード
+            *idm,           // IDm (8バイト)
+            0x01,           // サービス数
+            *serviceCode,   // サービスコード
+            0x01,           // ブロック数
+            0x80.toByte(), 0x00  // ブロック番号
+        )
+    }
+
+    private fun parseTransactionHistory(data: ByteArray): List<TransactionHistory> {
+        val transactions = mutableListOf<TransactionHistory>()
+
+        // レスポンス形式: [レスポンスコード(1) + IDm(8) + データ(N*16)]
+        if (data.size < 10) return transactions
+
+        val blockData = data.copyOfRange(10, data.size)
+
+        for (i in blockData.indices step 16) {
+            if (i + 16 > blockData.size) break
+
+            val record = blockData.copyOfRange(i, i + 16)
+            parseRecord(record)?.let { transactions.add(it) }
+        }
+
+        return transactions
+    }
+
+    private fun parseRecord(data: ByteArray): TransactionHistory? {
+        if (data.size < 16) return null
+
+        // 日付パース
+        val dateCode = ((data[2].toInt() and 0xFF) shl 8) or (data[3].toInt() and 0xFF)
+        val date = LocalDate.of(2000, 1, 1).plusDays(dateCode.toLong())
+
+        // 駅コード
+        val entryCode = ((data[4].toInt() and 0xFF) shl 8) or (data[5].toInt() and 0xFF)
+        val exitCode = ((data[6].toInt() and 0xFF) shl 8) or (data[7].toInt() and 0xFF)
+
+        // 金額
+        val amount = ((data[10].toInt() and 0xFF) shl 8) or (data[11].toInt() and 0xFF)
+
+        return TransactionHistory(
+            date = date,
+            from = getStationName(entryCode),
+            to = getStationName(exitCode),
+            amount = amount
+        )
+    }
+
+    private fun getStationName(code: Int): String {
+        // TODO: 駅コードマスタから取得
+        return "駅コード: $code"
+    }
+}
+
+data class TransactionHistory(
+    val date: LocalDate,
+    val from: String,
+    val to: String,
+    val amount: Int
+)
+```
+
+---
+
+## 📊 駅コードマスタデータ
+
+### データベース設計
+
+```sql
+-- 駅マスタテーブル
+CREATE TABLE station_codes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    country_code VARCHAR(2) NOT NULL,  -- JP, HK, TW, SG
+    station_code INT NOT NULL,
+    station_name_ja VARCHAR(100),
+    station_name_en VARCHAR(100),
+    line_name VARCHAR(100),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    created_at TIMESTAMP DEFAULT NOW(),
+
+    UNIQUE(country_code, station_code)
+);
+
+-- インデックス
+CREATE INDEX idx_station_codes_lookup ON station_codes(country_code, station_code);
+```
+
+### データソース
+
+**日本 (Suica/Pasmo):**
+- [駅データ.jp](https://ekidata.jp/)
+- [国土交通省 駅データ](https://nlftp.mlit.go.jp/ksj/)
+
+**香港 (Octopus):**
+- MTR公式APIまたはオープンデータ
+
+**台湾 (EasyCard):**
+- 台北捷運公開データ
+
+---
+
+## 🔄 重複処理ロジック
+
+### 自動マージアルゴリズム
+
+```swift
+func detectDuplicate(
+    scanned: TransactionHistory,
+    existing: [Expense]
+) -> Expense? {
+    return existing.first { expense in
+        // 同じ日付
+        let sameDate = Calendar.current.isDate(
+            expense.expenseDate,
+            inSameDayAs: scanned.date
+        )
+
+        // 金額が近い (±10円の誤差許容)
+        let similarAmount = abs(expense.amount - Double(scanned.amount)) < 10
+
+        // カテゴリーが交通費
+        let isTransportCategory = expense.category?.name == "交通費"
+
+        // 時間的に近い (同じ日の±1時間)
+        let timeDiff = abs(expense.expenseDate.timeIntervalSince(scanned.date))
+        let withinTimeWindow = timeDiff < 3600
+
+        return sameDate && similarAmount && (isTransportCategory || withinTimeWindow)
+    }
+}
+```
+
+---
+
+## 🎨 UI/UX設計
+
+### ICカードスキャン画面
+
+```
+┌─────────────────────────────┐
+│  💳 ICカードをスキャン      │
+├─────────────────────────────┤
+│                             │
+│     [カードアイコン]         │
+│                             │
+│  カードを端末に近づけてください │
+│                             │
+│  🇯🇵 Suica / Pasmo         │
+│  🇭🇰 Octopus Card          │
+│  🇹🇼 EasyCard              │
+│                             │
+│  [ スキャン開始 ]           │
+│  [ キャンセル ]             │
+│                             │
+└─────────────────────────────┘
+```
+
+### スキャン結果画面
+
+```
+┌─────────────────────────────┐
+│  ✅ 15件の取引を読み取りました │
+│  残高: ¥3,450               │
+├─────────────────────────────┤
+│  [ すべて(15) ][ 新規(12) ] │
+│  [ 重複(3) ]                │
+├─────────────────────────────┤
+│  ☑️ 新宿駅 → 渋谷駅         │
+│     ¥220 | 12/21 14:23     │
+├─────────────────────────────┤
+│  ⚠️ 東京駅 → 品川駅(重複)   │
+│     ¥170 | 12/20 09:15     │
+│     [既存データと統合]      │
+├─────────────────────────────┤
+│  [ 選択した12件を追加 ]     │
+└─────────────────────────────┘
+```
+
+---
+
+## 📱 開発開始手順
+
+### iOS
+
+```bash
+# 1. Xcodeでプロジェクト作成
+open -a Xcode
+
+# 2. Swift Package Managerで依存関係追加
+# File > Add Packages
+# https://github.com/supabase/supabase-swift
+
+# 3. プロジェクト構造作成
+cd ios/TravelExpense
+mkdir -p {App,Features,Core,Models,Resources}
+```
+
+### Android
+
+```bash
+# 1. Android Studioでプロジェクト作成
+# New Project > Empty Compose Activity
+
+# 2. build.gradleに依存関係追加
+
+# 3. プロジェクト構造作成
+cd android/app/src/main/java/com/travelexpense
+mkdir -p {ui,data,domain,nfc}
+```
+
+---
+
+## 🧪 テストプラン
+
+### NFC機能テスト
+
+1. **実機テスト必須**
+   - NFCはシミュレーターで動作しない
+   - 実際のICカードで検証
+
+2. **テストケース**
+   - ✅ カード読み取り成功
+   - ✅ 複数レコード読み取り
+   - ✅ 重複検出
+   - ✅ 異なる種類のカード (Suica, Pasmo, ICOCA)
+   - ✅ エラーハンドリング (カード離れすぎ、通信エラー)
+
+---
+
+## 📝 次のステップ
+
+1. ✅ **Phase 9a**: プロジェクトセットアップ
+2. ⬜ **Phase 9b**: Supabase統合 + 基本画面
+3. ⬜ **Phase 9c**: NFC機能実装 (日本)
+4. ⬜ **Phase 9d**: 他国対応 (香港、台湾)
+5. ⬜ **Phase 9e**: テスト・デバッグ
+
+---
+
+**バージョン**: 1.0
+**最終更新**: 2025-12-21
+**作成者**: Claude Code
