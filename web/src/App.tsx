@@ -8,6 +8,7 @@ import { Onboarding } from './pages/Onboarding'
 import { TripList } from './pages/TripList'
 import { TripForm } from './pages/TripForm'
 import { TripDetail } from './pages/TripDetail'
+import { ExpenseForm } from './pages/ExpenseForm'
 
 function App() {
   return (
@@ -57,10 +58,19 @@ function App() {
             }
           />
 
+          <Route
+            path="/trips/:tripId/expenses/new"
+            element={
+              <PrivateRoute>
+                <ExpenseForm />
+              </PrivateRoute>
+            }
+          />
+
           {/* TODO: Add more protected routes */}
           {/*
           <Route path="/trips/:id/edit" element={<PrivateRoute><TripForm /></PrivateRoute>} />
-          <Route path="/trips/:id/expenses/new" element={<PrivateRoute><ExpenseForm /></PrivateRoute>} />
+          <Route path="/trips/:tripId/expenses/:expenseId" element={<PrivateRoute><ExpenseDetail /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           */}
 
