@@ -1,12 +1,14 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 interface PrivateRouteProps {
   children: React.ReactNode
+  requireOnboarding?: boolean
 }
 
-export function PrivateRoute({ children }: PrivateRouteProps) {
-  const { user, loading } = useAuth()
+export function PrivateRoute({ children, requireOnboarding = true }: PrivateRouteProps) {
+  const { user, loading, onboardingCompleted } = useAuth()
+  const location = useLocation()
 
   if (loading) {
     return (
@@ -20,7 +22,12 @@ export function PrivateRoute({ children }: PrivateRouteProps) {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  // Redirect to onboarding if not completed and onboarding is required
+  if (requireOnboarding && !onboardingCompleted && location.pathname !== '/onboarding') {
+    return <Navigate to="/onboarding" replace />
   }
 
   return <>{children}</>

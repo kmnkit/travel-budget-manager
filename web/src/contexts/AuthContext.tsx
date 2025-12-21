@@ -6,10 +6,12 @@ interface AuthContextType {
   user: User | null
   session: Session | null
   loading: boolean
+  onboardingCompleted: boolean
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string, displayName: string) => Promise<void>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<void>
+  refreshOnboardingStatus: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -18,21 +20,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false)
+
+  // Fetch onboarding status from users table
+  const fetchOnboardingStatus = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('onboarding_completed')
+        .eq('id', userId)
+        .single()
+
+      if (error) {
+        console.error('Error fetching onboarding status:', error)
+        return
+      }
+
+      setOnboardingCompleted(data?.onboarding_completed ?? false)
+    } catch (error) {
+      console.error('Error fetching onboarding status:', error)
+    }
+  }
+
+  const refreshOnboardingStatus = async () => {
+    if (user) {
+      await fetchOnboardingStatus(user.id)
+    }
+  }
 
   useEffect(() => {
     // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
+
+      if (session?.user) {
+        await fetchOnboardingStatus(session.user.id)
+      }
+
       setLoading(false)
     })
 
     // Listen for changes on auth state (signed in, signed out, etc.)
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
+
+      if (session?.user) {
+        await fetchOnboardingStatus(session.user.id)
+      } else {
+        setOnboardingCompleted(false)
+      }
+
       setLoading(false)
     })
 
@@ -76,10 +117,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     session,
     loading,
+    onboardingCompleted,
     signIn,
     signUp,
     signOut,
     resetPassword,
+    refreshOnboardingStatus,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

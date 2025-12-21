@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import { PrivateRoute } from './components/PrivateRoute'
 import { Login } from './pages/Login'
 import { Signup } from './pages/Signup'
+import { Onboarding } from './pages/Onboarding'
 import { TripList } from './pages/TripList'
 
 function App() {
@@ -16,7 +17,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* Protected Routes */}
+          {/* Onboarding Route - Requires auth but not onboarding completion */}
+          <Route
+            path="/onboarding"
+            element={
+              <PrivateRoute requireOnboarding={false}>
+                <Onboarding />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Protected Routes - Require auth AND onboarding completion */}
           <Route
             path="/trips"
             element={
