@@ -43,10 +43,14 @@ class AuthViewModel: ObservableObject {
         Task {
             for await event in supabase.observeAuthStateChanges() {
                 switch event {
-                case .signedIn(let session):
-                    authState = .authenticated(session.user)
+                case .signedIn:
+                    // 新しいバージョンでは関連値なし、currentUserから取得
+                    checkAuthStatus()
                 case .signedOut:
                     authState = .unauthenticated
+                case .tokenRefreshed:
+                    // トークンがリフレッシュされたら状態を再確認
+                    checkAuthStatus()
                 default:
                     break
                 }
