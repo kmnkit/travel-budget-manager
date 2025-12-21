@@ -13,6 +13,7 @@ import { ExpenseDetail } from './pages/ExpenseDetail'
 import { CategoryList } from './pages/CategoryList'
 import { CategoryForm } from './pages/CategoryForm'
 import { TripReport } from './pages/TripReport'
+import { Profile } from './pages/Profile'
 
 function App() {
   return (
@@ -134,10 +135,14 @@ function App() {
             }
           />
 
-          {/* TODO: Add more protected routes */}
-          {/*
-          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
 
           {/* Home Route - Redirect to trips if authenticated, otherwise login */}
           <Route path="/" element={<Navigate to="/trips" replace />} />
