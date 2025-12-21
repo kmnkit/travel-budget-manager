@@ -10,6 +10,8 @@ import { TripForm } from './pages/TripForm'
 import { TripDetail } from './pages/TripDetail'
 import { ExpenseForm } from './pages/ExpenseForm'
 import { ExpenseDetail } from './pages/ExpenseDetail'
+import { CategoryList } from './pages/CategoryList'
+import { CategoryForm } from './pages/CategoryForm'
 
 function App() {
   return (
@@ -91,6 +93,33 @@ function App() {
             element={
               <PrivateRoute>
                 <TripForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories"
+            element={
+              <PrivateRoute>
+                <CategoryList />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories/new"
+            element={
+              <PrivateRoute>
+                <CategoryForm />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/categories/:id/edit"
+            element={
+              <PrivateRoute>
+                <CategoryForm />
               </PrivateRoute>
             }
           />
