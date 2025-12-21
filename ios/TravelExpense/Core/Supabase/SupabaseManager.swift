@@ -52,7 +52,7 @@ class SupabaseManager {
     }
 
     /// セッション監視
-    func observeAuthStateChanges() -> AsyncStream<AuthChangeEvent> {
+    func observeAuthStateChanges() -> AsyncStream<(event: AuthChangeEvent, session: Session?)> {
         client.auth.authStateChanges
     }
 }

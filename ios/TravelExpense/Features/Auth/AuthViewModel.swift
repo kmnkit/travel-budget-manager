@@ -41,16 +41,24 @@ class AuthViewModel: ObservableObject {
     /// 認証状態の変更を監視
     private func observeAuthChanges() {
         Task {
-            for await event in supabase.observeAuthStateChanges() {
+            for await (event, session) in supabase.observeAuthStateChanges() {
                 switch event {
                 case .signedIn:
-                    // 新しいバージョンでは関連値なし、currentUserから取得
-                    checkAuthStatus()
+                    // セッションからユーザー情報を取得
+                    if let user = session?.user {
+                        authState = .authenticated(user)
+                    } else {
+                        checkAuthStatus()
+                    }
                 case .signedOut:
                     authState = .unauthenticated
                 case .tokenRefreshed:
-                    // トークンがリフレッシュされたら状態を再確認
-                    checkAuthStatus()
+                    // トークンがリフレッシュされたらセッションから取得
+                    if let user = session?.user {
+                        authState = .authenticated(user)
+                    } else {
+                        checkAuthStatus()
+                    }
                 default:
                     break
                 }
