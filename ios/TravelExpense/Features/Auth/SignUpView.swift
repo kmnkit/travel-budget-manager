@@ -2,7 +2,7 @@ import SwiftUI
 
 /// サインアップ画面
 struct SignUpView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -61,11 +61,20 @@ struct SignUpView: View {
 
                         // 成功メッセージ
                         if let successMessage = viewModel.successMessage {
-                            Text(successMessage)
-                                .font(.caption)
-                                .foregroundColor(.white)
-                                .padding(.horizontal)
-                                .multilineTextAlignment(.center)
+                            VStack(spacing: 8) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.green)
+
+                                Text(successMessage)
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .padding()
+                            .background(Color.white.opacity(0.1))
+                            .cornerRadius(12)
                         }
 
                         // サインアップボタン
@@ -83,10 +92,11 @@ struct SignUpView: View {
                             }
                         }
                         .buttonStyle(PrimaryButtonStyle())
-                        .disabled(viewModel.isLoading)
+                        .disabled(viewModel.isLoading || viewModel.successMessage != nil)
 
                         // ログインリンク
                         Button(action: {
+                            viewModel.clearForm()
                             dismiss()
                         }) {
                             Text("既にアカウントをお持ちの方はこちら")
@@ -104,6 +114,7 @@ struct SignUpView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        viewModel.clearForm()
                         dismiss()
                     }) {
                         Image(systemName: "xmark.circle.fill")
@@ -117,4 +128,5 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
+        .environmentObject(AuthViewModel())
 }

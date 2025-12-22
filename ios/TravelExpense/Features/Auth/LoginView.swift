@@ -2,7 +2,7 @@ import SwiftUI
 
 /// ログイン画面
 struct LoginView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
     @State private var showSignUp = false
 
     var body: some View {
@@ -78,6 +78,7 @@ struct LoginView: View {
 
                         // サインアップリンク
                         Button(action: {
+                            viewModel.clearForm()
                             showSignUp = true
                         }) {
                             Text("アカウントをお持ちでない方はこちら")
@@ -148,4 +149,5 @@ extension Color {
 
 #Preview {
     LoginView()
+        .environmentObject(AuthViewModel())
 }
