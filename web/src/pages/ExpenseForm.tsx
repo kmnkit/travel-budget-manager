@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
+import { ReceiptScanner } from '../components/ReceiptScanner'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
+import { OCRResult } from '../lib/ocr'
 import toast from 'react-hot-toast'
 
 interface Category {
@@ -22,6 +24,7 @@ export function ExpenseForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
   const [tripCurrency, setTripCurrency] = useState('JPY')
+  const [showScanner, setShowScanner] = useState(false)
   const isEditMode = !!expenseId
 
   const [formData, setFormData] = useState({
@@ -232,6 +235,32 @@ export function ExpenseForm() {
     }
   }
 
+  const handleOCRResult = (result: OCRResult) => {
+    // OCR結果をフォームに反映
+    if (result.amount) {
+      setFormData(prev => ({ ...prev, amount: result.amount!.toString() }))
+    }
+
+    if (result.date) {
+      setFormData(prev => ({ ...prev, expense_date: result.date! }))
+    }
+
+    // OCRで読み取ったテキストをメモに追加（オプション）
+    if (result.text && result.confidence > 70) {
+      const extractedInfo = `[OCR読み取り結果]\n${result.text.slice(0, 200)}`
+      setFormData(prev => ({
+        ...prev,
+        notes: prev.notes ? `${prev.notes}\n\n${extractedInfo}` : extractedInfo
+      }))
+    }
+
+    toast.success(
+      result.amount
+        ? `金額 ${result.amount} を検出しました`
+        : 'レシートを読み取りました（金額は手動で入力してください）'
+    )
+  }
+
   return (
     <Layout>
       <div className="max-w-2xl mx-auto">
@@ -244,6 +273,27 @@ export function ExpenseForm() {
             {isEditMode ? '支出の詳細を更新してください' : '支出の詳細を入力してください'}
           </p>
         </div>
+
+        {/* OCR Scanner Button */}
+        {!isEditMode && (
+          <div className="mb-6">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowScanner(true)}
+              className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-primary/30 hover:border-primary/50 hover:bg-primary/5"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span className="font-semibold">レシートをスキャン</span>
+            </Button>
+            <p className="text-sm text-neutral text-center mt-2">
+              カメラで撮影またはギャラリーから選択
+            </p>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-md p-8 space-y-6">
@@ -390,6 +440,14 @@ export function ExpenseForm() {
             </Button>
           </div>
         </form>
+
+        {/* Receipt Scanner Modal */}
+        {showScanner && (
+          <ReceiptScanner
+            onScanComplete={handleOCRResult}
+            onClose={() => setShowScanner(false)}
+          />
+        )}
       </div>
     </Layout>
   )
