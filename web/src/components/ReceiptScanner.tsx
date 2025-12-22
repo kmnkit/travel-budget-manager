@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import Webcam from 'react-webcam'
-import { performOCR, OCRResult } from '../lib/ocr'
+import { performOCR, type OCRResult } from '../lib/ocr'
 import { Button } from './Button'
 import toast from 'react-hot-toast'
 

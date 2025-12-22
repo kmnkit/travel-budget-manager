@@ -6,7 +6,7 @@ import { Button } from '../components/Button'
 import { ReceiptScanner } from '../components/ReceiptScanner'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
-import { OCRResult } from '../lib/ocr'
+import type { OCRResult } from '../lib/ocr'
 import toast from 'react-hot-toast'
 
 interface Category {
@@ -23,7 +23,6 @@ export function ExpenseForm() {
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState<Category[]>([])
-  const [tripCurrency, setTripCurrency] = useState('JPY')
   const [showScanner, setShowScanner] = useState(false)
   const isEditMode = !!expenseId
 
@@ -66,7 +65,6 @@ export function ExpenseForm() {
         return
       }
 
-      setTripCurrency(data.currency)
       setFormData(prev => ({ ...prev, currency: data.currency }))
     } catch (error) {
       console.error('Error fetching trip currency:', error)
