@@ -1,0 +1,282 @@
+{
+  "@@locale": "ko",
+
+  "@_APP_GENERAL": {},
+  "appTitle": "트립월렛",
+  "save": "저장",
+  "cancel": "취소",
+  "delete": "삭제",
+  "edit": "수정",
+  "add": "추가",
+  "retry": "재시도",
+  "settings": "설정",
+  "loading": "로딩 중",
+
+  "@_NAVIGATION": {},
+  "trips": "여행",
+  "expenses": "지출",
+  "exchangeRates": "환율",
+  "statistics": "통계",
+
+  "@_TRIP": {},
+  "tripTitle": "여행 제목",
+  "baseCurrency": "기본 통화",
+  "budgetAmount": "예산",
+  "startDate": "시작일",
+  "endDate": "종료일",
+  "addTrip": "여행 추가",
+  "editTrip": "여행 수정",
+  "deleteTrip": "여행 삭제",
+  "tripTitleHint": "예: 도쿄 여행",
+  "tripNotFound": "여행을 찾을 수 없습니다",
+  "tripLoadFailed": "여행 정보를 불러올 수 없습니다",
+  "tripCreateSuccess": "여행이 생성되었습니다",
+  "tripCreateFailed": "여행 생성 실패: {error}",
+  "@tripCreateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tripUpdateSuccess": "여행이 수정되었습니다",
+  "tripUpdateFailed": "여행 수정 실패: {error}",
+  "@tripUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tripDeleteConfirm": "{tripTitle}을(를) 삭제하시겠습니까?\n모든 지출 기록도 함께 삭제됩니다.",
+  "@tripDeleteConfirm": {
+    "placeholders": {
+      "tripTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "tripDeleteSuccess": "여행이 삭제되었습니다",
+  "tripDeleteFailed": "여행 삭제 실패",
+  "noTrips": "여행을 추가해보세요!",
+  "noTripsDescription": "새로운 여행을 계획하고 예산을 관리하세요",
+
+  "@_TRIP_STATUS": {},
+  "tripStatusUpcoming": "예정",
+  "tripStatusOngoing": "진행중",
+  "tripStatusCompleted": "완료",
+  "error": "오류",
+
+  "@_EXPENSE": {},
+  "amount": "금액",
+  "memo": "메모",
+  "memoOptional": "메모 (선택)",
+  "memoHint": "메모를 입력하세요",
+  "category": "카테고리",
+  "paymentMethod": "지불수단",
+  "date": "날짜",
+  "addExpense": "지출 추가",
+  "editExpense": "지출 수정",
+  "deleteExpense": "지출 삭제",
+  "noExpenses": "지출을 기록해보세요!",
+  "expenseLoadFailed": "지출 목록을 불러올 수 없습니다",
+  "expenseListLoadFailed": "지출 목록을 불러올 수 없습니다",
+  "expenseCreateSuccess": "지출이 추가되었습니다",
+  "expenseCreateFailed": "저장 실패: {error}",
+  "@expenseCreateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseUpdateSuccess": "지출이 수정되었습니다",
+  "expenseUpdateFailed": "지출 수정 실패",
+  "expenseDeleteConfirm": "{item}을(를) 삭제하시겠습니까?",
+  "@expenseDeleteConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseDeleteSuccess": "지출이 삭제되었습니다",
+  "expenseDeleteFailed": "지출 삭제 실패",
+  "categoryRequired": "카테고리를 선택해주세요",
+  "paymentMethodRequired": "지불수단을 선택해주세요",
+  "enterValidAmount": "올바른 금액을 입력해주세요",
+  "conversionInProgress": "환율 변환 중입니다. 잠시만 기다려주세요",
+  "noPaymentMethods": "지불수단이 없습니다. 먼저 지불수단을 추가해주세요.",
+
+  "@_EXPENSE_CATEGORY": {},
+  "categoryFood": "식비",
+  "categoryTransport": "교통",
+  "categoryAccommodation": "숙박",
+  "categoryShopping": "쇼핑",
+  "categoryEntertainment": "오락",
+  "categorySightseeing": "관광",
+  "categoryCommunication": "통신",
+  "categoryOther": "기타",
+
+  "@_PAYMENT_METHOD": {},
+  "paymentMethods": "지불수단 관리",
+  "addPaymentMethod": "지불수단 추가",
+  "editPaymentMethod": "지불수단 수정",
+  "deletePaymentMethod": "지불수단 삭제",
+  "paymentMethodName": "지불수단 이름",
+  "defaultPayment": "기본",
+  "setAsDefault": "기본으로 설정",
+  "paymentMethodAdded": "지불수단이 추가되었습니다",
+  "paymentMethodUpdated": "지불수단이 수정되었습니다",
+  "paymentMethodDeleted": "지불수단이 삭제되었습니다",
+  "paymentMethodDeleteConfirm": "{name}을(를) 삭제하시겠습니까?",
+  "@paymentMethodDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodSetDefault": "{name}을(를) 기본 지불수단으로 설정했습니다",
+  "@paymentMethodSetDefault": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodAddFailed": "추가 실패: {error}",
+  "@paymentMethodAddFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodUpdateFailed": "수정 실패: {error}",
+  "@paymentMethodUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodDeleteFailed": "삭제 실패: {error}",
+  "@paymentMethodDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodSetDefaultFailed": "설정 실패: {error}",
+  "@paymentMethodSetDefaultFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodLoadFailed": "지불수단 로드 실패: {error}",
+  "@paymentMethodLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPaymentMethodsAvailable": "지불수단이 없습니다",
+
+  "@_PAYMENT_METHOD_TYPE": {},
+  "paymentCash": "현금",
+  "paymentCreditCard": "신용카드",
+  "paymentDebitCard": "체크카드",
+  "paymentTransitCard": "교통카드",
+  "paymentOther": "기타",
+
+  "@_BUDGET": {},
+  "budget": "예산",
+  "total": "합계",
+  "remaining": "잔액",
+  "used": "사용",
+  "budgetComfortable": "여유",
+  "budgetCaution": "주의",
+  "budgetWarning": "경고",
+  "budgetExceeded": "초과",
+
+  "@_EXCHANGE_RATE": {},
+  "autoRate": "자동",
+  "manualRate": "수동",
+  "refreshRate": "환율 새로고침",
+  "lastUpdated": "마지막 업데이트",
+  "noExchangeRates": "등록된 환율이 없습니다",
+  "exchangeRateLoadFailed": "환율 정보를 불러올 수 없습니다\n{error}",
+  "@exchangeRateLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeRateRefreshHint": "환율을 가져오려면 새로고침 버튼을 눌러주세요",
+  "exchangeRateLoading": "환율 정보를 불러오는 중...",
+
+  "@_STATISTICS": {},
+  "noData": "데이터가 없습니다",
+  "noExpenseData": "지출 데이터가 없습니다",
+  "noExpenseDataInPeriod": "선택한 기간에 지출 내역이 없습니다",
+  "statisticsLoadFailed": "통계 데이터를 불러올 수 없습니다\n{error}",
+  "@statisticsLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "statisticsCalculating": "통계를 계산하는 중...",
+  "periodAll": "전체",
+  "periodWeek": "이번 주",
+  "periodMonth": "이번 달",
+  "periodCustom": "직접 설정",
+
+  "@_FILTER_SORT": {},
+  "allCategories": "전체",
+  "sortByDate": "최신순",
+  "sortByAmount": "금액순",
+  "selectDefaultCurrency": "기본 통화 선택",
+
+  "@_SETTINGS": {},
+  "language": "언어",
+  "languageKorean": "한국어",
+  "languageEnglish": "English",
+  "defaultCurrency": "기본 통화",
+  "general": "일반",
+  "data": "데이터",
+  "info": "정보",
+  "version": "버전",
+  "backup": "백업",
+  "restore": "복원",
+  "privacyPolicy": "개인정보 처리방침",
+  "licenses": "오픈소스 라이선스",
+  "comingSoon": "준비 중",
+
+  "@_VALIDATION": {},
+  "validationTitleRequired": "제목을 입력해주세요",
+  "validationTitleTooLong": "제목은 100자 이하여야 합니다",
+  "validationBudgetRequired": "예산을 입력하세요",
+  "validationBudgetPositive": "예산은 0보다 커야 합니다",
+  "validationEndDateAfterStart": "종료일은 시작일 이후여야 합니다",
+  "validationAmountPositive": "금액은 0보다 커야 합니다",
+  "validationCategoryRequired": "카테고리를 선택해주세요",
+  "validationPaymentRequired": "지불수단을 선택해주세요",
+  "enterTripTitle": "여행 제목을 입력하세요",
+  "enterBudget": "예산을 입력하세요",
+  "enterAmountGreaterThanZero": "0보다 큰 금액을 입력하세요",
+
+  "@_ERROR": {},
+  "networkError": "네트워크 오류가 발생했습니다",
+  "offlineMode": "오프라인",
+  "loadFailed": "로드 실패",
+  "saveFailed": "저장 실패",
+  "unknownError": "알 수 없는 오류가 발생했습니다"
+}

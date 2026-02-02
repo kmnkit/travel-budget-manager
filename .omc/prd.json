@@ -1,0 +1,181 @@
+{
+  "project": "TripWallet",
+  "branchName": "ralph/trip-wallet-v2",
+  "description": "여행 전용 가계부 앱. 여행 기간 동안의 예산을 관리하고, 다통화 지출을 기록하며, 지불수단별로 관리할 수 있다. 한국어/영어 전환 지원. 통화 7종(KRW, USD, EUR, JPY, GBP, AUD, CAD), 환율 API 자동 + 수동 입력, Isar DB, 통계 차트 포함.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "프로젝트 기반 구조 설정",
+      "description": "As a developer, I want to set up the project foundation (dependencies, Clean Architecture folder structure, Isar DB, Riverpod, GoRouter, i18n) so that all subsequent features have a solid base.",
+      "acceptanceCriteria": [
+        "pubspec.yaml에 모든 핵심 의존성 추가 (isar, riverpod, go_router, intl, dio 등)",
+        "Clean Architecture 폴더 구조 생성 (core/, features/, shared/, l10n/)",
+        "Isar DB 초기화 서비스 구현",
+        "Riverpod ProviderScope 설정",
+        "GoRouter 기본 라우터 설정",
+        "i18n ARB 파일 구조 (en, ko) 및 l10n.yaml 설정",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 1,
+      "passes": false
+    },
+    {
+      "id": "US-002",
+      "title": "여행 CRUD",
+      "description": "As a user, I want to create, read, update, and delete trips with title, base currency, budget, start/end dates so that I can manage my travel plans.",
+      "acceptanceCriteria": [
+        "Trip entity (Isar collection): id, title, baseCurrency, budget, startDate, endDate",
+        "Trip 상태는 날짜 기반 computedStatus (upcoming/ongoing/completed)",
+        "TripRepository 인터페이스 + Isar 구현체",
+        "CreateTrip, GetTrips, UpdateTrip, DeleteTrip UseCase",
+        "TripProvider (Riverpod) 구현",
+        "여행 목록 화면 (HomeScreen)",
+        "여행 생성/수정 화면",
+        "여행 상세 화면",
+        "입력 검증: 제목 공백 불가/100자, 예산 양수/최대 100억, 통화 코드 허용 목록",
+        "모든 UseCase 단위 테스트 작성",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 2,
+      "passes": false
+    },
+    {
+      "id": "US-003",
+      "title": "지불수단 관리",
+      "description": "As a user, I want to manage payment methods (cash, credit card, transit card, debit card, etc.) so that I can track which payment method was used for each expense.",
+      "acceptanceCriteria": [
+        "PaymentMethod entity: id, name, type(enum: cash/creditCard/debitCard/transitCard/other), icon, isDefault",
+        "기본 지불수단 프리셋 제공 (현금, 신용카드, 교통카드)",
+        "PaymentMethodRepository 인터페이스 + Isar 구현체",
+        "CRUD UseCase 구현",
+        "지불수단 관리 화면 (추가/수정/삭제)",
+        "모든 UseCase 단위 테스트 작성",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 3,
+      "passes": false
+    },
+    {
+      "id": "US-004",
+      "title": "지출 CRUD 및 카테고리",
+      "description": "As a user, I want to record expenses with amount, currency, category, payment method, memo, and date so that I can track all spending during a trip.",
+      "acceptanceCriteria": [
+        "Expense entity: id, tripId, amount, currency, category, paymentMethodId, memo, date, convertedAmount",
+        "ExpenseCategory enum: food, transport, accommodation, shopping, entertainment, sightseeing, communication, other",
+        "ExpenseRepository 인터페이스 + Isar 구현체",
+        "CreateExpense, GetExpenses, UpdateExpense, DeleteExpense UseCase",
+        "convertedAmount는 생성/수정 시 자동 환산 저장",
+        "ExpenseProvider 구현",
+        "지출 목록 화면 (여행 상세 내)",
+        "지출 생성/수정 화면 (카테고리 선택, 지불수단 선택, 통화 선택)",
+        "모든 UseCase 단위 테스트 작성",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 4,
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "title": "환율 관리 (API + 수동)",
+      "description": "As a user, I want exchange rates to be automatically fetched from an API and also manually adjustable so that currency conversion is accurate.",
+      "acceptanceCriteria": [
+        "ExchangeRate entity: id, tripId(nullable), baseCurrency, targetCurrency, rate, isManual, updatedAt",
+        "RemoteExchangeRateDataSource: open.er-api.com API 호출",
+        "FetchLatestRatesUseCase: 24시간 캐시, 오프라인 스킵, 5초 타임아웃",
+        "ConvertCurrencyUseCase: 4단계 폴백 체인 (trip rate → global rate → reverse rate → USD 기본값)",
+        "수동 환율 설정 화면 (여행별)",
+        "앱 시작 시 비동기 백그라운드 fetch",
+        "NetworkConnectivityService로 네트워크 상태 감지",
+        "모든 UseCase 단위 테스트 작성",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 5,
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "예산 추적 및 요약",
+      "description": "As a user, I want to see my budget usage (spent/remaining/percentage) per trip so that I can stay within budget.",
+      "acceptanceCriteria": [
+        "BudgetSummary 모델: totalBudget, totalSpent, remaining, usagePercent(0.0~1.0+)",
+        "BudgetStatus enum: comfortable(0-60%), caution(60-80%), warning(80-100%), exceeded(100%+)",
+        "BudgetProvider: 여행별 예산 요약 계산",
+        "BudgetProgressBar 위젯 (상태별 색상)",
+        "BudgetSummaryCard 위젯",
+        "여행 상세 화면에 예산 요약 표시",
+        "통화 정밀도 적용 (CurrencyUtils)",
+        "모든 단위 테스트 작성",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 6,
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "통계 차트",
+      "description": "As a user, I want to see statistics charts (category breakdown, daily spending trend) so that I can understand my spending patterns.",
+      "acceptanceCriteria": [
+        "카테고리별 지출 비율 파이 차트 (fl_chart)",
+        "일별 지출 추세 라인/바 차트",
+        "지불수단별 지출 비율 차트",
+        "통계 화면 (여행 상세에서 접근)",
+        "빈 데이터 시 안내 메시지",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 7,
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "다국어 (한국어/영어) 전환",
+      "description": "As a user, I want to switch between Korean and English so that I can use the app in my preferred language.",
+      "acceptanceCriteria": [
+        "ARB 파일에 모든 UI 문자열 정의 (en, ko)",
+        "설정 화면에서 언어 전환 기능",
+        "선택한 언어 SharedPreferences에 저장 및 앱 재시작 없이 적용",
+        "모든 화면에서 하드코딩 문자열 없음 (AppLocalizations 사용)",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 8,
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "title": "설정 화면 및 테마",
+      "description": "As a user, I want a settings screen with language selection and app theme so that I can personalize the app.",
+      "acceptanceCriteria": [
+        "설정 화면: 언어 선택, 앱 정보",
+        "AppTheme 정의 (AppColors, 일관된 디자인 시스템)",
+        "라우터에 /settings 경로 등록",
+        "flutter analyze 통과",
+        "flutter test 통과"
+      ],
+      "priority": 9,
+      "passes": false
+    },
+    {
+      "id": "US-010",
+      "title": "통합 테스트 및 마무리",
+      "description": "As a developer, I want integration tests covering key user flows so that the app is reliable end-to-end.",
+      "acceptanceCriteria": [
+        "여행 생성 → 지출 추가 → 예산 확인 통합 테스트",
+        "다통화 변환 통합 테스트",
+        "지출 수정 → 예산 재계산 통합 테스트",
+        "여행 라이프사이클 (upcoming → ongoing → completed) 통합 테스트",
+        "CLAUDE.md 프로젝트 현황에 맞게 갱신",
+        "flutter analyze 통과",
+        "flutter test 전체 통과"
+      ],
+      "priority": 10,
+      "passes": false
+    }
+  ]
+}

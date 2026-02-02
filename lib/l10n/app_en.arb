@@ -1,0 +1,282 @@
+{
+  "@@locale": "en",
+
+  "@_APP_GENERAL": {},
+  "appTitle": "TripWallet",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "add": "Add",
+  "retry": "Retry",
+  "settings": "Settings",
+  "loading": "Loading",
+
+  "@_NAVIGATION": {},
+  "trips": "Trips",
+  "expenses": "Expenses",
+  "exchangeRates": "Exchange Rates",
+  "statistics": "Statistics",
+
+  "@_TRIP": {},
+  "tripTitle": "Trip Title",
+  "baseCurrency": "Base Currency",
+  "budgetAmount": "Budget",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "addTrip": "Add Trip",
+  "editTrip": "Edit Trip",
+  "deleteTrip": "Delete Trip",
+  "tripTitleHint": "e.g., Tokyo Trip",
+  "tripNotFound": "Trip not found",
+  "tripLoadFailed": "Failed to load trip information",
+  "tripCreateSuccess": "Trip created successfully",
+  "tripCreateFailed": "Failed to create trip: {error}",
+  "@tripCreateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tripUpdateSuccess": "Trip updated successfully",
+  "tripUpdateFailed": "Failed to update trip: {error}",
+  "@tripUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tripDeleteConfirm": "Do you want to delete {tripTitle}?\nAll expense records will also be deleted.",
+  "@tripDeleteConfirm": {
+    "placeholders": {
+      "tripTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "tripDeleteSuccess": "Trip deleted successfully",
+  "tripDeleteFailed": "Failed to delete trip",
+  "noTrips": "Add your first trip!",
+  "noTripsDescription": "Plan a new trip and manage your budget",
+
+  "@_TRIP_STATUS": {},
+  "tripStatusUpcoming": "Upcoming",
+  "tripStatusOngoing": "Ongoing",
+  "tripStatusCompleted": "Completed",
+  "error": "Error",
+
+  "@_EXPENSE": {},
+  "amount": "Amount",
+  "memo": "Memo",
+  "memoOptional": "Memo (Optional)",
+  "memoHint": "Enter memo",
+  "category": "Category",
+  "paymentMethod": "Payment Method",
+  "date": "Date",
+  "addExpense": "Add Expense",
+  "editExpense": "Edit Expense",
+  "deleteExpense": "Delete Expense",
+  "noExpenses": "Record your first expense!",
+  "expenseLoadFailed": "Failed to load expense list",
+  "expenseListLoadFailed": "Failed to load expense list",
+  "expenseCreateSuccess": "Expense added successfully",
+  "expenseCreateFailed": "Failed to save: {error}",
+  "@expenseCreateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseUpdateSuccess": "Expense updated successfully",
+  "expenseUpdateFailed": "Failed to update expense",
+  "expenseDeleteConfirm": "Do you want to delete {item}?",
+  "@expenseDeleteConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseDeleteSuccess": "Expense deleted successfully",
+  "expenseDeleteFailed": "Failed to delete expense",
+  "categoryRequired": "Please select a category",
+  "paymentMethodRequired": "Please select a payment method",
+  "enterValidAmount": "Please enter a valid amount",
+  "conversionInProgress": "Currency conversion in progress. Please wait.",
+  "noPaymentMethods": "No payment methods available. Please add a payment method first.",
+
+  "@_EXPENSE_CATEGORY": {},
+  "categoryFood": "Food",
+  "categoryTransport": "Transport",
+  "categoryAccommodation": "Accommodation",
+  "categoryShopping": "Shopping",
+  "categoryEntertainment": "Entertainment",
+  "categorySightseeing": "Sightseeing",
+  "categoryCommunication": "Communication",
+  "categoryOther": "Other",
+
+  "@_PAYMENT_METHOD": {},
+  "paymentMethods": "Payment Methods",
+  "addPaymentMethod": "Add Payment Method",
+  "editPaymentMethod": "Edit Payment Method",
+  "deletePaymentMethod": "Delete Payment Method",
+  "paymentMethodName": "Payment Method Name",
+  "defaultPayment": "Default",
+  "setAsDefault": "Set as Default",
+  "paymentMethodAdded": "Payment method added",
+  "paymentMethodUpdated": "Payment method updated",
+  "paymentMethodDeleted": "Payment method deleted",
+  "paymentMethodDeleteConfirm": "Do you want to delete {name}?",
+  "@paymentMethodDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodSetDefault": "{name} has been set as the default payment method",
+  "@paymentMethodSetDefault": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodAddFailed": "Failed to add: {error}",
+  "@paymentMethodAddFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodUpdateFailed": "Failed to update: {error}",
+  "@paymentMethodUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodDeleteFailed": "Failed to delete: {error}",
+  "@paymentMethodDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodSetDefaultFailed": "Failed to set default: {error}",
+  "@paymentMethodSetDefaultFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodLoadFailed": "Failed to load payment methods: {error}",
+  "@paymentMethodLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPaymentMethodsAvailable": "No payment methods available",
+
+  "@_PAYMENT_METHOD_TYPE": {},
+  "paymentCash": "Cash",
+  "paymentCreditCard": "Credit Card",
+  "paymentDebitCard": "Debit Card",
+  "paymentTransitCard": "Transit Card",
+  "paymentOther": "Other",
+
+  "@_BUDGET": {},
+  "budget": "Budget",
+  "total": "Total",
+  "remaining": "Remaining",
+  "used": "Used",
+  "budgetComfortable": "Comfortable",
+  "budgetCaution": "Caution",
+  "budgetWarning": "Warning",
+  "budgetExceeded": "Exceeded",
+
+  "@_EXCHANGE_RATE": {},
+  "autoRate": "Auto",
+  "manualRate": "Manual",
+  "refreshRate": "Refresh Exchange Rates",
+  "lastUpdated": "Last Updated",
+  "noExchangeRates": "No exchange rates registered",
+  "exchangeRateLoadFailed": "Failed to load exchange rate information\n{error}",
+  "@exchangeRateLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeRateRefreshHint": "Press the refresh button to fetch exchange rates",
+  "exchangeRateLoading": "Loading exchange rate information...",
+
+  "@_STATISTICS": {},
+  "noData": "No data available",
+  "noExpenseData": "No expense data available",
+  "noExpenseDataInPeriod": "No expense records in the selected period",
+  "statisticsLoadFailed": "Failed to load statistics data\n{error}",
+  "@statisticsLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "statisticsCalculating": "Calculating statistics...",
+  "periodAll": "All",
+  "periodWeek": "This Week",
+  "periodMonth": "This Month",
+  "periodCustom": "Custom",
+
+  "@_FILTER_SORT": {},
+  "allCategories": "All",
+  "sortByDate": "Latest First",
+  "sortByAmount": "Amount",
+  "selectDefaultCurrency": "Select Default Currency",
+
+  "@_SETTINGS": {},
+  "language": "Language",
+  "languageKorean": "Korean",
+  "languageEnglish": "English",
+  "defaultCurrency": "Default Currency",
+  "general": "General",
+  "data": "Data",
+  "info": "Info",
+  "version": "Version",
+  "backup": "Backup",
+  "restore": "Restore",
+  "privacyPolicy": "Privacy Policy",
+  "licenses": "Open Source Licenses",
+  "comingSoon": "Coming soon",
+
+  "@_VALIDATION": {},
+  "validationTitleRequired": "Title is required",
+  "validationTitleTooLong": "Title must be 100 characters or less",
+  "validationBudgetRequired": "Please enter a budget",
+  "validationBudgetPositive": "Budget must be positive",
+  "validationEndDateAfterStart": "End date must be after start date",
+  "validationAmountPositive": "Amount must be positive",
+  "validationCategoryRequired": "Please select a category",
+  "validationPaymentRequired": "Please select a payment method",
+  "enterTripTitle": "Enter trip title",
+  "enterBudget": "Enter budget",
+  "enterAmountGreaterThanZero": "Enter an amount greater than 0",
+
+  "@_ERROR": {},
+  "networkError": "Network error occurred",
+  "offlineMode": "Offline",
+  "loadFailed": "Load failed",
+  "saveFailed": "Save failed",
+  "unknownError": "An unknown error occurred"
+}
