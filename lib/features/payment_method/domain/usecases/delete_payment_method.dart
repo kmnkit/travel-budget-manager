@@ -1,0 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:trip_wallet/features/payment_method/domain/repositories/payment_method_repository.dart';
+import 'package:trip_wallet/features/payment_method/data/repositories/payment_method_repository_impl.dart';
+import 'package:trip_wallet/features/payment_method/data/datasources/payment_method_local_datasource.dart';
+
+class DeletePaymentMethod {
+  final PaymentMethodRepository _repository;
+
+  DeletePaymentMethod(this._repository);
+
+  Future<void> call(int id) {
+    return _repository.deletePaymentMethod(id);
+  }
+}
+
+final deletePaymentMethodProvider = Provider<DeletePaymentMethod>((ref) {
+  final datasource = ref.watch(paymentMethodLocalDatasourceProvider);
+  final repository = PaymentMethodRepositoryImpl(datasource);
+  return DeletePaymentMethod(repository);
+});
