@@ -126,12 +126,20 @@ presentation → domain ← data
 
 ### 디자인 시스템
 
+Stitch 디자인 도구(Project ID: `1536195772045761405`)와 정밀 정렬된 UI 구현:
+
 | 요소 | 값 |
 |------|-----|
-| **Primary Color** | Teal (#00897B) |
+| **Primary Color** | Teal (#008A7C) |
+| **Background** | #F5F8F8 |
+| **Text Primary** | #0C1D1B |
+| **Text Secondary** | #4A5B59 |
 | **Border Radius** | 8px / 12px |
 | **폰트** | Lexend (Google Fonts) |
 | **Design System** | Material Design 3 |
+| **카드 그림자** | Custom BoxShadow (elevation 대신) |
+| **예산 카드** | 수평 3열 레이아웃 + LinearProgress |
+| **설정 화면** | 카드 기반 섹션 그룹핑 |
 
 ## 프로젝트 구조
 

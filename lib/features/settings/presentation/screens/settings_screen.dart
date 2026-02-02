@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:trip_wallet/core/constants/app_constants.dart';
 import 'package:trip_wallet/core/constants/currency_constants.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 
-/// Settings screen for app configuration.
-///
-/// Features:
-/// - Language toggle (Korean/English)
-/// - Default currency selector
-/// - Backup/Restore (disabled for now)
-/// - App info (version, privacy policy, licenses)
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -25,102 +19,144 @@ class SettingsScreen extends ConsumerWidget {
         title: const Text('설정'),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(16),
         children: [
           // General section
-          _SectionHeader(title: '일반'),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('언어'),
-            subtitle: Text(
-              locale.languageCode == 'ko' ? '한국어' : 'English',
-            ),
-            trailing: Switch(
-              value: locale.languageCode == 'en',
-              onChanged: (value) {
-                final newLocale = value ? const Locale('en') : const Locale('ko');
-                ref.read(localeProvider.notifier).setLocale(newLocale);
-              },
-              activeTrackColor: AppColors.primary,
-            ),
-            onTap: () {
-              final currentIsEn = locale.languageCode == 'en';
-              final newLocale = currentIsEn ? const Locale('ko') : const Locale('en');
-              ref.read(localeProvider.notifier).setLocale(newLocale);
-            },
+          _buildSectionLabel(theme, '일반'),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text('언어'),
+                subtitle: Text(
+                  locale.languageCode == 'ko' ? '한국어' : 'English',
+                ),
+                trailing: Switch(
+                  value: locale.languageCode == 'en',
+                  onChanged: (value) {
+                    final newLocale = value ? const Locale('en') : const Locale('ko');
+                    ref.read(localeProvider.notifier).setLocale(newLocale);
+                  },
+                  activeTrackColor: AppColors.primary,
+                ),
+                onTap: () {
+                  final currentIsEn = locale.languageCode == 'en';
+                  final newLocale = currentIsEn ? const Locale('ko') : const Locale('en');
+                  ref.read(localeProvider.notifier).setLocale(newLocale);
+                },
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.currency_exchange),
+                title: const Text('기본 통화'),
+                subtitle: Text(
+                  SupportedCurrency.fromCode(defaultCurrency).nameKo,
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showCurrencyPicker(context, ref, defaultCurrency),
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.attach_money),
-            title: const Text('기본 통화'),
-            subtitle: Text(
-              SupportedCurrency.fromCode(defaultCurrency).nameKo,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showCurrencyPicker(context, ref, defaultCurrency),
-          ),
-          const Divider(),
+          const SizedBox(height: 24),
 
           // Data section
-          _SectionHeader(title: '데이터'),
-          ListTile(
-            leading: const Icon(Icons.backup),
-            title: const Text('백업'),
-            subtitle: const Text('준비 중'),
-            enabled: false,
-            onTap: () {},
+          _buildSectionLabel(theme, '데이터'),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.cloud_upload),
+                title: const Text('백업'),
+                subtitle: const Text('준비 중'),
+                enabled: false,
+                onTap: () {},
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.cloud_download),
+                title: const Text('복원'),
+                subtitle: const Text('준비 중'),
+                enabled: false,
+                onTap: () {},
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.restore),
-            title: const Text('복원'),
-            subtitle: const Text('준비 중'),
-            enabled: false,
-            onTap: () {},
-          ),
-          const Divider(),
+          const SizedBox(height: 24),
 
           // Info section
-          _SectionHeader(title: '정보'),
-          const ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text('버전'),
-            subtitle: Text('1.0.0'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('개인정보 처리방침'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Open privacy policy
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('준비 중입니다')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.article_outlined),
-            title: const Text('오픈소스 라이선스'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              showLicensePage(
-                context: context,
-                applicationName: 'TripWallet',
-                applicationVersion: '1.0.0',
-              );
-            },
+          _buildSectionLabel(theme, '정보'),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              const ListTile(
+                leading: Icon(Icons.info),
+                title: Text('버전'),
+                subtitle: Text('1.0.0'),
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.policy),
+                title: const Text('개인정보 처리방침'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('준비 중입니다')),
+                  );
+                },
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.description),
+                title: const Text('오픈소스 라이선스'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  showLicensePage(
+                    context: context,
+                    applicationName: 'TripWallet',
+                    applicationVersion: '1.0.0',
+                  );
+                },
+              ),
+            ],
           ),
 
           // Footer
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'TripWallet',
+              'Made with ♥ by TripWallet',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: AppColors.textSecondary,
               ),
             ),
           ),
           const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+
+  Widget _buildSectionLabel(ThemeData theme, String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primary,
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({required List<Widget> children}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: AppConstants.cardShadow,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(children: children),
     );
   }
 
@@ -166,27 +202,5 @@ class SettingsScreen extends ConsumerWidget {
     if (selectedCurrency != null) {
       ref.read(defaultCurrencyProvider.notifier).setCurrency(selectedCurrency);
     }
-  }
-}
-
-/// Section header widget for grouped settings
-class _SectionHeader extends StatelessWidget {
-  final String title;
-
-  const _SectionHeader({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: AppColors.primary,
-        ),
-      ),
-    );
   }
 }

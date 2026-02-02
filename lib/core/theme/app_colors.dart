@@ -4,15 +4,16 @@ class AppColors {
   AppColors._();
 
   // Primary - Teal from Stitch
-  static const Color primary = Color(0xFF00897B);
+  static const Color primary = Color(0xFF008A7C);
   static const Color primaryLight = Color(0xFF4DB6AC);
-  static const Color primaryDark = Color(0xFF00695C);
+  static const Color primaryDark = Color(0xFF006D62);
   static const Color onPrimary = Color(0xFFFFFFFF);
 
   // Surface
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color background = Color(0xFFFAFAFA);
+  static const Color background = Color(0xFFF5F8F8);
   static const Color surfaceVariant = Color(0xFFF5F5F5);
+  static const Color surfaceTeal = Color(0xFFE6F4F3);
 
   // Trip Status Badges
   static const Color statusUpcoming = Color(0xFF2196F3);
@@ -20,15 +21,15 @@ class AppColors {
   static const Color statusCompleted = Color(0xFF9E9E9E);
 
   // Budget Status
-  static const Color budgetComfortable = Color(0xFF00897B);
+  static const Color budgetComfortable = Color(0xFF008A7C);
   static const Color budgetCaution = Color(0xFFFFA726);
   static const Color budgetWarning = Color(0xFFEF5350);
   static const Color budgetExceeded = Color(0xFFD32F2F);
 
   // Text
-  static const Color textPrimary = Color(0xFF212121);
-  static const Color textSecondary = Color(0xFF757575);
-  static const Color textHint = Color(0xFFBDBDBD);
+  static const Color textPrimary = Color(0xFF0C1D1B);
+  static const Color textSecondary = Color(0xFF4A5B59);
+  static const Color textHint = Color(0xFF5A7A77);
 
   // Expense Category colors
   static const Color categoryFood = Color(0xFFFF7043);

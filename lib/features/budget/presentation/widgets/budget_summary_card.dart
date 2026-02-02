@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/core/constants/app_constants.dart';
+import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/budget/domain/entities/budget_summary.dart';
-import 'package:trip_wallet/features/budget/presentation/widgets/circular_budget_progress.dart';
+import 'package:trip_wallet/features/budget/presentation/widgets/linear_budget_progress.dart';
 
 class BudgetSummaryCard extends StatelessWidget {
   final BudgetSummary budgetSummary;
@@ -18,70 +20,104 @@ class BudgetSummaryCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Card(
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        boxShadow: AppConstants.cardShadow,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            CircularBudgetProgress(
-              percentUsed: budgetSummary.percentUsed,
-              status: budgetSummary.status,
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          // Horizontal 3-column layout
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatColumn(
+                  context,
+                  label: '예산',
+                  amount: budgetSummary.totalBudget,
+                  textTheme: textTheme,
+                  colorScheme: colorScheme,
+                ),
+              ),
+              Container(
+                width: 1,
+                height: 40,
+                color: colorScheme.outlineVariant,
+              ),
+              Expanded(
+                child: _buildStatColumn(
+                  context,
+                  label: '사용',
+                  amount: budgetSummary.totalSpent,
+                  textTheme: textTheme,
+                  colorScheme: colorScheme,
+                ),
+              ),
+              Container(
+                width: 1,
+                height: 40,
+                color: colorScheme.outlineVariant,
+              ),
+              Expanded(
+                child: _buildStatColumn(
+                  context,
+                  label: '잔액',
+                  amount: budgetSummary.remaining,
+                  textTheme: textTheme,
+                  colorScheme: colorScheme,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          // Linear progress bar
+          LinearBudgetProgress(
+            percentUsed: budgetSummary.percentUsed,
+            status: budgetSummary.status,
+          ),
+          const SizedBox(height: 8),
+          // Percentage text
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              '${budgetSummary.percentUsed.toStringAsFixed(0)}% 사용됨',
+              style: textTheme.bodySmall?.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
-            const SizedBox(height: 24),
-            _buildStatRow(
-              context,
-              label: '예산',
-              amount: budgetSummary.totalBudget,
-              textTheme: textTheme,
-              colorScheme: colorScheme,
-            ),
-            const SizedBox(height: 12),
-            _buildStatRow(
-              context,
-              label: '사용',
-              amount: budgetSummary.totalSpent,
-              textTheme: textTheme,
-              colorScheme: colorScheme,
-            ),
-            const SizedBox(height: 12),
-            _buildStatRow(
-              context,
-              label: '잔액',
-              amount: budgetSummary.remaining,
-              textTheme: textTheme,
-              colorScheme: colorScheme,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildStatRow(
+  Widget _buildStatColumn(
     BuildContext context, {
     required String label,
     required double amount,
     required TextTheme textTheme,
     required ColorScheme colorScheme,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
         Text(
           label,
-          style: textTheme.bodyLarge?.copyWith(
+          style: textTheme.bodySmall?.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
         ),
+        const SizedBox(height: 4),
         Text(
           CurrencyFormatter.format(amount, currencyCode),
-          style: textTheme.bodyLarge?.copyWith(
+          style: textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w600,
             color: colorScheme.onSurface,
           ),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
