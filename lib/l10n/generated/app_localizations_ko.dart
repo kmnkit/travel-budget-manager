@@ -27,7 +27,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get add => '추가';
 
   @override
+  String get retry => '재시도';
+
+  @override
   String get settings => '설정';
+
+  @override
+  String get loading => '로딩 중';
 
   @override
   String get trips => '여행';
@@ -40,21 +46,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get statistics => '통계';
-
-  @override
-  String get budget => '예산';
-
-  @override
-  String get total => '합계';
-
-  @override
-  String get remaining => '잔액';
-
-  @override
-  String get noTrips => '여행을 추가해보세요!';
-
-  @override
-  String get noExpenses => '지출을 기록해보세요!';
 
   @override
   String get tripTitle => '여행 제목';
@@ -72,10 +63,79 @@ class AppLocalizationsKo extends AppLocalizations {
   String get endDate => '종료일';
 
   @override
+  String get addTrip => '여행 추가';
+
+  @override
+  String get editTrip => '여행 수정';
+
+  @override
+  String get deleteTrip => '여행 삭제';
+
+  @override
+  String get tripTitleHint => '예: 도쿄 여행';
+
+  @override
+  String get tripNotFound => '여행을 찾을 수 없습니다';
+
+  @override
+  String get tripLoadFailed => '여행 정보를 불러올 수 없습니다';
+
+  @override
+  String get tripCreateSuccess => '여행이 생성되었습니다';
+
+  @override
+  String tripCreateFailed(String error) {
+    return '여행 생성 실패: $error';
+  }
+
+  @override
+  String get tripUpdateSuccess => '여행이 수정되었습니다';
+
+  @override
+  String tripUpdateFailed(String error) {
+    return '여행 수정 실패: $error';
+  }
+
+  @override
+  String tripDeleteConfirm(String tripTitle) {
+    return '$tripTitle을(를) 삭제하시겠습니까?\n모든 지출 기록도 함께 삭제됩니다.';
+  }
+
+  @override
+  String get tripDeleteSuccess => '여행이 삭제되었습니다';
+
+  @override
+  String get tripDeleteFailed => '여행 삭제 실패';
+
+  @override
+  String get noTrips => '여행을 추가해보세요!';
+
+  @override
+  String get noTripsDescription => '새로운 여행을 계획하고 예산을 관리하세요';
+
+  @override
+  String get tripStatusUpcoming => '예정';
+
+  @override
+  String get tripStatusOngoing => '진행중';
+
+  @override
+  String get tripStatusCompleted => '완료';
+
+  @override
+  String get error => '오류';
+
+  @override
   String get amount => '금액';
 
   @override
   String get memo => '메모';
+
+  @override
+  String get memoOptional => '메모 (선택)';
+
+  @override
+  String get memoHint => '메모를 입력하세요';
 
   @override
   String get category => '카테고리';
@@ -87,43 +147,62 @@ class AppLocalizationsKo extends AppLocalizations {
   String get date => '날짜';
 
   @override
-  String get language => '언어';
+  String get addExpense => '지출 추가';
 
   @override
-  String get general => '일반';
+  String get editExpense => '지출 수정';
 
   @override
-  String get data => '데이터';
+  String get deleteExpense => '지출 삭제';
 
   @override
-  String get info => '정보';
+  String get noExpenses => '지출을 기록해보세요!';
 
   @override
-  String get version => '버전';
+  String get expenseLoadFailed => '지출 목록을 불러올 수 없습니다';
 
   @override
-  String get backup => '백업';
+  String get expenseListLoadFailed => '지출 목록을 불러올 수 없습니다';
 
   @override
-  String get restore => '복원';
+  String get expenseCreateSuccess => '지출이 추가되었습니다';
 
   @override
-  String get privacyPolicy => '개인정보 처리방침';
+  String expenseCreateFailed(String error) {
+    return '저장 실패: $error';
+  }
 
   @override
-  String get licenses => '오픈소스 라이선스';
+  String get expenseUpdateSuccess => '지출이 수정되었습니다';
 
   @override
-  String get confirmDelete => '정말 삭제하시겠습니까?';
+  String get expenseUpdateFailed => '지출 수정 실패';
 
   @override
-  String get tripStatusUpcoming => '예정';
+  String expenseDeleteConfirm(String item) {
+    return '$item을(를) 삭제하시겠습니까?';
+  }
 
   @override
-  String get tripStatusOngoing => '진행중';
+  String get expenseDeleteSuccess => '지출이 삭제되었습니다';
 
   @override
-  String get tripStatusCompleted => '완료';
+  String get expenseDeleteFailed => '지출 삭제 실패';
+
+  @override
+  String get categoryRequired => '카테고리를 선택해주세요';
+
+  @override
+  String get paymentMethodRequired => '지불수단을 선택해주세요';
+
+  @override
+  String get enterValidAmount => '올바른 금액을 입력해주세요';
+
+  @override
+  String get conversionInProgress => '환율 변환 중입니다. 잠시만 기다려주세요';
+
+  @override
+  String get noPaymentMethods => '지불수단이 없습니다. 먼저 지불수단을 추가해주세요.';
 
   @override
   String get categoryFood => '식비';
@@ -150,6 +229,74 @@ class AppLocalizationsKo extends AppLocalizations {
   String get categoryOther => '기타';
 
   @override
+  String get paymentMethods => '지불수단 관리';
+
+  @override
+  String get addPaymentMethod => '지불수단 추가';
+
+  @override
+  String get editPaymentMethod => '지불수단 수정';
+
+  @override
+  String get deletePaymentMethod => '지불수단 삭제';
+
+  @override
+  String get paymentMethodName => '지불수단 이름';
+
+  @override
+  String get defaultPayment => '기본';
+
+  @override
+  String get setAsDefault => '기본으로 설정';
+
+  @override
+  String get paymentMethodAdded => '지불수단이 추가되었습니다';
+
+  @override
+  String get paymentMethodUpdated => '지불수단이 수정되었습니다';
+
+  @override
+  String get paymentMethodDeleted => '지불수단이 삭제되었습니다';
+
+  @override
+  String paymentMethodDeleteConfirm(String name) {
+    return '$name을(를) 삭제하시겠습니까?';
+  }
+
+  @override
+  String paymentMethodSetDefault(String name) {
+    return '$name을(를) 기본 지불수단으로 설정했습니다';
+  }
+
+  @override
+  String paymentMethodAddFailed(String error) {
+    return '추가 실패: $error';
+  }
+
+  @override
+  String paymentMethodUpdateFailed(String error) {
+    return '수정 실패: $error';
+  }
+
+  @override
+  String paymentMethodDeleteFailed(String error) {
+    return '삭제 실패: $error';
+  }
+
+  @override
+  String paymentMethodSetDefaultFailed(String error) {
+    return '설정 실패: $error';
+  }
+
+  @override
+  String paymentMethodLoadFailed(String error) {
+    return '지불수단 로드 실패: $error';
+  }
+
+  @override
+  String get noPaymentMethodsAvailable => '지불수단이 없습니다';
+
+  @override
   String get paymentCash => '현금';
 
   @override
@@ -163,6 +310,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get paymentOther => '기타';
+
+  @override
+  String get budget => '예산';
+
+  @override
+  String get total => '합계';
+
+  @override
+  String get remaining => '잔액';
+
+  @override
+  String get used => '사용';
 
   @override
   String get budgetComfortable => '여유';
@@ -183,28 +342,56 @@ class AppLocalizationsKo extends AppLocalizations {
   String get manualRate => '수동';
 
   @override
+  String get refreshRate => '환율 새로고침';
+
+  @override
+  String get lastUpdated => '마지막 업데이트';
+
+  @override
+  String get noExchangeRates => '등록된 환율이 없습니다';
+
+  @override
+  String exchangeRateLoadFailed(String error) {
+    return '환율 정보를 불러올 수 없습니다\n$error';
+  }
+
+  @override
+  String get exchangeRateRefreshHint => '환율을 가져오려면 새로고침 버튼을 눌러주세요';
+
+  @override
+  String get exchangeRateLoading => '환율 정보를 불러오는 중...';
+
+  @override
   String get noData => '데이터가 없습니다';
 
   @override
-  String get addTrip => '여행 추가';
+  String get noExpenseData => '지출 데이터가 없습니다';
 
   @override
-  String get editTrip => '여행 수정';
+  String get noExpenseDataInPeriod => '선택한 기간에 지출 내역이 없습니다';
 
   @override
-  String get addExpense => '지출 추가';
+  String statisticsLoadFailed(String error) {
+    return '통계 데이터를 불러올 수 없습니다\n$error';
+  }
 
   @override
-  String get editExpense => '지출 수정';
+  String get statisticsCalculating => '통계를 계산하는 중...';
 
   @override
-  String get paymentMethods => '지불수단 관리';
+  String get periodAll => '전체';
 
   @override
-  String get addPaymentMethod => '지불수단 추가';
+  String get periodWeek => '이번 주';
 
   @override
-  String get defaultPayment => '기본';
+  String get periodMonth => '이번 달';
+
+  @override
+  String get periodCustom => '직접 설정';
+
+  @override
+  String get allCategories => '전체';
 
   @override
   String get sortByDate => '최신순';
@@ -213,16 +400,55 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sortByAmount => '금액순';
 
   @override
-  String get allCategories => '전체';
+  String get selectDefaultCurrency => '기본 통화 선택';
 
   @override
-  String get used => '사용';
+  String get language => '언어';
+
+  @override
+  String get languageKorean => '한국어';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get defaultCurrency => '기본 통화';
+
+  @override
+  String get general => '일반';
+
+  @override
+  String get data => '데이터';
+
+  @override
+  String get info => '정보';
+
+  @override
+  String get version => '버전';
+
+  @override
+  String get backup => '백업';
+
+  @override
+  String get restore => '복원';
+
+  @override
+  String get privacyPolicy => '개인정보 처리방침';
+
+  @override
+  String get licenses => '오픈소스 라이선스';
+
+  @override
+  String get comingSoon => '준비 중';
 
   @override
   String get validationTitleRequired => '제목을 입력해주세요';
 
   @override
   String get validationTitleTooLong => '제목은 100자 이하여야 합니다';
+
+  @override
+  String get validationBudgetRequired => '예산을 입력하세요';
 
   @override
   String get validationBudgetPositive => '예산은 0보다 커야 합니다';
@@ -240,8 +466,26 @@ class AppLocalizationsKo extends AppLocalizations {
   String get validationPaymentRequired => '지불수단을 선택해주세요';
 
   @override
+  String get enterTripTitle => '여행 제목을 입력하세요';
+
+  @override
+  String get enterBudget => '예산을 입력하세요';
+
+  @override
+  String get enterAmountGreaterThanZero => '0보다 큰 금액을 입력하세요';
+
+  @override
   String get networkError => '네트워크 오류가 발생했습니다';
 
   @override
   String get offlineMode => '오프라인';
+
+  @override
+  String get loadFailed => '로드 실패';
+
+  @override
+  String get saveFailed => '저장 실패';
+
+  @override
+  String get unknownError => '알 수 없는 오류가 발생했습니다';
 }
