@@ -37,7 +37,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/trip/:tripId',
         name: 'tripDetail',
         builder: (context, state) {
-          final tripId = int.parse(state.pathParameters['tripId']!);
+          final tripId = int.tryParse(state.pathParameters['tripId'] ?? '');
+          if (tripId == null) {
+            return const HomeScreen();
+          }
           return _PlaceholderScreen(title: 'Trip $tripId');
         },
         routes: [
@@ -45,7 +48,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'edit',
             name: 'tripEdit',
             builder: (context, state) {
-              final tripId = int.parse(state.pathParameters['tripId']!);
+              final tripId = int.tryParse(state.pathParameters['tripId'] ?? '');
+              if (tripId == null) {
+                return const HomeScreen();
+              }
               return TripEditScreen(tripId: tripId);
             },
           ),
@@ -53,7 +59,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'expense/create',
             name: 'expenseCreate',
             builder: (context, state) {
-              final tripId = int.parse(state.pathParameters['tripId']!);
+              final tripId = int.tryParse(state.pathParameters['tripId'] ?? '');
+              if (tripId == null) {
+                return const HomeScreen();
+              }
               return ExpenseFormScreen(tripId: tripId);
             },
           ),
@@ -61,8 +70,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'expense/:expenseId',
             name: 'expenseEdit',
             builder: (context, state) {
-              final tripId = int.parse(state.pathParameters['tripId']!);
-              final expenseId = int.parse(state.pathParameters['expenseId']!);
+              final tripId = int.tryParse(state.pathParameters['tripId'] ?? '');
+              final expenseId = int.tryParse(state.pathParameters['expenseId'] ?? '');
+              if (tripId == null || expenseId == null) {
+                return const HomeScreen();
+              }
               return ExpenseFormScreen(tripId: tripId, expenseId: expenseId);
             },
           ),
