@@ -1,0 +1,55 @@
+# Flutter/Dart build artifacts
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Generated code
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.mocks.dart
+.dart_tool/
+
+# Platform-specific generated files
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/App.framework
+ios/Runner.xcworkspace/xcshareddata/xcschemes/
+macos/Flutter/GeneratedPluginRegistrant.swift
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies lock (large, not useful for context)
+pubspec.lock
+
+# Coverage & test output
+coverage/
+test/.test_runner.dart
+
+# OMC state
+.omc/state/
+.omc/logs/
