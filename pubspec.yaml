@@ -1,0 +1,62 @@
+name: trip_wallet
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.8
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.1.0
+  riverpod_annotation: ^4.0.0
+  drift: ^2.30.1
+  drift_flutter: ^0.2.8
+  go_router: ^17.0.1
+  intl: ^0.20.2
+  flutter_localizations:
+    sdk: flutter
+  dio: ^5.7.0
+  google_fonts: ^8.0.0
+  fl_chart: ^1.1.1
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  uuid: ^4.5.1
+  shared_preferences: ^2.3.4
+  connectivity_plus: ^7.0.0
+  path_provider: ^2.1.5
+  sqlite3_flutter_libs: ^0.5.28
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  drift_dev: ^2.30.1
+  build_runner: ^2.4.14
+  freezed: ^3.2.3
+  json_serializable: ^6.9.4
+  riverpod_generator: ^4.0.0+1
+  mocktail: ^1.0.4
+  lints: ^6.1.0
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  generate: true
