@@ -138,7 +138,8 @@ Stitch 디자인 도구(Project ID: `1536195772045761405`)와 정밀 정렬된 U
 | **폰트** | Lexend (Google Fonts) |
 | **Design System** | Material Design 3 |
 | **카드 그림자** | Custom BoxShadow (elevation 대신) |
-| **예산 카드** | 수평 3열 레이아웃 + LinearProgress |
+| **홈 화면** | Total Balance 배너 + 필터 칩 (All/Active/Past) |
+| **예산 카드** | 수직 통계 + 원형 도넛 차트 레이아웃 |
 | **설정 화면** | 카드 기반 섹션 그룹핑 |
 
 ## 프로젝트 구조
@@ -344,7 +345,7 @@ registerFallbackValue(AsyncValue.data([]));
 
 ### 테스트 현황
 
-- **전체 테스트**: 28개 Dart 파일
+- **전체 테스트**: 206개 (28개 Dart 파일)
 - **Unit Tests**: 도메인, 데이터, 프로바이더
 - **Widget Tests**: 커스텀 위젯 및 UI 로직
 - **Integration Tests**: 4개 파일 (엔드투엔드)
