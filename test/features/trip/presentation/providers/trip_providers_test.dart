@@ -179,7 +179,7 @@ void main() {
       addTearDown(container.dispose);
 
       // Subscribe to trigger the provider
-      container.listen(tripListProvider, (_, __) {});
+      container.listen(tripListProvider, (_, _) {});
 
       // Wait for error to propagate
       await Future<void>.delayed(const Duration(milliseconds: 100));

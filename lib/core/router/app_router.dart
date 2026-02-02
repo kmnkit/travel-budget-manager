@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trip_wallet/features/trip/presentation/screens/home_screen.dart';
+import 'package:trip_wallet/features/trip/presentation/screens/trip_create_screen.dart';
+import 'package:trip_wallet/features/trip/presentation/screens/trip_edit_screen.dart';
+import 'package:trip_wallet/features/expense/presentation/screens/expense_form_screen.dart';
+import 'package:trip_wallet/features/payment_method/presentation/screens/payment_method_screen.dart';
+import 'package:trip_wallet/features/settings/presentation/screens/settings_screen.dart';
 
 // Placeholder screens for compilation - will be replaced by actual screens
 class _PlaceholderScreen extends StatelessWidget {
@@ -20,12 +26,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         name: 'home',
-        builder: (context, state) => const _PlaceholderScreen(title: 'Home'),
+        builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
         path: '/trip/create',
         name: 'tripCreate',
-        builder: (context, state) => const _PlaceholderScreen(title: 'Create Trip'),
+        builder: (context, state) => const TripCreateScreen(),
       ),
       GoRoute(
         path: '/trip/:tripId',
@@ -40,33 +46,37 @@ final routerProvider = Provider<GoRouter>((ref) {
             name: 'tripEdit',
             builder: (context, state) {
               final tripId = int.parse(state.pathParameters['tripId']!);
-              return _PlaceholderScreen(title: 'Edit Trip $tripId');
+              return TripEditScreen(tripId: tripId);
             },
           ),
           GoRoute(
             path: 'expense/create',
             name: 'expenseCreate',
-            builder: (context, state) => const _PlaceholderScreen(title: 'Create Expense'),
+            builder: (context, state) {
+              final tripId = int.parse(state.pathParameters['tripId']!);
+              return ExpenseFormScreen(tripId: tripId);
+            },
           ),
           GoRoute(
             path: 'expense/:expenseId',
             name: 'expenseEdit',
             builder: (context, state) {
+              final tripId = int.parse(state.pathParameters['tripId']!);
               final expenseId = int.parse(state.pathParameters['expenseId']!);
-              return _PlaceholderScreen(title: 'Edit Expense $expenseId');
+              return ExpenseFormScreen(tripId: tripId, expenseId: expenseId);
             },
           ),
           GoRoute(
             path: 'payment-methods',
             name: 'paymentMethods',
-            builder: (context, state) => const _PlaceholderScreen(title: 'Payment Methods'),
+            builder: (context, state) => const PaymentMethodScreen(),
           ),
         ],
       ),
       GoRoute(
         path: '/settings',
         name: 'settings',
-        builder: (context, state) => const _PlaceholderScreen(title: 'Settings'),
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

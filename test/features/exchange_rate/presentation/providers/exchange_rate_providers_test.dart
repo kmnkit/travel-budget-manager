@@ -52,7 +52,7 @@ void main() {
       addTearDown(container.dispose);
 
       // Subscribe to trigger the stream provider
-      container.listen(tripExchangeRatesProvider(tripId), (_, __) {});
+      container.listen(tripExchangeRatesProvider(tripId), (_, _) {});
 
       // Wait for stream to emit
       await Future<void>.delayed(const Duration(milliseconds: 100));
