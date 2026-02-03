@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
@@ -33,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () => context.push('/settings'),
-            tooltip: 'Settings',
+            tooltip: context.l10n.settings,
           ),
         ],
       ),
@@ -101,7 +102,7 @@ class _TotalBalanceBanner extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'TOTAL BALANCE',
+              context.l10n.totalBalance,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Colors.white70,
                     letterSpacing: 1.2,
@@ -150,8 +151,9 @@ class _FilterChips extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: ChoiceChip(
-              label: Text(_filterLabel(filter)),
+              label: Text(_filterLabel(context, filter)),
               selected: isSelected,
+              showCheckmark: false,
               onSelected: (_) =>
                   ref.read(tripFilterProvider.notifier).setFilter(filter),
               selectedColor: AppColors.primary,
@@ -173,14 +175,14 @@ class _FilterChips extends ConsumerWidget {
     );
   }
 
-  String _filterLabel(TripFilter filter) {
+  String _filterLabel(BuildContext context, TripFilter filter) {
     switch (filter) {
       case TripFilter.all:
-        return 'All Trips';
+        return context.l10n.filterAllTrips;
       case TripFilter.active:
-        return 'Active';
+        return context.l10n.filterActive;
       case TripFilter.past:
-        return 'Past';
+        return context.l10n.filterPast;
     }
   }
 }
