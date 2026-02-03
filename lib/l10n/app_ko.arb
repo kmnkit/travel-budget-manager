@@ -244,6 +244,10 @@
   "sortByDate": "최신순",
   "sortByAmount": "금액순",
   "selectDefaultCurrency": "기본 통화 선택",
+  "totalBalance": "총 잔액",
+  "filterAllTrips": "모든 여행",
+  "filterActive": "진행중",
+  "filterPast": "완료",
 
   "@_SETTINGS": {},
   "language": "언어",
