@@ -1003,6 +1003,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An unknown error occurred'**
   String get unknownError;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to TripWallet'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your smart travel companion for managing expenses across multiple currencies'**
+  String get onboardingWelcomeDescription;
+
+  /// No description provided for @onboardingFeaturesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Your Expenses'**
+  String get onboardingFeaturesTitle;
+
+  /// No description provided for @onboardingFeaturesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Record expenses in any currency with automatic conversion. Categorize by type and payment method.'**
+  String get onboardingFeaturesDescription;
+
+  /// No description provided for @onboardingGetStartedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Start?'**
+  String get onboardingGetStartedTitle;
+
+  /// No description provided for @onboardingGetStartedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first trip and start tracking your travel budget today!'**
+  String get onboardingGetStartedDescription;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingGetStarted;
 }
 
 class _AppLocalizationsDelegate

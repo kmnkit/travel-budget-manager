@@ -278,5 +278,16 @@
   "offlineMode": "Offline",
   "loadFailed": "Load failed",
   "saveFailed": "Save failed",
-  "unknownError": "An unknown error occurred"
+  "unknownError": "An unknown error occurred",
+
+  "@_ONBOARDING": {},
+  "onboardingWelcomeTitle": "Welcome to TripWallet",
+  "onboardingWelcomeDescription": "Your smart travel companion for managing expenses across multiple currencies",
+  "onboardingFeaturesTitle": "Track Your Expenses",
+  "onboardingFeaturesDescription": "Record expenses in any currency with automatic conversion. Categorize by type and payment method.",
+  "onboardingGetStartedTitle": "Ready to Start?",
+  "onboardingGetStartedDescription": "Create your first trip and start tracking your travel budget today!",
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingGetStarted": "Get Started"
 }

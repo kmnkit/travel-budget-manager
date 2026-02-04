@@ -492,4 +492,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unknownError => 'An unknown error occurred';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to TripWallet';
+
+  @override
+  String get onboardingWelcomeDescription =>
+      'Your smart travel companion for managing expenses across multiple currencies';
+
+  @override
+  String get onboardingFeaturesTitle => 'Track Your Expenses';
+
+  @override
+  String get onboardingFeaturesDescription =>
+      'Record expenses in any currency with automatic conversion. Categorize by type and payment method.';
+
+  @override
+  String get onboardingGetStartedTitle => 'Ready to Start?';
+
+  @override
+  String get onboardingGetStartedDescription =>
+      'Create your first trip and start tracking your travel budget today!';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingGetStarted => 'Get Started';
 }

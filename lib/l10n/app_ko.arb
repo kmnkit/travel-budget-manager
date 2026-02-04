@@ -278,5 +278,16 @@
   "offlineMode": "오프라인",
   "loadFailed": "로드 실패",
   "saveFailed": "저장 실패",
-  "unknownError": "알 수 없는 오류가 발생했습니다"
+  "unknownError": "알 수 없는 오류가 발생했습니다",
+
+  "@_ONBOARDING": {},
+  "onboardingWelcomeTitle": "트립월렛에 오신 것을 환영합니다",
+  "onboardingWelcomeDescription": "다양한 통화로 여행 경비를 관리하는 스마트한 여행 동반자",
+  "onboardingFeaturesTitle": "지출을 기록하세요",
+  "onboardingFeaturesDescription": "어떤 통화로든 지출을 기록하고 자동으로 환산하세요. 유형과 지불수단별로 분류할 수 있습니다.",
+  "onboardingGetStartedTitle": "시작할 준비가 되셨나요?",
+  "onboardingGetStartedDescription": "첫 번째 여행을 만들고 오늘부터 여행 예산을 관리해보세요!",
+  "onboardingSkip": "건너뛰기",
+  "onboardingNext": "다음",
+  "onboardingGetStarted": "시작하기"
 }
