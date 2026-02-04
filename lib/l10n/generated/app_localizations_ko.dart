@@ -403,6 +403,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get selectDefaultCurrency => '기본 통화 선택';
 
   @override
+  String get totalBalance => '총 잔액';
+
+  @override
+  String get filterAllTrips => '모든 여행';
+
+  @override
+  String get filterActive => '진행중';
+
+  @override
+  String get filterPast => '완료';
+
+  @override
   String get language => '언어';
 
   @override

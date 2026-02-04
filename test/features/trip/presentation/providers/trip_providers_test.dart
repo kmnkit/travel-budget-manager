@@ -346,6 +346,196 @@ void main() {
       verify(() => mockRepository.deleteTrip(1)).called(1);
     });
   });
+
+  group('TripFilter enum', () {
+    test('has all expected values', () {
+      expect(TripFilter.values, hasLength(3));
+      expect(TripFilter.values, contains(TripFilter.all));
+      expect(TripFilter.values, contains(TripFilter.active));
+      expect(TripFilter.values, contains(TripFilter.past));
+    });
+  });
+
+  group('tripFilterProvider', () {
+    test('defaults to TripFilter.all', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      expect(container.read(tripFilterProvider), equals(TripFilter.all));
+    });
+
+    test('can be updated', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      container.read(tripFilterProvider.notifier).setFilter(TripFilter.active);
+      expect(container.read(tripFilterProvider), equals(TripFilter.active));
+
+      container.read(tripFilterProvider.notifier).setFilter(TripFilter.past);
+      expect(container.read(tripFilterProvider), equals(TripFilter.past));
+    });
+  });
+
+  group('filteredTripListProvider', () {
+    test('returns all trips when filter is all', () async {
+      final now = DateTime.now();
+      final trips = [
+        Trip(
+          id: 1,
+          title: 'Ongoing Trip',
+          baseCurrency: 'KRW',
+          budget: 500000,
+          startDate: now.subtract(const Duration(days: 2)),
+          endDate: now.add(const Duration(days: 5)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+        Trip(
+          id: 2,
+          title: 'Past Trip',
+          baseCurrency: 'USD',
+          budget: 1000,
+          startDate: now.subtract(const Duration(days: 30)),
+          endDate: now.subtract(const Duration(days: 20)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ];
+
+      when(() => mockDataSource.watchAllTrips())
+          .thenAnswer((_) => Stream.value(trips));
+
+      final container = ProviderContainer(
+        overrides: [
+          tripLocalDataSourceProvider.overrideWithValue(mockDataSource),
+          tripFilterProvider.overrideWith(() => TripFilterNotifier()),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Wait for stream data
+      container.listen(tripListProvider, (_, _) {});
+      await container.read(tripListProvider.future);
+
+      final result = container.read(filteredTripListProvider);
+      expect(result.value, hasLength(2));
+    });
+
+    test('returns only ongoing trips when filter is active', () async {
+      final now = DateTime.now();
+      final trips = [
+        Trip(
+          id: 1,
+          title: 'Ongoing Trip',
+          baseCurrency: 'KRW',
+          budget: 500000,
+          startDate: now.subtract(const Duration(days: 2)),
+          endDate: now.add(const Duration(days: 5)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+        Trip(
+          id: 2,
+          title: 'Past Trip',
+          baseCurrency: 'USD',
+          budget: 1000,
+          startDate: now.subtract(const Duration(days: 30)),
+          endDate: now.subtract(const Duration(days: 20)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ];
+
+      when(() => mockDataSource.watchAllTrips())
+          .thenAnswer((_) => Stream.value(trips));
+
+      final container = ProviderContainer(
+        overrides: [
+          tripLocalDataSourceProvider.overrideWithValue(mockDataSource),
+          tripFilterProvider.overrideWith(() {
+            final notifier = TripFilterNotifier();
+            return notifier;
+          }),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Set filter to active after container is created
+      container.read(tripFilterProvider.notifier).setFilter(TripFilter.active);
+
+      container.listen(tripListProvider, (_, _) {});
+      await container.read(tripListProvider.future);
+
+      final result = container.read(filteredTripListProvider);
+      expect(result.value, isNotNull);
+      expect(result.value!.every((t) => t.status == TripStatus.ongoing), isTrue);
+    });
+
+    test('returns only completed trips when filter is past', () async {
+      final now = DateTime.now();
+      final trips = [
+        Trip(
+          id: 1,
+          title: 'Ongoing Trip',
+          baseCurrency: 'KRW',
+          budget: 500000,
+          startDate: now.subtract(const Duration(days: 2)),
+          endDate: now.add(const Duration(days: 5)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+        Trip(
+          id: 2,
+          title: 'Past Trip',
+          baseCurrency: 'USD',
+          budget: 1000,
+          startDate: now.subtract(const Duration(days: 30)),
+          endDate: now.subtract(const Duration(days: 20)),
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ];
+
+      when(() => mockDataSource.watchAllTrips())
+          .thenAnswer((_) => Stream.value(trips));
+
+      final container = ProviderContainer(
+        overrides: [
+          tripLocalDataSourceProvider.overrideWithValue(mockDataSource),
+          tripFilterProvider.overrideWith(() {
+            final notifier = TripFilterNotifier();
+            return notifier;
+          }),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Set filter to past after container is created
+      container.read(tripFilterProvider.notifier).setFilter(TripFilter.past);
+
+      container.listen(tripListProvider, (_, _) {});
+      await container.read(tripListProvider.future);
+
+      final result = container.read(filteredTripListProvider);
+      expect(result.value, isNotNull);
+      expect(result.value!.every((t) => t.status == TripStatus.completed), isTrue);
+    });
+
+    test('returns loading when trips are loading', () {
+      final container = ProviderContainer(
+        overrides: [
+          tripLocalDataSourceProvider.overrideWithValue(mockDataSource),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Don't wait for stream - should be loading
+      container.listen(tripListProvider, (_, _) {});
+
+      final result = container.read(filteredTripListProvider);
+      expect(result.isLoading, isTrue);
+    });
+  });
 }
 
 class Listener<T> extends Mock {

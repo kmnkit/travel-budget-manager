@@ -407,6 +407,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectDefaultCurrency => 'Select Default Currency';
 
   @override
+  String get totalBalance => 'TOTAL BALANCE';
+
+  @override
+  String get filterAllTrips => 'All Trips';
+
+  @override
+  String get filterActive => 'Active';
+
+  @override
+  String get filterPast => 'Past';
+
+  @override
   String get language => 'Language';
 
   @override

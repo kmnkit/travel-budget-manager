@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   AppConstants._();
 
@@ -9,4 +11,29 @@ class AppConstants {
   static const Duration rateCacheDuration = Duration(hours: 24);
   static const String exchangeRateApiBaseUrl = 'https://open.er-api.com/v6/latest';
   static const String exchangeRateApiFallbackUrl = 'https://api.exchangerate-api.com/v4/latest';
+
+  // Stitch Design Shadows
+  static const List<BoxShadow> cardShadow = [
+    BoxShadow(
+      offset: Offset(0, 2),
+      blurRadius: 8,
+      color: Color(0x0D000000),
+    ),
+  ];
+
+  static const List<BoxShadow> cardHoverShadow = [
+    BoxShadow(
+      offset: Offset(0, 4),
+      blurRadius: 12,
+      color: Color(0x14000000),
+    ),
+  ];
+
+  static const List<BoxShadow> fabShadow = [
+    BoxShadow(
+      offset: Offset(0, 4),
+      blurRadius: 16,
+      color: Color(0x66008A7C),
+    ),
+  ];
 }

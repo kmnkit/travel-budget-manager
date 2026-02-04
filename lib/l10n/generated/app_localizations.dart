@@ -830,6 +830,30 @@ abstract class AppLocalizations {
   /// **'Select Default Currency'**
   String get selectDefaultCurrency;
 
+  /// No description provided for @totalBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL BALANCE'**
+  String get totalBalance;
+
+  /// No description provided for @filterAllTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'All Trips'**
+  String get filterAllTrips;
+
+  /// No description provided for @filterActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get filterActive;
+
+  /// No description provided for @filterPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get filterPast;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:

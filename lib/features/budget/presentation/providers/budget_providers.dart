@@ -63,3 +63,21 @@ final budgetSummaryProvider = FutureProvider.family<BudgetSummary, int>((ref, tr
   final useCase = ref.watch(getBudgetSummaryProvider);
   return useCase(tripId);
 });
+
+// ============================================================================
+// Total Balance Provider
+// ============================================================================
+
+/// Provides total balance across all trips (simple budget sum)
+///
+/// Uses the first trip's baseCurrency for display. Falls back to 'KRW'.
+/// Note: Multi-currency conversion is out of scope; this is a simple sum.
+final totalBalanceProvider = FutureProvider<({double total, String currency})>((ref) async {
+  final trips = await ref.watch(tripListProvider.future);
+  double total = 0;
+  for (final trip in trips) {
+    total += trip.budget;
+  }
+  final currency = trips.isNotEmpty ? trips.first.baseCurrency : 'KRW';
+  return (total: total, currency: currency);
+});

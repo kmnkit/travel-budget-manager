@@ -149,3 +149,38 @@ class TripNotifier extends Notifier<void> {
     ref.invalidate(tripDetailProvider(id));
   }
 }
+
+// ============================================================================
+// Filter Providers
+// ============================================================================
+
+/// Trip filter options for the home screen
+enum TripFilter { all, active, past }
+
+/// Notifier for the currently selected trip filter
+class TripFilterNotifier extends Notifier<TripFilter> {
+  @override
+  TripFilter build() => TripFilter.all;
+
+  void setFilter(TripFilter filter) {
+    state = filter;
+  }
+}
+
+/// Holds the currently selected trip filter
+final tripFilterProvider = NotifierProvider<TripFilterNotifier, TripFilter>(
+  TripFilterNotifier.new,
+);
+
+/// Provides filtered trip list based on selected filter
+final filteredTripListProvider = Provider<AsyncValue<List<Trip>>>((ref) {
+  final filter = ref.watch(tripFilterProvider);
+  final tripsAsync = ref.watch(tripListProvider);
+  return tripsAsync.whenData((trips) {
+    return switch (filter) {
+      TripFilter.all => trips,
+      TripFilter.active => trips.where((t) => t.status == TripStatus.ongoing).toList(),
+      TripFilter.past => trips.where((t) => t.status == TripStatus.completed).toList(),
+    };
+  });
+});

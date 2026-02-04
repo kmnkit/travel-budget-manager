@@ -70,18 +70,10 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
           appBar: AppBar(
             title: Text(trip.title),
             actions: [
-              PopupMenuButton<String>(
-                onSelected: (value) => _handleMenuAction(value, trip),
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value: 'edit',
-                    child: Text('수정'),
-                  ),
-                  const PopupMenuItem(
-                    value: 'delete',
-                    child: Text('삭제'),
-                  ),
-                ],
+              IconButton(
+                icon: const Icon(Icons.edit),
+                tooltip: '수정',
+                onPressed: () => context.go('/trip/${widget.tripId}/edit'),
               ),
             ],
           ),
@@ -195,44 +187,6 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
         ],
       ),
     );
-  }
-
-  void _handleMenuAction(String action, Trip trip) {
-    switch (action) {
-      case 'edit':
-        context.go('/trip/${widget.tripId}/edit');
-        break;
-      case 'delete':
-        _showDeleteConfirmation(trip);
-        break;
-    }
-  }
-
-  Future<void> _showDeleteConfirmation(Trip trip) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('여행 삭제'),
-        content: Text('${trip.title}을(를) 삭제하시겠습니까?\n모든 지출 기록도 함께 삭제됩니다.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('취소'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('삭제'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true && mounted) {
-      await ref.read(tripNotifierProvider.notifier).deleteTrip(trip.id);
-      if (mounted) {
-        context.go('/');
-      }
-    }
   }
 
   _StatusInfo _getStatusInfo(TripStatus status) {

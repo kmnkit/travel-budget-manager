@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:trip_wallet/core/constants/app_constants.dart';
 import 'package:trip_wallet/core/constants/currency_constants.dart';
+import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 
-/// Settings screen for app configuration.
-///
-/// Features:
-/// - Language toggle (Korean/English)
-/// - Default currency selector
-/// - Backup/Restore (disabled for now)
-/// - App info (version, privacy policy, licenses)
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -22,99 +17,118 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('설정'),
+        title: Text(context.l10n.settings),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(16),
         children: [
           // General section
-          _SectionHeader(title: '일반'),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('언어'),
-            subtitle: Text(
-              locale.languageCode == 'ko' ? '한국어' : 'English',
-            ),
-            trailing: Switch(
-              value: locale.languageCode == 'en',
-              onChanged: (value) {
-                final newLocale = value ? const Locale('en') : const Locale('ko');
-                ref.read(localeProvider.notifier).setLocale(newLocale);
-              },
-              activeTrackColor: AppColors.primary,
-            ),
-            onTap: () {
-              final currentIsEn = locale.languageCode == 'en';
-              final newLocale = currentIsEn ? const Locale('ko') : const Locale('en');
-              ref.read(localeProvider.notifier).setLocale(newLocale);
-            },
+          _buildSectionLabel(theme, context.l10n.general),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: Text(context.l10n.language),
+                subtitle: Text(
+                  locale.languageCode == 'ko' ? context.l10n.languageKorean : context.l10n.languageEnglish,
+                ),
+                trailing: Switch(
+                  value: locale.languageCode == 'en',
+                  onChanged: (value) {
+                    final newLocale = value ? const Locale('en') : const Locale('ko');
+                    ref.read(localeProvider.notifier).setLocale(newLocale);
+                  },
+                  activeTrackColor: AppColors.primary,
+                ),
+                onTap: () {
+                  final currentIsEn = locale.languageCode == 'en';
+                  final newLocale = currentIsEn ? const Locale('ko') : const Locale('en');
+                  ref.read(localeProvider.notifier).setLocale(newLocale);
+                },
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.currency_exchange),
+                title: Text(context.l10n.defaultCurrency),
+                subtitle: Text(
+                  _currencyName(SupportedCurrency.fromCode(defaultCurrency), locale),
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showCurrencyPicker(context, ref, defaultCurrency, locale),
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.attach_money),
-            title: const Text('기본 통화'),
-            subtitle: Text(
-              SupportedCurrency.fromCode(defaultCurrency).nameKo,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showCurrencyPicker(context, ref, defaultCurrency),
-          ),
-          const Divider(),
+          const SizedBox(height: 24),
 
           // Data section
-          _SectionHeader(title: '데이터'),
-          ListTile(
-            leading: const Icon(Icons.backup),
-            title: const Text('백업'),
-            subtitle: const Text('준비 중'),
-            enabled: false,
-            onTap: () {},
+          _buildSectionLabel(theme, context.l10n.data),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.cloud_upload),
+                title: Text(context.l10n.backup),
+                subtitle: Text(context.l10n.comingSoon),
+                enabled: false,
+                onTap: () {},
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.cloud_download),
+                title: Text(context.l10n.restore),
+                subtitle: Text(context.l10n.comingSoon),
+                enabled: false,
+                onTap: () {},
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.restore),
-            title: const Text('복원'),
-            subtitle: const Text('준비 중'),
-            enabled: false,
-            onTap: () {},
-          ),
-          const Divider(),
+          const SizedBox(height: 24),
 
           // Info section
-          _SectionHeader(title: '정보'),
-          const ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text('버전'),
-            subtitle: Text('1.0.0'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('개인정보 처리방침'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              // TODO: Open privacy policy
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('준비 중입니다')),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.article_outlined),
-            title: const Text('오픈소스 라이선스'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              showLicensePage(
-                context: context,
-                applicationName: 'TripWallet',
-                applicationVersion: '1.0.0',
-              );
-            },
+          _buildSectionLabel(theme, context.l10n.info),
+          const SizedBox(height: 8),
+          _buildSectionCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.info),
+                title: Text(context.l10n.version),
+                subtitle: const Text('1.0.0'),
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.policy),
+                title: Text(context.l10n.privacyPolicy),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(context.l10n.comingSoon)),
+                  );
+                },
+              ),
+              const Divider(height: 1, indent: 56),
+              ListTile(
+                leading: const Icon(Icons.description),
+                title: Text(context.l10n.licenses),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  showLicensePage(
+                    context: context,
+                    applicationName: 'TripWallet',
+                    applicationVersion: '1.0.0',
+                  );
+                },
+              ),
+            ],
           ),
 
           // Footer
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'TripWallet',
+              'Made with ♥ by TripWallet',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: AppColors.textSecondary,
               ),
             ),
           ),
@@ -124,15 +138,43 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  Widget _buildSectionLabel(ThemeData theme, String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primary,
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({required List<Widget> children}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: AppConstants.cardShadow,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(children: children),
+    );
+  }
+
+  String _currencyName(SupportedCurrency currency, Locale locale) {
+    return locale.languageCode == 'ko' ? currency.nameKo : currency.nameEn;
+  }
+
   Future<void> _showCurrencyPicker(
     BuildContext context,
     WidgetRef ref,
     String currentCurrency,
+    Locale locale,
   ) async {
     final selectedCurrency = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('기본 통화 선택'),
+        title: Text(context.l10n.selectDefaultCurrency),
         content: SizedBox(
           width: double.maxFinite,
           child: ListView.builder(
@@ -143,7 +185,7 @@ class SettingsScreen extends ConsumerWidget {
               final isSelected = currency.code == currentCurrency;
 
               return ListTile(
-                title: Text(currency.nameKo),
+                title: Text(_currencyName(currency, locale)),
                 subtitle: Text('${currency.code} (${currency.symbol})'),
                 trailing: isSelected
                     ? Icon(Icons.check, color: AppColors.primary)
@@ -157,7 +199,7 @@ class SettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('취소'),
+            child: Text(context.l10n.cancel),
           ),
         ],
       ),
@@ -166,27 +208,5 @@ class SettingsScreen extends ConsumerWidget {
     if (selectedCurrency != null) {
       ref.read(defaultCurrencyProvider.notifier).setCurrency(selectedCurrency);
     }
-  }
-}
-
-/// Section header widget for grouped settings
-class _SectionHeader extends StatelessWidget {
-  final String title;
-
-  const _SectionHeader({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: AppColors.primary,
-        ),
-      ),
-    );
   }
 }
