@@ -1,0 +1,6 @@
+# Pluginfile for Fastlane
+# Learn more: https://docs.fastlane.tools/plugins/available-plugins
+
+# Uncomment plugins as needed:
+# gem 'fastlane-plugin-firebase_app_distribution'
+# gem 'fastlane-plugin-versioning'

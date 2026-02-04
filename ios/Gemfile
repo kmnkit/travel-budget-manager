@@ -1,0 +1,7 @@
+# Gemfile for TripWallet iOS
+# Run: bundle install
+
+source "https://rubygems.org"
+
+gem "fastlane"
+gem "cocoapods"
