@@ -1,0 +1,32 @@
+Trip Wallet is a smart expense tracker designed for travelers.
+
+KEY FEATURES:
+
+• Multi-Currency Support
+Track expenses in 7 major currencies (KRW, USD, EUR, JPY, GBP, AUD, CAD) with automatic conversion.
+
+• Real-Time Exchange Rates
+Get up-to-date exchange rates automatically, or set custom rates for your trip.
+
+• Smart Budget Tracking
+Set budgets for each trip and monitor your spending with visual progress indicators.
+
+• Expense Categories
+Organize expenses into 8 categories: Food, Transportation, Accommodation, Entertainment, Shopping, Activities, Communication, and Miscellaneous.
+
+• Multiple Payment Methods
+Track spending across Cash, Credit Card, Debit Card, Mobile Payment, and more.
+
+• Visual Statistics
+View your spending patterns with beautiful pie charts and bar graphs by category and date.
+
+• Dual Currency Display
+See amounts in both original currency and your base currency at a glance.
+
+• Offline First
+All data is stored locally on your device. No account required, no data uploaded to servers.
+
+• Bilingual Support
+Full support for English and Korean languages.
+
+Start your next trip with Trip Wallet and take control of your travel budget!
