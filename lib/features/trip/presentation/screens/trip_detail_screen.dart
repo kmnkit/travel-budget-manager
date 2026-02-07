@@ -75,7 +75,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
               IconButton(
                 icon: const Icon(Icons.edit),
                 tooltip: '수정',
-                onPressed: () => context.go('/trip/${widget.tripId}/edit'),
+                onPressed: () => context.push('/trip/${widget.tripId}/edit'),
               ),
             ],
           ),
@@ -134,7 +134,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
           ),
           floatingActionButton: _tabController.index == 0
               ? FloatingActionButton(
-                  onPressed: () => context.go('/trip/${widget.tripId}/expense/create'),
+                  onPressed: () => context.push('/trip/${widget.tripId}/expense/create'),
                   child: const Icon(Icons.add),
                 )
               : null,

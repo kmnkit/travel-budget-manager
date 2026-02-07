@@ -33,7 +33,7 @@ class TripCard extends ConsumerWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
-          onTap: () => context.go('/trip/${trip.id}'),
+          onTap: () => context.push('/trip/${trip.id}'),
           borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(16),
