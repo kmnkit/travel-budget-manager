@@ -1399,6 +1399,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get onboardingGetStarted;
+
+  /// No description provided for @consentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Data Protection'**
+  String get consentTitle;
+
+  /// No description provided for @consentDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.'**
+  String get consentDescription;
+
+  /// No description provided for @consentAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'I Accept'**
+  String get consentAccept;
+
+  /// No description provided for @consentDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'I Decline'**
+  String get consentDecline;
+
+  /// No description provided for @consentViewFullPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'View Full Privacy Policy'**
+  String get consentViewFullPolicy;
+
+  /// No description provided for @consentDeclineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Consent Required'**
+  String get consentDeclineTitle;
+
+  /// No description provided for @consentDeclineMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.'**
+  String get consentDeclineMessage;
+
+  /// No description provided for @consentDeclineUnderstand.
+  ///
+  /// In en, this message translates to:
+  /// **'I Understand'**
+  String get consentDeclineUnderstand;
+
+  /// No description provided for @consentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Consent Status'**
+  String get consentStatus;
+
+  /// No description provided for @consentAcceptedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted on {date}'**
+  String consentAcceptedOn(String date);
+
+  /// No description provided for @consentNotGiven.
+  ///
+  /// In en, this message translates to:
+  /// **'Not given yet'**
+  String get consentNotGiven;
+
+  /// No description provided for @consentSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save consent. Please try again.'**
+  String get consentSaveError;
 }
 
 class _AppLocalizationsDelegate

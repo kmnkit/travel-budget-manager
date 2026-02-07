@@ -380,5 +380,26 @@
   "onboardingGetStartedDescription": "Create your first trip and start tracking your travel budget today!",
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
-  "onboardingGetStarted": "Get Started"
+  "onboardingGetStarted": "Get Started",
+
+  "@_CONSENT": {},
+  "consentTitle": "Privacy & Data Protection",
+  "consentDescription": "TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.",
+  "consentAccept": "I Accept",
+  "consentDecline": "I Decline",
+  "consentViewFullPolicy": "View Full Privacy Policy",
+  "consentDeclineTitle": "Consent Required",
+  "consentDeclineMessage": "TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.",
+  "consentDeclineUnderstand": "I Understand",
+  "consentStatus": "Privacy Consent Status",
+  "consentAcceptedOn": "Accepted on {date}",
+  "@consentAcceptedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "consentNotGiven": "Not given yet",
+  "consentSaveError": "Failed to save consent. Please try again."
 }

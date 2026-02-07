@@ -7,6 +7,8 @@ import 'core/router/app_router.dart';
 import 'features/settings/presentation/providers/settings_providers.dart';
 import 'features/onboarding/presentation/providers/onboarding_providers.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'features/consent/presentation/providers/consent_providers.dart';
+import 'features/consent/presentation/screens/consent_screen.dart';
 
 class TripWalletApp extends ConsumerWidget {
   const TripWalletApp({super.key});
@@ -64,7 +66,59 @@ class TripWalletApp extends ConsumerWidget {
             ),
           );
         }
-        return _buildMainApp(ref, locale);
+
+        // Check consent after onboarding
+        final consentAsync = ref.watch(consentRecordProvider);
+        return consentAsync.when(
+          loading: () => MaterialApp(
+            title: 'TripWallet',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            locale: locale,
+            supportedLocales: const [
+              Locale('en'),
+              Locale('ko'),
+            ],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+          error: (error, stack) => _buildMainApp(ref, locale),
+          data: (consentRecord) {
+            if (!consentRecord.hasValidConsent) {
+              return MaterialApp(
+                title: 'TripWallet',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme,
+                locale: locale,
+                supportedLocales: const [
+                  Locale('en'),
+                  Locale('ko'),
+                ],
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                home: ConsentScreen(
+                  onConsentGiven: () {
+                    ref.invalidate(consentRecordProvider);
+                  },
+                ),
+              );
+            }
+            return _buildMainApp(ref, locale);
+          },
+        );
       },
     );
   }

@@ -380,5 +380,26 @@
   "onboardingGetStartedDescription": "첫 번째 여행을 만들고 오늘부터 여행 예산을 관리해보세요!",
   "onboardingSkip": "건너뛰기",
   "onboardingNext": "다음",
-  "onboardingGetStarted": "시작하기"
+  "onboardingGetStarted": "시작하기",
+
+  "@_CONSENT": {},
+  "consentTitle": "개인정보 보호 및 데이터 처리",
+  "consentDescription": "TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.",
+  "consentAccept": "동의합니다",
+  "consentDecline": "동의하지 않습니다",
+  "consentViewFullPolicy": "전체 개인정보 처리방침 보기",
+  "consentDeclineTitle": "동의 필요",
+  "consentDeclineMessage": "TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.",
+  "consentDeclineUnderstand": "이해했습니다",
+  "consentStatus": "개인정보 동의 상태",
+  "consentAcceptedOn": "{date}에 동의함",
+  "@consentAcceptedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "consentNotGiven": "아직 동의하지 않음",
+  "consentSaveError": "동의 저장에 실패했습니다. 다시 시도해주세요."
 }
