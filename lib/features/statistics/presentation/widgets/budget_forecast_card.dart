@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/budget_forecast.dart';
 
@@ -19,7 +20,8 @@ class BudgetForecastCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final statusInfo = _getStatusInfo(forecast.status);
+    final l10n = AppLocalizations.of(context)!;
+    final statusInfo = _getStatusInfo(context, forecast.status);
 
     return Card(
       margin: const EdgeInsets.all(16),
@@ -36,7 +38,7 @@ class BudgetForecastCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '예산 예측',
+                  l10n.budgetForecast,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -62,7 +64,7 @@ class BudgetForecastCard extends StatelessWidget {
             // Projected total spend
             _buildMetricRow(
               context,
-              label: '예상 총 지출',
+              label: l10n.projectedTotal,
               value: CurrencyFormatter.format(
                 forecast.projectedTotalSpend,
                 currencyCode,
@@ -73,7 +75,7 @@ class BudgetForecastCard extends StatelessWidget {
             // Daily spending rate
             _buildMetricRow(
               context,
-              label: '일일 지출',
+              label: l10n.dailySpending,
               value: CurrencyFormatter.format(
                 forecast.dailySpendingRate,
                 currencyCode,
@@ -84,10 +86,10 @@ class BudgetForecastCard extends StatelessWidget {
             // Days until exhaustion
             _buildMetricRow(
               context,
-              label: '예산 소진까지',
+              label: l10n.daysUntilExhaustion,
               value: forecast.daysUntilExhaustion != null
-                  ? '${forecast.daysUntilExhaustion}일'
-                  : '예산 충분',
+                  ? l10n.daysUntilExhaustionValue(forecast.daysUntilExhaustion!)
+                  : l10n.budgetSufficient,
             ),
             const SizedBox(height: 12),
 
@@ -155,31 +157,32 @@ class BudgetForecastCard extends StatelessWidget {
     );
   }
 
-  _StatusInfo _getStatusInfo(ForecastStatus status) {
+  _StatusInfo _getStatusInfo(BuildContext context, ForecastStatus status) {
+    final l10n = AppLocalizations.of(context)!;
     switch (status) {
       case ForecastStatus.onTrack:
         return _StatusInfo(
           icon: Icons.check_circle,
           color: Colors.green,
-          label: '순조로움',
+          label: l10n.forecastStatusOnTrack,
         );
       case ForecastStatus.atRisk:
         return _StatusInfo(
           icon: Icons.warning,
           color: Colors.amber,
-          label: '주의 필요',
+          label: l10n.forecastStatusAtRisk,
         );
       case ForecastStatus.overBudget:
         return _StatusInfo(
           icon: Icons.error,
           color: Colors.red,
-          label: '초과 예상',
+          label: l10n.forecastStatusOverBudget,
         );
       case ForecastStatus.exhausted:
         return _StatusInfo(
           icon: Icons.dangerous,
           color: const Color(0xFFB71C1C),
-          label: '예산 소진',
+          label: l10n.forecastStatusExhausted,
         );
     }
   }

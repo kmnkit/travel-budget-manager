@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/analytics_insight.dart';
 
 /// Widget that displays a list of analytics insights
@@ -25,7 +26,7 @@ class InsightCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '스마트 인사이트',
+              AppLocalizations.of(context)!.smartInsights,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

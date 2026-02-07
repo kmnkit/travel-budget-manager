@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:trip_wallet/core/theme/app_theme.dart';
@@ -11,6 +12,9 @@ void main() {
     Widget createTestWidget(Widget child) {
       return MaterialApp(
         theme: AppTheme.lightTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('ko'),
         home: Scaffold(
           body: SingleChildScrollView(child: child),
         ),
@@ -182,6 +186,108 @@ void main() {
       expect(find.text('실제 지출'), findsOneWidget);
       expect(find.text('예측'), findsOneWidget);
       expect(find.text('예산 한도'), findsOneWidget);
+    });
+
+    testWidgets('should render confidence band when interval differs', (tester) async {
+      final forecast = createForecast();
+
+      await tester.pumpWidget(
+        createTestWidget(
+          BudgetBurndownChart(
+            forecast: forecast,
+            currencyCode: 'USD',
+          ),
+        ),
+      );
+
+      final lineChart = tester.widget<LineChart>(find.byType(LineChart));
+      final lineData = lineChart.data;
+
+      // Should have 5 line bars: historical, projected, budget, best-case, worst-case
+      expect(lineData.lineBarsData.length, equals(5));
+
+      // Should have one BetweenBarsData for confidence band
+      expect(lineData.betweenBarsData.length, equals(1));
+
+      final bandData = lineData.betweenBarsData.first;
+      expect(bandData.fromIndex, equals(3)); // best-case line
+      expect(bandData.toIndex, equals(4)); // worst-case line
+    });
+
+    testWidgets('should not render confidence band when bestCase equals worstCase', (tester) async {
+      final forecast = BudgetForecast(
+        tripId: 1,
+        totalBudget: 1000.0,
+        totalSpent: 300.0,
+        dailySpendingRate: 50.0,
+        projectedTotalSpend: 700.0,
+        daysElapsed: 6,
+        daysRemaining: 8,
+        daysUntilExhaustion: 14,
+        status: ForecastStatus.onTrack,
+        historicalSpending: [
+          DataPoint(date: DateTime(2024, 1, 1), value: 50.0),
+          DataPoint(date: DateTime(2024, 1, 2), value: 100.0),
+          DataPoint(date: DateTime(2024, 1, 3), value: 150.0),
+        ],
+        projectedSpending: [
+          DataPoint(date: DateTime(2024, 1, 4), value: 200.0),
+          DataPoint(date: DateTime(2024, 1, 5), value: 250.0),
+        ],
+        budgetLine: [
+          DataPoint(date: DateTime(2024, 1, 1), value: 1000.0),
+          DataPoint(date: DateTime(2024, 1, 14), value: 1000.0),
+        ],
+        confidenceInterval: const ConfidenceInterval(
+          bestCase: 700.0,
+          worstCase: 700.0, // Same as best case
+          confidenceLevel: 0.68,
+        ),
+      );
+
+      await tester.pumpWidget(
+        createTestWidget(
+          BudgetBurndownChart(
+            forecast: forecast,
+            currencyCode: 'USD',
+          ),
+        ),
+      );
+
+      final lineChart = tester.widget<LineChart>(find.byType(LineChart));
+      final lineData = lineChart.data;
+
+      // Should only have 3 line bars (no confidence lines)
+      expect(lineData.lineBarsData.length, equals(3));
+
+      // Should have empty betweenBarsData
+      expect(lineData.betweenBarsData, isEmpty);
+    });
+
+    testWidgets('should render confidence band with correct color', (tester) async {
+      final forecast = createForecast();
+
+      await tester.pumpWidget(
+        createTestWidget(
+          BudgetBurndownChart(
+            forecast: forecast,
+            currencyCode: 'USD',
+          ),
+        ),
+      );
+
+      final lineChart = tester.widget<LineChart>(find.byType(LineChart));
+      final lineData = lineChart.data;
+
+      expect(lineData.betweenBarsData.length, equals(1));
+
+      final bandData = lineData.betweenBarsData.first;
+      final bandColor = bandData.color;
+
+      // Should be semi-transparent blue
+      expect(bandColor, isNotNull);
+      expect((bandColor!.a * 255.0).round(), lessThan(100)); // Semi-transparent
+      expect((bandColor.b * 255.0).round(), greaterThan(200)); // Predominantly blue
     });
   });
 }

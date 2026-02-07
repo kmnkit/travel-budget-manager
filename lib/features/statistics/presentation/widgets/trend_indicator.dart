@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/trend_data.dart';
 
 /// A compact widget that displays trend direction, change percentage, and confidence
@@ -55,7 +56,7 @@ class TrendIndicator extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          '신뢰도: $confidenceText',
+          AppLocalizations.of(context)!.confidenceLabel(confidenceText),
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),

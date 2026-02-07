@@ -73,7 +73,7 @@ final periodComparisonProvider =
   final overallComparison = comparePeriod.call(
     currentDailyTotals: currentWeek,
     previousDailyTotals: previousWeek,
-    label: '총 지출',
+    label: 'totalExpense',
   );
 
   // Category comparison
@@ -94,7 +94,7 @@ final periodComparisonProvider =
 
   return PeriodComparisonData(
     comparisons: [overallComparison, ...categoryComparisons],
-    periodLabel: '이번 주 vs 지난 주',
+    periodLabel: 'thisWeekVsLastWeek',
   );
 });
 

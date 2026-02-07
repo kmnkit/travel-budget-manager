@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
@@ -59,7 +60,7 @@ class BudgetBurndownChart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '예산 소진 차트',
+              AppLocalizations.of(context)!.budgetBurndownChart,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -120,11 +121,11 @@ class BudgetBurndownChart extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _legendItem(theme, Colors.blue, '실제 지출'),
+        _legendItem(theme, Colors.blue, AppLocalizations.of(context)!.actualSpending),
         const SizedBox(width: 16),
-        _legendItem(theme, Colors.blue.shade200, '예측'),
+        _legendItem(theme, Colors.blue.shade200, AppLocalizations.of(context)!.projectedSpending),
         const SizedBox(width: 16),
-        _legendItem(theme, Colors.red, '예산 한도'),
+        _legendItem(theme, Colors.red, AppLocalizations.of(context)!.budgetLimit),
       ],
     );
   }
@@ -273,17 +274,78 @@ class BudgetBurndownChart extends StatelessWidget {
       ));
     }
 
+    // 4. Best-case confidence line (invisible, for band rendering)
+    if (forecast.historicalSpending.isNotEmpty && 
+        forecast.confidenceInterval.bestCase != forecast.confidenceInterval.worstCase &&
+        forecast.daysRemaining > 0) {
+      final lastHistorical = forecast.historicalSpending.last;
+      final startDay = lastHistorical.date.difference(firstDate).inDays.toDouble();
+      final startValue = lastHistorical.value;
+      final endValue = forecast.confidenceInterval.bestCase;
+      
+      // Generate points from last historical to best case over remaining days
+      final bestCaseSpots = <FlSpot>[];
+      for (int i = 0; i <= forecast.daysRemaining; i++) {
+        final progress = forecast.daysRemaining > 0 ? i / forecast.daysRemaining : 1.0;
+        final value = startValue + (endValue - startValue) * progress;
+        bestCaseSpots.add(FlSpot(startDay + i, value));
+      }
+
+      lines.add(LineChartBarData(
+        spots: bestCaseSpots,
+        isCurved: false,
+        color: Colors.transparent,
+        barWidth: 0,
+        dotData: const FlDotData(show: false),
+        belowBarData: BarAreaData(show: false),
+      ));
+    }
+
+    // 5. Worst-case confidence line (invisible, for band rendering)
+    if (forecast.historicalSpending.isNotEmpty && 
+        forecast.confidenceInterval.bestCase != forecast.confidenceInterval.worstCase &&
+        forecast.daysRemaining > 0) {
+      final lastHistorical = forecast.historicalSpending.last;
+      final startDay = lastHistorical.date.difference(firstDate).inDays.toDouble();
+      final startValue = lastHistorical.value;
+      final endValue = forecast.confidenceInterval.worstCase;
+      
+      // Generate points from last historical to worst case over remaining days
+      final worstCaseSpots = <FlSpot>[];
+      for (int i = 0; i <= forecast.daysRemaining; i++) {
+        final progress = forecast.daysRemaining > 0 ? i / forecast.daysRemaining : 1.0;
+        final value = startValue + (endValue - startValue) * progress;
+        worstCaseSpots.add(FlSpot(startDay + i, value));
+      }
+
+      lines.add(LineChartBarData(
+        spots: worstCaseSpots,
+        isCurved: false,
+        color: Colors.transparent,
+        barWidth: 0,
+        dotData: const FlDotData(show: false),
+        belowBarData: BarAreaData(show: false),
+      ));
+    }
+
     return lines;
   }
 
   List<BetweenBarsData> _buildConfidenceBand(DateTime firstDate) {
     if (forecast.projectedSpending.isEmpty ||
-        forecast.confidenceInterval.bestCase == forecast.confidenceInterval.worstCase) {
+        forecast.confidenceInterval.bestCase == forecast.confidenceInterval.worstCase ||
+        forecast.daysRemaining <= 0 ||
+        forecast.historicalSpending.isEmpty) {
       return [];
     }
 
-    // We need to add confidence band lines as additional bar data
-    // For now, return empty as fl_chart's BetweenBarsData requires matching indices
-    return [];
+    // Return BetweenBarsData connecting the best-case (index 3) and worst-case (index 4) lines
+    return [
+      BetweenBarsData(
+        fromIndex: 3,
+        toIndex: 4,
+        color: Colors.blue.withValues(alpha: 0.1),
+      ),
+    ];
   }
 }

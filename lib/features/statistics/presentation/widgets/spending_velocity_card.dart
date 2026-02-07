@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/spending_velocity.dart';
@@ -19,6 +20,7 @@ class SpendingVelocityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Determine acceleration indicator
     final IconData accelerationIcon;
@@ -30,15 +32,15 @@ class SpendingVelocityCard extends StatelessWidget {
     if (velocity.acceleration.abs() < stableThreshold) {
       accelerationIcon = Icons.trending_flat;
       accelerationColor = Colors.grey;
-      accelerationText = '안정';
+      accelerationText = l10n.velocityStable;
     } else if (velocity.acceleration > 0) {
       accelerationIcon = Icons.trending_up;
       accelerationColor = Colors.green;
-      accelerationText = '증가 중';
+      accelerationText = l10n.velocityIncreasing;
     } else {
       accelerationIcon = Icons.trending_down;
       accelerationColor = Colors.red;
-      accelerationText = '감소 중';
+      accelerationText = l10n.velocityDecreasing;
     }
 
     // Format period dates
@@ -57,7 +59,7 @@ class SpendingVelocityCard extends StatelessWidget {
           children: [
             // Title
             Text(
-              '지출 속도',
+              l10n.spendingVelocity,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -67,7 +69,7 @@ class SpendingVelocityCard extends StatelessWidget {
             // Daily Average
             _buildMetricRow(
               context,
-              label: '일평균',
+              label: l10n.dailyAverage,
               value: CurrencyFormatter.format(
                 velocity.dailyAverage,
                 currencyCode,
@@ -78,7 +80,7 @@ class SpendingVelocityCard extends StatelessWidget {
             // Weekly Average
             _buildMetricRow(
               context,
-              label: '주평균',
+              label: l10n.weeklyAverage,
               value: CurrencyFormatter.format(
                 velocity.weeklyAverage,
                 currencyCode,
@@ -96,7 +98,7 @@ class SpendingVelocityCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '가속도: $accelerationText',
+                  l10n.accelerationLabel(accelerationText),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: accelerationColor,
                     fontWeight: FontWeight.w500,
@@ -108,7 +110,7 @@ class SpendingVelocityCard extends StatelessWidget {
 
             // Period
             Text(
-              '기간: $periodText',
+              l10n.periodLabel(periodText),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),

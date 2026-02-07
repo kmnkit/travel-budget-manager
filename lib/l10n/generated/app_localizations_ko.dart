@@ -447,6 +447,108 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noBudgetSet => '예산이 설정되지 않았습니다';
 
   @override
+  String get overallSpendingTrend => '전체 지출 추세:';
+
+  @override
+  String get spendingVelocity => '지출 속도';
+
+  @override
+  String get dailyAverage => '일평균';
+
+  @override
+  String get weeklyAverage => '주평균';
+
+  @override
+  String get velocityStable => '안정';
+
+  @override
+  String get velocityIncreasing => '증가 중';
+
+  @override
+  String get velocityDecreasing => '감소 중';
+
+  @override
+  String accelerationLabel(String status) {
+    return '가속도: $status';
+  }
+
+  @override
+  String periodLabel(String period) {
+    return '기간: $period';
+  }
+
+  @override
+  String get periodComparison => '기간 비교';
+
+  @override
+  String get noComparisonData => '비교할 데이터가 없습니다';
+
+  @override
+  String get categoryAnalysis => '카테고리 분석';
+
+  @override
+  String get noCategoryData => '카테고리 데이터가 없습니다';
+
+  @override
+  String get smartInsights => '스마트 인사이트';
+
+  @override
+  String confidenceLabel(String value) {
+    return '신뢰도: $value';
+  }
+
+  @override
+  String get dailyExpenses => '일별 지출';
+
+  @override
+  String get expensesByCategory => '카테고리별 지출';
+
+  @override
+  String get expensesByPaymentMethod => '결제 수단별 지출';
+
+  @override
+  String get totalExpense => '총 지출';
+
+  @override
+  String get thisWeekVsLastWeek => '이번 주 vs 지난 주';
+
+  @override
+  String get dashboardEdit => '대시보드 편집';
+
+  @override
+  String get resetToDefault => '기본값 복원';
+
+  @override
+  String get widgetCategoryPieChart => '카테고리별 지출';
+
+  @override
+  String get widgetDailyBarChart => '일별 지출';
+
+  @override
+  String get widgetPaymentMethodChart => '결제 수단별 지출';
+
+  @override
+  String get widgetTrendIndicator => '지출 트렌드';
+
+  @override
+  String get widgetSpendingVelocity => '지출 속도';
+
+  @override
+  String get widgetPeriodComparison => '기간 비교';
+
+  @override
+  String get widgetCategoryInsights => '카테고리 인사이트';
+
+  @override
+  String get widgetSmartInsights => '스마트 인사이트';
+
+  @override
+  String get widgetBudgetForecast => '예산 예측';
+
+  @override
+  String get widgetBudgetBurndown => '예산 소진율';
+
+  @override
   String get allCategories => '전체';
 
   @override
@@ -469,6 +571,15 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get filterPast => '완료';
+
+  @override
+  String get clearAllFilters => '전체 초기화';
+
+  @override
+  String get filterByCategory => '카테고리';
+
+  @override
+  String get filterByPaymentMethod => '결제 수단';
 
   @override
   String get language => '언어';

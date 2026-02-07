@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense_category.dart';
@@ -42,7 +43,7 @@ class CategoryPieChart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '카테고리별 지출',
+              AppLocalizations.of(context)!.expensesByCategory,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,

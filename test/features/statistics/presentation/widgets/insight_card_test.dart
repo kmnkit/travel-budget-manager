@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/analytics_insight.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/insight_card.dart';
@@ -8,6 +9,9 @@ void main() {
     // Helper to wrap widget in MaterialApp
     Widget buildTestWidget(List<AnalyticsInsight> insights) {
       return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('ko'),
         home: Scaffold(
           body: SingleChildScrollView(
             child: InsightCard(insights: insights),

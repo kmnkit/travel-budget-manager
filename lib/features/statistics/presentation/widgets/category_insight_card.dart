@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/category_insight.dart';
 
@@ -33,7 +34,7 @@ class CategoryInsightCard extends StatelessWidget {
           children: [
             // Title
             Text(
-              '카테고리 분석',
+              AppLocalizations.of(context)!.categoryAnalysis,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -45,7 +46,7 @@ class CategoryInsightCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
-                    '카테고리 데이터가 없습니다',
+                    AppLocalizations.of(context)!.noCategoryData,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color:
                           theme.colorScheme.onSurface.withValues(alpha: 0.5),

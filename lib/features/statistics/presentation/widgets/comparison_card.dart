@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/comparison_result.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/trend_data.dart';
@@ -36,7 +37,7 @@ class ComparisonCard extends StatelessWidget {
           children: [
             // Title
             Text(
-              '기간 비교',
+              AppLocalizations.of(context)!.periodComparison,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -45,7 +46,7 @@ class ComparisonCard extends StatelessWidget {
             if (periodLabel != null) ...[
               const SizedBox(height: 4),
               Text(
-                periodLabel!,
+                _resolveLabel(context, periodLabel!),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
@@ -58,7 +59,7 @@ class ComparisonCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
-                    '비교할 데이터가 없습니다',
+                    AppLocalizations.of(context)!.noComparisonData,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
@@ -102,7 +103,7 @@ class ComparisonCard extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              comparison.label,
+              _resolveLabel(context, comparison.label),
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -145,5 +146,19 @@ class ComparisonCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Resolves l10n key identifiers to localized strings.
+  /// Falls back to the raw string for category names or other dynamic labels.
+  String _resolveLabel(BuildContext context, String key) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'totalExpense':
+        return l10n.totalExpense;
+      case 'thisWeekVsLastWeek':
+        return l10n.thisWeekVsLastWeek;
+      default:
+        return key;
+    }
   }
 }

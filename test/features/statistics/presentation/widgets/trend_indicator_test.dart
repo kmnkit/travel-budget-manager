@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:trip_wallet/core/theme/app_theme.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/trend_data.dart';
@@ -9,6 +10,9 @@ void main() {
     Widget createTestWidget(Widget child) {
       return MaterialApp(
         theme: AppTheme.lightTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('ko'),
         home: Scaffold(
           body: child,
         ),

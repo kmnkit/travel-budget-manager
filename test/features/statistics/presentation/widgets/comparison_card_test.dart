@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart' hide ComparisonResult;
 import 'package:trip_wallet/core/theme/app_theme.dart';
 import 'package:trip_wallet/features/statistics/domain/entities/comparison_result.dart';
@@ -9,6 +10,9 @@ void main() {
   Widget buildTestWidget(Widget child) {
     return MaterialApp(
       theme: AppTheme.lightTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('ko'),
       home: Scaffold(body: SingleChildScrollView(child: child)),
     );
   }
@@ -18,7 +22,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 150000.0,
           comparisonValue: 120000.0,
           difference: 30000.0,
@@ -43,7 +47,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 200000.0,
           comparisonValue: 100000.0,
           difference: 100000.0,
@@ -67,7 +71,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 80000.0,
           comparisonValue: 120000.0,
           difference: -40000.0,
@@ -90,7 +94,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 100000.0,
           comparisonValue: 98000.0,
           difference: 2000.0,
@@ -113,7 +117,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 50000.0,
           comparisonValue: 100000.0,
           difference: -50000.0,
@@ -137,7 +141,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-          label: '총 지출',
+          label: 'totalExpense',
           currentValue: 200000.0,
           comparisonValue: 100000.0,
           difference: 100000.0,
@@ -212,7 +216,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-            label: '총 지출',
+            label: 'totalExpense',
             currentValue: 100.0,
             comparisonValue: 80.0,
             difference: 20.0,
@@ -224,11 +228,11 @@ void main() {
         ComparisonCard(
           comparisons: comparisons,
           currencyCode: 'USD',
-          periodLabel: '이번 주 vs 지난 주',
+          periodLabel: 'thisWeekVsLastWeek',
         ),
       ));
 
-      expect(find.text('이번 주 vs 지난 주'), findsOneWidget);
+      expect(find.text('이번 주 vs 지난 주'), findsOneWidget); // resolved from 'thisWeekVsLastWeek' key
     });
 
     testWidgets(
@@ -236,7 +240,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-            label: '총 지출',
+            label: 'totalExpense',
             currentValue: 1234.56,
             comparisonValue: 1000.0,
             difference: 234.56,
@@ -259,7 +263,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-            label: '총 지출',
+            label: 'totalExpense',
             currentValue: 100.0,
             comparisonValue: 80.0,
             difference: 20.0,
@@ -283,7 +287,7 @@ void main() {
         (WidgetTester tester) async {
       final comparisons = [
         ComparisonResult(
-            label: '총 지출',
+            label: 'totalExpense',
             currentValue: 0.0,
             comparisonValue: 0.0,
             difference: 0.0,

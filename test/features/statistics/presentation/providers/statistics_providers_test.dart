@@ -27,12 +27,23 @@ void main() {
       };
       const totalAmount = 530.0;
 
+      final categoryDailyTotals = {
+        ExpenseCategory.food: {
+          DateTime(2024, 1, 1): 50.0,
+          DateTime(2024, 1, 2): 50.0,
+        },
+        ExpenseCategory.transport: {
+          DateTime(2024, 1, 2): 50.0,
+        },
+      };
+
       // Act
       final statisticsData = StatisticsData(
         categoryTotals: categoryTotals,
         dailyTotals: dailyTotals,
         paymentMethodTotals: paymentMethodTotals,
         totalAmount: totalAmount,
+        categoryDailyTotals: categoryDailyTotals,
       );
 
       // Assert
@@ -50,6 +61,10 @@ void main() {
       expect(statisticsData.paymentMethodTotals['Credit Card'], equals(280.0));
 
       expect(statisticsData.totalAmount, equals(totalAmount));
+
+      expect(statisticsData.categoryDailyTotals, isNotEmpty);
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.food]?[DateTime(2024, 1, 1)], equals(50.0));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.transport]?[DateTime(2024, 1, 2)], equals(50.0));
     });
 
     test('should handle empty data collections', () {
@@ -59,6 +74,7 @@ void main() {
         dailyTotals: {},
         paymentMethodTotals: {},
         totalAmount: 0.0,
+        categoryDailyTotals: {},
       );
 
       // Assert
@@ -66,6 +82,7 @@ void main() {
       expect(statisticsData.dailyTotals.isEmpty, isTrue);
       expect(statisticsData.paymentMethodTotals.isEmpty, isTrue);
       expect(statisticsData.totalAmount, equals(0.0));
+      expect(statisticsData.categoryDailyTotals.isEmpty, isTrue);
     });
 
     test('should correctly store all 8 expense categories', () {
@@ -87,6 +104,7 @@ void main() {
         dailyTotals: {},
         paymentMethodTotals: {},
         totalAmount: 530.0,
+        categoryDailyTotals: {},
       );
 
       // Assert
@@ -120,6 +138,7 @@ void main() {
         dailyTotals: dailyTotals,
         paymentMethodTotals: {},
         totalAmount: 650.0,
+        categoryDailyTotals: {},
       );
 
       // Assert
@@ -143,6 +162,7 @@ void main() {
         dailyTotals: {},
         paymentMethodTotals: paymentMethodTotals,
         totalAmount: 600.0,
+        categoryDailyTotals: {},
       );
 
       // Assert
@@ -166,12 +186,50 @@ void main() {
         dailyTotals: {},
         paymentMethodTotals: {},
         totalAmount: 191.34,
+        categoryDailyTotals: {},
       );
 
       // Assert
       expect(statisticsData.categoryTotals[ExpenseCategory.food], equals(123.45));
       expect(statisticsData.categoryTotals[ExpenseCategory.transport], equals(67.89));
       expect(statisticsData.totalAmount, equals(191.34));
+    });
+
+    test('should correctly store category daily totals', () {
+      // Arrange
+      final categoryDailyTotals = {
+        ExpenseCategory.food: {
+          DateTime(2024, 1, 1): 50.0,
+          DateTime(2024, 1, 2): 60.0,
+          DateTime(2024, 1, 3): 40.0,
+        },
+        ExpenseCategory.transport: {
+          DateTime(2024, 1, 1): 20.0,
+          DateTime(2024, 1, 3): 30.0,
+        },
+        ExpenseCategory.accommodation: {
+          DateTime(2024, 1, 2): 200.0,
+        },
+      };
+
+      // Act
+      final statisticsData = StatisticsData(
+        categoryTotals: {},
+        dailyTotals: {},
+        paymentMethodTotals: {},
+        totalAmount: 400.0,
+        categoryDailyTotals: categoryDailyTotals,
+      );
+
+      // Assert
+      expect(statisticsData.categoryDailyTotals.length, equals(3));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.food]?.length, equals(3));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.food]?[DateTime(2024, 1, 1)], equals(50.0));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.food]?[DateTime(2024, 1, 2)], equals(60.0));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.transport]?.length, equals(2));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.transport]?[DateTime(2024, 1, 1)], equals(20.0));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.accommodation]?.length, equals(1));
+      expect(statisticsData.categoryDailyTotals[ExpenseCategory.accommodation]?[DateTime(2024, 1, 2)], equals(200.0));
     });
   });
 
