@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/constants/currency_constants.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
+import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
 import 'package:trip_wallet/shared/widgets/app_scaffold.dart';
 import 'package:trip_wallet/shared/widgets/currency_dropdown.dart';
@@ -21,10 +22,17 @@ class _TripCreateScreenState extends ConsumerState<TripCreateScreen> {
   final _titleController = TextEditingController();
   final _budgetController = TextEditingController();
 
-  SupportedCurrency _selectedCurrency = SupportedCurrency.KRW;
+  late SupportedCurrency _selectedCurrency;
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now().add(const Duration(days: 7));
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final defaultCurrency = ref.read(defaultCurrencyProvider);
+    _selectedCurrency = SupportedCurrency.fromCode(defaultCurrency);
+  }
 
   @override
   void dispose() {
@@ -50,7 +58,7 @@ class _TripCreateScreenState extends ConsumerState<TripCreateScreen> {
           );
 
       if (mounted) {
-        context.go('/trip/${trip.id}');
+        context.pushReplacement('/trip/${trip.id}');
       }
     } catch (e) {
       if (mounted) {

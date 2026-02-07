@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
-// import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
+import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense_category.dart';
 import 'package:trip_wallet/features/expense/presentation/providers/expense_providers.dart';
@@ -24,10 +24,7 @@ enum _SortOrder {
 class ExpenseListScreen extends ConsumerStatefulWidget {
   final int tripId;
 
-  const ExpenseListScreen({
-    super.key,
-    required this.tripId,
-  });
+  const ExpenseListScreen({super.key, required this.tripId});
 
   @override
   ConsumerState<ExpenseListScreen> createState() => _ExpenseListScreenState();
@@ -63,8 +60,8 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                 Text(
                   '지출을 기록해보세요!',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -82,10 +79,10 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         const adInterval = 3;
         final dateGroupCount = groupedExpenses.length;
         final fixedAdCount = shouldShowAds ? 1 : 0;
-        final interleaveAdCount =
-            shouldShowAds ? (dateGroupCount ~/ adInterval) : 0;
-        final totalItems =
-            dateGroupCount + fixedAdCount + interleaveAdCount;
+        final interleaveAdCount = shouldShowAds
+            ? (dateGroupCount ~/ adInterval)
+            : 0;
+        final totalItems = dateGroupCount + fixedAdCount + interleaveAdCount;
 
         return Column(
           children: [
@@ -102,36 +99,37 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                   if (shouldShowAds && index == 0) {
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
+                      child: AdBannerWidget(),
                     );
                   }
 
                   // Offset by 1 for the fixed banner
-                  final adjustedIndex =
-                      shouldShowAds ? index - 1 : index;
+                  final adjustedIndex = shouldShowAds ? index - 1 : index;
 
                   // Interleave ads every 3 date groups
                   final adsBefore = shouldShowAds
-                      ? (adjustedIndex ~/ (adInterval + 1))
-                          .clamp(0, interleaveAdCount)
+                      ? (adjustedIndex ~/ (adInterval + 1)).clamp(
+                          0,
+                          interleaveAdCount,
+                        )
                       : 0;
                   final groupIndex = adjustedIndex - adsBefore;
 
                   // Check if this position is an interleave ad slot
-                  final isAdPosition = shouldShowAds &&
+                  final isAdPosition =
+                      shouldShowAds &&
                       adsBefore < interleaveAdCount &&
                       (adjustedIndex + 1) % (adInterval + 1) == 0;
 
                   if (isAdPosition) {
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
+                      child: AdBannerWidget(),
                     );
                   }
 
                   // Show date group
-                  final entry =
-                      groupedExpenses.entries.elementAt(groupIndex);
+                  final entry = groupedExpenses.entries.elementAt(groupIndex);
                   final date = entry.key;
                   final dayExpenses = entry.value;
                   final dailyTotal = dayExpenses.fold(
@@ -146,10 +144,9 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                       _buildDateHeader(date, dailyTotal, baseCurrency),
 
                       // Expense items for this date
-                      ...dayExpenses.map((expense) => _buildExpenseItem(
-                            expense,
-                            baseCurrency,
-                          )),
+                      ...dayExpenses.map(
+                        (expense) => _buildExpenseItem(expense, baseCurrency),
+                      ),
                     ],
                   );
                 },
@@ -173,10 +170,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
               isExpanded: true,
               hint: const Text('전체'),
               items: [
-                const DropdownMenuItem(
-                  value: null,
-                  child: Text('전체'),
-                ),
+                const DropdownMenuItem(value: null, child: Text('전체')),
                 ...ExpenseCategory.values.map((category) {
                   return DropdownMenuItem(
                     value: category,
@@ -197,10 +191,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
           DropdownButton<_SortOrder>(
             value: _sortOrder,
             items: _SortOrder.values.map((order) {
-              return DropdownMenuItem(
-                value: order,
-                child: Text(order.label),
-              );
+              return DropdownMenuItem(value: order, child: Text(order.label));
             }).toList(),
             onChanged: (value) {
               if (value != null) {
@@ -250,10 +241,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16),
         color: Colors.red,
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.delete, color: Colors.white),
       ),
       child: ExpenseItemCard(
         category: expense.category,
@@ -262,7 +250,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         currency: expense.currency,
         convertedAmount: expense.convertedAmount,
         baseCurrency: baseCurrency,
-        onTap: () => context.go('/trip/${widget.tripId}/expense/${expense.id}'),
+        onTap: () => context.push('/trip/${widget.tripId}/expense/${expense.id}'),
       ),
     );
   }
@@ -324,7 +312,9 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('지출 삭제'),
-        content: Text('${expense.memo ?? _getCategoryLabel(expense.category)}을(를) 삭제하시겠습니까?'),
+        content: Text(
+          '${expense.memo ?? _getCategoryLabel(expense.category)}을(를) 삭제하시겠습니까?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),

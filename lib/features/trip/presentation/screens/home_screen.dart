@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
-// import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
+import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
 import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
@@ -61,8 +61,9 @@ class HomeScreen extends ConsumerWidget {
                 // Fixed top banner (always 1) + interleave every 4 trips
                 const adInterval = 4;
                 final fixedAdCount = shouldShowAds ? 1 : 0;
-                final interleaveAdCount =
-                    shouldShowAds ? (trips.length ~/ adInterval) : 0;
+                final interleaveAdCount = shouldShowAds
+                    ? (trips.length ~/ adInterval)
+                    : 0;
                 final totalItems =
                     trips.length + fixedAdCount + interleaveAdCount;
 
@@ -74,30 +75,32 @@ class HomeScreen extends ConsumerWidget {
                     if (shouldShowAds && index == 0) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
+                        child: AdBannerWidget(),
                       );
                     }
 
                     // Offset by 1 for the fixed banner
-                    final adjustedIndex =
-                        shouldShowAds ? index - 1 : index;
+                    final adjustedIndex = shouldShowAds ? index - 1 : index;
 
                     // Interleave ads every 4 trips
                     final adsBefore = shouldShowAds
-                        ? (adjustedIndex ~/ (adInterval + 1))
-                            .clamp(0, interleaveAdCount)
+                        ? (adjustedIndex ~/ (adInterval + 1)).clamp(
+                            0,
+                            interleaveAdCount,
+                          )
                         : 0;
                     final tripIndex = adjustedIndex - adsBefore;
 
                     // Check if this position is an interleave ad slot
-                    final isAdPosition = shouldShowAds &&
+                    final isAdPosition =
+                        shouldShowAds &&
                         adsBefore < interleaveAdCount &&
                         (adjustedIndex + 1) % (adInterval + 1) == 0;
 
                     if (isAdPosition) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
+                        child: AdBannerWidget(),
                       );
                     }
 
@@ -148,9 +151,9 @@ class _TotalBalanceBanner extends ConsumerWidget {
             Text(
               context.l10n.totalBalance,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white70,
-                    letterSpacing: 1.2,
-                  ),
+                color: Colors.white70,
+                letterSpacing: 1.2,
+              ),
             ),
             const SizedBox(height: 4),
             Row(
@@ -160,16 +163,16 @@ class _TotalBalanceBanner extends ConsumerWidget {
                 Text(
                   CurrencyFormatter.format(balance.total, balance.currency),
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   balance.currency,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white70,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
                 ),
               ],
             ),
@@ -207,7 +210,9 @@ class _FilterChips extends ConsumerWidget {
               ),
               backgroundColor: Colors.white,
               side: BorderSide(
-                color: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.5),
+                color: isSelected
+                    ? AppColors.primary
+                    : AppColors.primary.withValues(alpha: 0.5),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
