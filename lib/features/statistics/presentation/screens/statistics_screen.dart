@@ -14,6 +14,9 @@ import 'package:trip_wallet/features/statistics/presentation/widgets/comparison_
 import 'package:trip_wallet/features/statistics/presentation/widgets/category_insight_card.dart';
 import 'package:trip_wallet/features/statistics/presentation/providers/insights_provider.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/insight_card.dart';
+import 'package:trip_wallet/features/statistics/presentation/providers/budget_forecast_providers.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/budget_forecast_card.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/budget_burndown_chart.dart';
 import 'package:trip_wallet/shared/widgets/loading_indicator.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
 
@@ -99,6 +102,7 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
     final periodComparisonAsync = ref.watch(periodComparisonProvider(widget.tripId));
     final categoryInsightsAsync = ref.watch(categoryInsightsProvider(widget.tripId));
     final insightsAsync = ref.watch(insightsProvider(widget.tripId));
+    final budgetForecastAsync = ref.watch(budgetForecastProvider(widget.tripId));
 
     return Scaffold(
       body: Column(
@@ -281,6 +285,28 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
                         data: (insightsData) => insightsData.insights.isNotEmpty
                           ? InsightCard(insights: insightsData.insights)
                           : const SizedBox.shrink(),
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, stackTrace) => const SizedBox.shrink(),
+                      ),
+                      // Budget forecast card and burndown chart
+                      budgetForecastAsync.when(
+                        data: (forecastData) {
+                          if (forecastData.forecast.totalBudget <= 0) {
+                            return const SizedBox.shrink();
+                          }
+                          return Column(
+                            children: [
+                              BudgetForecastCard(
+                                forecast: forecastData.forecast,
+                                currencyCode: widget.currencyCode,
+                              ),
+                              BudgetBurndownChart(
+                                forecast: forecastData.forecast,
+                                currencyCode: widget.currencyCode,
+                              ),
+                            ],
+                          );
+                        },
                         loading: () => const SizedBox.shrink(),
                         error: (error, stackTrace) => const SizedBox.shrink(),
                       ),

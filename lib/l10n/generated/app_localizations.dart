@@ -806,6 +806,114 @@ abstract class AppLocalizations {
   /// **'Custom'**
   String get periodCustom;
 
+  /// No description provided for @budgetForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Forecast'**
+  String get budgetForecast;
+
+  /// No description provided for @budgetBurndownChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Burn-down'**
+  String get budgetBurndownChart;
+
+  /// No description provided for @projectedTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Total'**
+  String get projectedTotal;
+
+  /// No description provided for @dailySpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Spending'**
+  String get dailySpending;
+
+  /// No description provided for @daysUntilExhaustion.
+  ///
+  /// In en, this message translates to:
+  /// **'Days Until Exhaustion'**
+  String get daysUntilExhaustion;
+
+  /// No description provided for @daysUntilExhaustionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String daysUntilExhaustionValue(int days);
+
+  /// No description provided for @budgetSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Sufficient'**
+  String get budgetSufficient;
+
+  /// No description provided for @forecastStatusOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On Track'**
+  String get forecastStatusOnTrack;
+
+  /// No description provided for @forecastStatusAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'At Risk'**
+  String get forecastStatusAtRisk;
+
+  /// No description provided for @forecastStatusOverBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Over Budget'**
+  String get forecastStatusOverBudget;
+
+  /// No description provided for @forecastStatusExhausted.
+  ///
+  /// In en, this message translates to:
+  /// **'Exhausted'**
+  String get forecastStatusExhausted;
+
+  /// No description provided for @actualSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual Spending'**
+  String get actualSpending;
+
+  /// No description provided for @projectedSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected'**
+  String get projectedSpending;
+
+  /// No description provided for @budgetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Limit'**
+  String get budgetLimit;
+
+  /// No description provided for @bestCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Case'**
+  String get bestCase;
+
+  /// No description provided for @worstCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Worst Case'**
+  String get worstCase;
+
+  /// No description provided for @confidenceInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence Interval'**
+  String get confidenceInterval;
+
+  /// No description provided for @noBudgetSet.
+  ///
+  /// In en, this message translates to:
+  /// **'No budget has been set'**
+  String get noBudgetSet;
+
   /// No description provided for @allCategories.
   ///
   /// In en, this message translates to:

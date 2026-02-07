@@ -391,6 +391,62 @@ class AppLocalizationsKo extends AppLocalizations {
   String get periodCustom => '직접 설정';
 
   @override
+  String get budgetForecast => '예산 예측';
+
+  @override
+  String get budgetBurndownChart => '예산 소진 차트';
+
+  @override
+  String get projectedTotal => '예상 총 지출';
+
+  @override
+  String get dailySpending => '일일 지출';
+
+  @override
+  String get daysUntilExhaustion => '예산 소진까지';
+
+  @override
+  String daysUntilExhaustionValue(int days) {
+    return '$days일';
+  }
+
+  @override
+  String get budgetSufficient => '예산 충분';
+
+  @override
+  String get forecastStatusOnTrack => '순조로움';
+
+  @override
+  String get forecastStatusAtRisk => '주의 필요';
+
+  @override
+  String get forecastStatusOverBudget => '초과 예상';
+
+  @override
+  String get forecastStatusExhausted => '예산 소진';
+
+  @override
+  String get actualSpending => '실제 지출';
+
+  @override
+  String get projectedSpending => '예측';
+
+  @override
+  String get budgetLimit => '예산 한도';
+
+  @override
+  String get bestCase => '최선';
+
+  @override
+  String get worstCase => '최악';
+
+  @override
+  String get confidenceInterval => '신뢰구간';
+
+  @override
+  String get noBudgetSet => '예산이 설정되지 않았습니다';
+
+  @override
   String get allCategories => '전체';
 
   @override

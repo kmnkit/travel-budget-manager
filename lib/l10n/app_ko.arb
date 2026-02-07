@@ -239,6 +239,33 @@
   "periodMonth": "이번 달",
   "periodCustom": "직접 설정",
 
+  "@_BUDGET_FORECAST": {},
+  "budgetForecast": "예산 예측",
+  "budgetBurndownChart": "예산 소진 차트",
+  "projectedTotal": "예상 총 지출",
+  "dailySpending": "일일 지출",
+  "daysUntilExhaustion": "예산 소진까지",
+  "daysUntilExhaustionValue": "{days}일",
+  "@daysUntilExhaustionValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetSufficient": "예산 충분",
+  "forecastStatusOnTrack": "순조로움",
+  "forecastStatusAtRisk": "주의 필요",
+  "forecastStatusOverBudget": "초과 예상",
+  "forecastStatusExhausted": "예산 소진",
+  "actualSpending": "실제 지출",
+  "projectedSpending": "예측",
+  "budgetLimit": "예산 한도",
+  "bestCase": "최선",
+  "worstCase": "최악",
+  "confidenceInterval": "신뢰구간",
+  "noBudgetSet": "예산이 설정되지 않았습니다",
+
   "@_FILTER_SORT": {},
   "allCategories": "전체",
   "sortByDate": "최신순",

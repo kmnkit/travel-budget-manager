@@ -395,6 +395,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodCustom => 'Custom';
 
   @override
+  String get budgetForecast => 'Budget Forecast';
+
+  @override
+  String get budgetBurndownChart => 'Budget Burn-down';
+
+  @override
+  String get projectedTotal => 'Projected Total';
+
+  @override
+  String get dailySpending => 'Daily Spending';
+
+  @override
+  String get daysUntilExhaustion => 'Days Until Exhaustion';
+
+  @override
+  String daysUntilExhaustionValue(int days) {
+    return '$days days';
+  }
+
+  @override
+  String get budgetSufficient => 'Budget Sufficient';
+
+  @override
+  String get forecastStatusOnTrack => 'On Track';
+
+  @override
+  String get forecastStatusAtRisk => 'At Risk';
+
+  @override
+  String get forecastStatusOverBudget => 'Over Budget';
+
+  @override
+  String get forecastStatusExhausted => 'Exhausted';
+
+  @override
+  String get actualSpending => 'Actual Spending';
+
+  @override
+  String get projectedSpending => 'Projected';
+
+  @override
+  String get budgetLimit => 'Budget Limit';
+
+  @override
+  String get bestCase => 'Best Case';
+
+  @override
+  String get worstCase => 'Worst Case';
+
+  @override
+  String get confidenceInterval => 'Confidence Interval';
+
+  @override
+  String get noBudgetSet => 'No budget has been set';
+
+  @override
   String get allCategories => 'All';
 
   @override

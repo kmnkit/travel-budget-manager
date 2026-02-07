@@ -239,6 +239,33 @@
   "periodMonth": "This Month",
   "periodCustom": "Custom",
 
+  "@_BUDGET_FORECAST": {},
+  "budgetForecast": "Budget Forecast",
+  "budgetBurndownChart": "Budget Burn-down",
+  "projectedTotal": "Projected Total",
+  "dailySpending": "Daily Spending",
+  "daysUntilExhaustion": "Days Until Exhaustion",
+  "daysUntilExhaustionValue": "{days} days",
+  "@daysUntilExhaustionValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetSufficient": "Budget Sufficient",
+  "forecastStatusOnTrack": "On Track",
+  "forecastStatusAtRisk": "At Risk",
+  "forecastStatusOverBudget": "Over Budget",
+  "forecastStatusExhausted": "Exhausted",
+  "actualSpending": "Actual Spending",
+  "projectedSpending": "Projected",
+  "budgetLimit": "Budget Limit",
+  "bestCase": "Best Case",
+  "worstCase": "Worst Case",
+  "confidenceInterval": "Confidence Interval",
+  "noBudgetSet": "No budget has been set",
+
   "@_FILTER_SORT": {},
   "allCategories": "All",
   "sortByDate": "Latest First",
