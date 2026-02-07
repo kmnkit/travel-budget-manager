@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 import 'package:trip_wallet/features/consent/presentation/providers/consent_providers.dart';
-import 'package:trip_wallet/features/consent/data/datasources/consent_local_datasource.dart';
 import 'package:trip_wallet/features/consent/data/repositories/consent_repository_impl.dart';
 import 'app.dart';
 
@@ -19,9 +18,8 @@ void main() async {
   // Initialize SharedPreferences
   final prefs = await SharedPreferences.getInstance();
 
-  // Initialize consent data source and repository
-  final consentDataSource = ConsentLocalDataSource(prefs);
-  final consentRepository = ConsentRepositoryImpl(consentDataSource);
+  // Initialize consent repository
+  final consentRepository = ConsentRepositoryImpl(prefs);
 
   runApp(
     ProviderScope(

@@ -17,11 +17,11 @@ final analyticsRepositoryProvider = Provider<AnalyticsRepository>((ref) {
 
 /// Provider that initializes analytics based on consent status
 final analyticsInitializerProvider = FutureProvider<void>((ref) async {
-  final consentStatus = await ref.watch(consentStatusProvider.future);
+  final consentRecord = await ref.watch(consentRecordProvider.future);
   final analyticsRepo = ref.read(analyticsRepositoryProvider);
 
-  // Enable analytics only if user consented
-  final enabled = consentStatus?.analyticsConsent ?? false;
+  // Enable analytics only if user has given valid consent
+  final enabled = consentRecord?.hasValidConsent ?? false;
   await analyticsRepo.setAnalyticsEnabled(enabled);
 
   // Set anonymous user properties

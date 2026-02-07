@@ -16,7 +16,7 @@ class TripWalletApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final consentAsync = ref.watch(consentCompletedProvider);
+    final consentAsync = ref.watch(consentRecordProvider);
     final onboardingAsync = ref.watch(onboardingCompletedProvider);
     final locale = ref.watch(localeProvider);
 
@@ -26,8 +26,8 @@ class TripWalletApp extends ConsumerWidget {
     }
 
     // 2. Consent not completed -> Show consent screen
-    final consentCompleted = consentAsync.value ?? false;
-    if (!consentCompleted) {
+    final consentRecord = consentAsync.value;
+    if (consentRecord != null && !consentRecord.hasValidConsent) {
       return _buildConsentApp(ref, locale);
     }
 
@@ -82,8 +82,8 @@ class TripWalletApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       home: ConsentScreen(
-        onComplete: () {
-          ref.invalidate(consentCompletedProvider);
+        onConsentGiven: () {
+          ref.invalidate(consentRecordProvider);
         },
       ),
     );

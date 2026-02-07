@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_wallet/app.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 import 'package:trip_wallet/features/consent/presentation/providers/consent_providers.dart';
-import 'package:trip_wallet/features/consent/data/datasources/consent_local_datasource.dart';
 import 'package:trip_wallet/features/consent/data/repositories/consent_repository_impl.dart';
 
 /// Screenshot test for App Store submission
@@ -28,9 +27,8 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
 
-      // Initialize consent data source and repository
-      final consentDataSource = ConsentLocalDataSource(prefs);
-      final consentRepository = ConsentRepositoryImpl(consentDataSource);
+      // Initialize consent repository
+      final consentRepository = ConsentRepositoryImpl(prefs);
 
       // Start app without Firebase
       await tester.pumpWidget(

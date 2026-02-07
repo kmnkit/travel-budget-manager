@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
-import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
+// import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
 import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
@@ -74,7 +74,7 @@ class HomeScreen extends ConsumerWidget {
                     if (shouldShowAds && index == 0) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: AdBannerWidget(),
+                        child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
                       );
                     }
 
@@ -97,7 +97,7 @@ class HomeScreen extends ConsumerWidget {
                     if (isAdPosition) {
                       return const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: AdBannerWidget(),
+                        child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
                       );
                     }
 

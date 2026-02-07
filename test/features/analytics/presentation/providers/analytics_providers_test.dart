@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:trip_wallet/features/analytics/domain/repositories/analytics_repository.dart';
 import 'package:trip_wallet/features/analytics/presentation/providers/analytics_providers.dart';
-import 'package:trip_wallet/features/consent/domain/entities/consent_status.dart';
+import 'package:trip_wallet/features/consent/domain/entities/consent_record.dart';
 import 'package:trip_wallet/features/consent/presentation/providers/consent_providers.dart';
 import 'package:trip_wallet/features/consent/domain/repositories/consent_repository.dart';
 
@@ -56,14 +56,13 @@ void main() {
     group('analyticsInitializerProvider', () {
       test('enables analytics when user has consented', () async {
         // Arrange
-        final consentStatus = ConsentStatus(
-          analyticsConsent: true,
-          personalizedAdsConsent: false,
-          attGranted: false,
-          consentDate: DateTime.now(),
+        final consentRecord = ConsentRecord(
+          isAccepted: true,
+          acceptedAt: DateTime.now(),
+          policyVersion: '1.0',
         );
-        when(() => mockConsentRepo.getConsentStatus())
-            .thenAnswer((_) async => consentStatus);
+        when(() => mockConsentRepo.getConsentRecord())
+            .thenAnswer((_) async => consentRecord);
         when(() => mockAnalyticsRepo.setAnalyticsEnabled(true))
             .thenAnswer((_) async {});
 
@@ -76,14 +75,13 @@ void main() {
 
       test('disables analytics when user has not consented', () async {
         // Arrange
-        final consentStatus = ConsentStatus(
-          analyticsConsent: false,
-          personalizedAdsConsent: false,
-          attGranted: false,
-          consentDate: DateTime.now(),
+        final consentRecord = ConsentRecord(
+          isAccepted: false,
+          acceptedAt: null,
+          policyVersion: '',
         );
-        when(() => mockConsentRepo.getConsentStatus())
-            .thenAnswer((_) async => consentStatus);
+        when(() => mockConsentRepo.getConsentRecord())
+            .thenAnswer((_) async => consentRecord);
         when(() => mockAnalyticsRepo.setAnalyticsEnabled(false))
             .thenAnswer((_) async {});
 
@@ -94,10 +92,15 @@ void main() {
         verify(() => mockAnalyticsRepo.setAnalyticsEnabled(false)).called(1);
       });
 
-      test('disables analytics when consent status is null', () async {
+      test('disables analytics when consent record is null', () async {
         // Arrange
-        when(() => mockConsentRepo.getConsentStatus())
-            .thenAnswer((_) async => null);
+        const consentRecord = ConsentRecord(
+          isAccepted: false,
+          acceptedAt: null,
+          policyVersion: '',
+        );
+        when(() => mockConsentRepo.getConsentRecord())
+            .thenAnswer((_) async => consentRecord);
         when(() => mockAnalyticsRepo.setAnalyticsEnabled(false))
             .thenAnswer((_) async {});
 

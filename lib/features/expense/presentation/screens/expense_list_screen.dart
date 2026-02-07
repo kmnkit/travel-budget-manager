@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
-import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
+// import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense_category.dart';
 import 'package:trip_wallet/features/expense/presentation/providers/expense_providers.dart';
@@ -102,7 +102,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                   if (shouldShowAds && index == 0) {
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: AdBannerWidget(),
+                      child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
                     );
                   }
 
@@ -125,7 +125,7 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                   if (isAdPosition) {
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: AdBannerWidget(),
+                      child: const SizedBox.shrink(), // TODO: Add AdBannerWidget
                     );
                   }
 
