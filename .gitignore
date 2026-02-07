@@ -51,6 +51,10 @@ app.*.map.json
 # Android build reports
 android/build/
 
+# Firebase config (contains API keys)
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
+
 # App Store Connect API Key
 AuthKey_*.p8
 
