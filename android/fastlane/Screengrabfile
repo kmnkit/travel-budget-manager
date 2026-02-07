@@ -1,0 +1,47 @@
+# Screengrabfile for automated screenshot generation
+# See https://docs.fastlane.tools/actions/screengrab/
+
+# Path to the workspace or the Xcode project (not needed for Flutter)
+# app_package_name('com.kmnkit.trip_wallet')
+
+# Path to the APK to use
+# app_apk_path('app-debug.apk')
+
+# Path to the tests APK to use
+# tests_apk_path('app-debug-androidTest.apk')
+
+# Use the device or emulator with the given Identifier
+# use_tests_in_packages(['com.kmnkit.trip_wallet.test'])
+
+# Fully qualified name of the test class to use
+# use_tests_in_classes(['com.kmnkit.trip_wallet.ScreenshotTest'])
+
+# Path to the screenshot output directory
+output_directory('./fastlane/metadata/android')
+
+# Clear all previously generated screenshots before creating new ones
+clear_previous_screenshots(true)
+
+# Locales to capture screenshots for
+locales(['en-US', 'ko-KR'])
+
+# Device types to capture screenshots for
+# device_type('phone')  # phone, sevenInch, tenInch
+
+# Skip device type cleanup
+# skip_cleanup(false)
+
+# Launch arguments to pass to the app
+# app_instrumentation_runner('androidx.test.runner.AndroidJUnitRunner')
+
+# Number of times to retry launching the app
+# launch_arguments([])
+
+# Timeout for each screenshot
+# timeout(180)
+
+# Reinstall the app before capturing
+reinstall_app(true)
+
+# Use adb devices to get a list of connected devices
+# adb_host('localhost')

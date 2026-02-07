@@ -8,6 +8,7 @@ import 'package:trip_wallet/features/expense/presentation/screens/expense_form_s
 import 'package:trip_wallet/features/payment_method/presentation/screens/payment_method_screen.dart';
 import 'package:trip_wallet/features/settings/presentation/screens/settings_screen.dart';
 import 'package:trip_wallet/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:trip_wallet/features/premium/presentation/screens/premium_screen.dart';
 
 // Placeholder screens for compilation - will be replaced by actual screens
 class _PlaceholderScreen extends StatelessWidget {
@@ -100,6 +101,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/settings',
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/premium',
+        name: 'premium',
+        builder: (context, state) => const PremiumScreen(),
       ),
     ],
   );
