@@ -529,4 +529,44 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => '시작하기';
+
+  @override
+  String get consentTitle => '개인정보 보호 및 데이터 처리';
+
+  @override
+  String get consentDescription =>
+      'TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.';
+
+  @override
+  String get consentAccept => '동의합니다';
+
+  @override
+  String get consentDecline => '동의하지 않습니다';
+
+  @override
+  String get consentViewFullPolicy => '전체 개인정보 처리방침 보기';
+
+  @override
+  String get consentDeclineTitle => '동의 필요';
+
+  @override
+  String get consentDeclineMessage =>
+      'TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.';
+
+  @override
+  String get consentDeclineUnderstand => '이해했습니다';
+
+  @override
+  String get consentStatus => '개인정보 동의 상태';
+
+  @override
+  String consentAcceptedOn(String date) {
+    return '$date에 동의함';
+  }
+
+  @override
+  String get consentNotGiven => '아직 동의하지 않음';
+
+  @override
+  String get consentSaveError => '동의 저장에 실패했습니다. 다시 시도해주세요.';
 }

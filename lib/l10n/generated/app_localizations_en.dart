@@ -534,4 +534,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get consentTitle => 'Privacy & Data Protection';
+
+  @override
+  String get consentDescription =>
+      'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.';
+
+  @override
+  String get consentAccept => 'I Accept';
+
+  @override
+  String get consentDecline => 'I Decline';
+
+  @override
+  String get consentViewFullPolicy => 'View Full Privacy Policy';
+
+  @override
+  String get consentDeclineTitle => 'Consent Required';
+
+  @override
+  String get consentDeclineMessage =>
+      'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.';
+
+  @override
+  String get consentDeclineUnderstand => 'I Understand';
+
+  @override
+  String get consentStatus => 'Privacy Consent Status';
+
+  @override
+  String consentAcceptedOn(String date) {
+    return 'Accepted on $date';
+  }
+
+  @override
+  String get consentNotGiven => 'Not given yet';
+
+  @override
+  String get consentSaveError => 'Failed to save consent. Please try again.';
 }

@@ -35,6 +35,7 @@ dependencies:
   dio: ^5.7.0
   google_fonts: ^8.0.0
   fl_chart: ^1.1.1
+  flutter_markdown: ^0.7.4
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   uuid: ^4.5.1
@@ -60,3 +61,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/privacy-policy-en.md
+    - assets/privacy-policy-ko.md
