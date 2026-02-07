@@ -11,17 +11,7 @@ import 'package:trip_wallet/features/onboarding/presentation/screens/onboarding_
 import 'package:trip_wallet/features/analytics/presentation/providers/analytics_providers.dart';
 import 'package:trip_wallet/features/analytics/presentation/observers/analytics_route_observer.dart';
 import 'package:trip_wallet/features/premium/presentation/screens/premium_screen.dart';
-
-// Placeholder screens for compilation - will be replaced by actual screens
-class _PlaceholderScreen extends StatelessWidget {
-  final String title;
-  const _PlaceholderScreen({required this.title});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(title)),
-    body: Center(child: Text(title)),
-  );
-}
+import 'package:trip_wallet/features/trip/presentation/screens/trip_detail_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final analyticsRepository = ref.watch(analyticsRepositoryProvider);
@@ -60,7 +50,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           if (tripId == null) {
             return const HomeScreen();
           }
-          return _PlaceholderScreen(title: 'Trip $tripId');
+          return TripDetailScreen(tripId: tripId);
         },
         routes: [
           GoRoute(
