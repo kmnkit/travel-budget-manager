@@ -155,7 +155,7 @@ class TripNotifier extends Notifier<void> {
 // ============================================================================
 
 /// Trip filter options for the home screen
-enum TripFilter { all, active, past }
+enum TripFilter { all, upcoming, active, past }
 
 /// Notifier for the currently selected trip filter
 class TripFilterNotifier extends Notifier<TripFilter> {
@@ -179,6 +179,7 @@ final filteredTripListProvider = Provider<AsyncValue<List<Trip>>>((ref) {
   return tripsAsync.whenData((trips) {
     return switch (filter) {
       TripFilter.all => trips,
+      TripFilter.upcoming => trips.where((t) => t.status == TripStatus.upcoming).toList(),
       TripFilter.active => trips.where((t) => t.status == TripStatus.ongoing).toList(),
       TripFilter.past => trips.where((t) => t.status == TripStatus.completed).toList(),
     };

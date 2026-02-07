@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/utils/date_formatter.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
 import 'package:trip_wallet/features/budget/presentation/widgets/budget_summary_card.dart';
+import 'package:trip_wallet/features/exchange_rate/presentation/screens/exchange_rate_screen.dart';
 import 'package:trip_wallet/features/expense/presentation/screens/expense_list_screen.dart';
 import 'package:trip_wallet/features/export/presentation/widgets/export_button.dart';
+import 'package:trip_wallet/features/statistics/presentation/screens/statistics_screen.dart';
 import 'package:trip_wallet/features/trip/domain/entities/trip.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
@@ -125,8 +127,14 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                   controller: _tabController,
                   children: [
                     ExpenseListScreen(tripId: widget.tripId),
-                    const Center(child: Text('환율')),
-                    const Center(child: Text('통계')),
+                    ExchangeRateScreen(
+                      tripId: widget.tripId,
+                      baseCurrency: trip.baseCurrency,
+                    ),
+                    StatisticsScreen(
+                      tripId: widget.tripId,
+                      currencyCode: trip.baseCurrency,
+                    ),
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:trip_wallet/core/constants/app_constants.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
 import 'package:trip_wallet/core/utils/date_formatter.dart';
+import 'package:trip_wallet/features/budget/domain/entities/budget_summary.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
 import 'package:trip_wallet/features/budget/presentation/widgets/linear_budget_progress.dart';
 import 'package:trip_wallet/features/trip/domain/entities/trip.dart';
@@ -128,29 +129,74 @@ class TripCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    CurrencyFormatter.format(
-                                      summary.totalSpent,
-                                      trip.baseCurrency,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppColors.textSecondary,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.surfaceVariant,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '지출',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: AppColors.textHint,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            CurrencyFormatter.format(
+                                              summary.totalSpent,
+                                              trip.baseCurrency,
+                                            ),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.textPrimary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    '${summary.percentUsed.toStringAsFixed(0)}%',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppColors.textSecondary,
-                                      fontWeight: FontWeight.w500,
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: _getStatusColor(summary.status),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '사용률',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: AppColors.textHint,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            '${summary.percentUsed.toStringAsFixed(0)}%',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.textPrimary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 8),
                               LinearBudgetProgress(
                                 percentUsed: summary.percentUsed,
                                 status: summary.status,
@@ -170,5 +216,19 @@ class TripCard extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+/// Returns background color based on budget status
+Color _getStatusColor(BudgetStatus status) {
+  switch (status) {
+    case BudgetStatus.comfortable:
+      return AppColors.budgetComfortable.withValues(alpha: 0.1);
+    case BudgetStatus.caution:
+      return AppColors.budgetCaution.withValues(alpha: 0.1);
+    case BudgetStatus.warning:
+      return AppColors.budgetWarning.withValues(alpha: 0.1);
+    case BudgetStatus.exceeded:
+      return AppColors.budgetExceeded.withValues(alpha: 0.15);
   }
 }

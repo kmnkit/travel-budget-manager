@@ -228,6 +228,8 @@ class _FilterChips extends ConsumerWidget {
     switch (filter) {
       case TripFilter.all:
         return context.l10n.filterAllTrips;
+      case TripFilter.upcoming:
+        return '예정';
       case TripFilter.active:
         return context.l10n.filterActive;
       case TripFilter.past:

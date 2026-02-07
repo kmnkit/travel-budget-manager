@@ -55,6 +55,30 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   void initState() {
     super.initState();
     _amountController.addListener(_onAmountChanged);
+
+    // 날짜 및 통화 초기화
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final tripAsync = ref.read(tripDetailProvider(widget.tripId));
+      if (tripAsync.hasValue && tripAsync.value != null) {
+        final trip = tripAsync.value!;
+        final now = DateTime.now();
+
+        // 날짜를 여행 기간으로 clamp
+        DateTime initialDate;
+        if (now.isBefore(trip.startDate)) {
+          initialDate = trip.startDate;
+        } else if (now.isAfter(trip.endDate)) {
+          initialDate = trip.endDate;
+        } else {
+          initialDate = now;
+        }
+
+        setState(() {
+          _selectedDate = initialDate;
+          _selectedCurrency = trip.baseCurrency; // 통화를 여행 통화로 초기화
+        });
+      }
+    });
   }
 
   @override
