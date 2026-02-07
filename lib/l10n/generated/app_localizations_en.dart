@@ -703,61 +703,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingGetStarted => 'Get Started';
 
   @override
-  String get consentTitle => 'Data Collection Consent';
-
-  @override
-  String get consentWelcome => 'Welcome to Trip Wallet';
+  String get consentTitle => 'Privacy & Data Protection';
 
   @override
   String get consentDescription =>
-      'Please consent to the following data collection for better service.';
+      'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.';
 
   @override
-  String get consentDataCollected => 'Data We Collect';
+  String get consentAccept => 'I Accept';
 
   @override
-  String get consentDataCollectedList =>
-      '• Screen view history\n• Button click events\n• Feature usage frequency\n• App performance data\n• Device type and OS version';
+  String get consentDecline => 'I Decline';
 
   @override
-  String get consentDataNotCollected => 'Data We Don\'t Collect';
+  String get consentViewFullPolicy => 'View Full Privacy Policy';
 
   @override
-  String get consentDataNotCollectedList =>
-      '• Personal information (name, email)\n• Actual expense amounts and budgets\n• Travel destinations\n• Payment method details';
+  String get consentDeclineTitle => 'Consent Required';
 
   @override
-  String get consentAnalytics => 'Analytics Consent (Optional)';
+  String get consentDeclineMessage =>
+      'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.';
 
   @override
-  String get consentAnalyticsDesc =>
-      'We collect anonymous usage data to improve our service.';
+  String get consentDeclineUnderstand => 'I Understand';
 
   @override
-  String get consentPersonalizedAds => 'Personalized Ads Consent (Optional)';
+  String get consentStatus => 'Privacy Consent Status';
 
   @override
-  String get consentPersonalizedAdsDesc => 'Show ads based on your interests.';
+  String consentAcceptedOn(String date) {
+    return 'Accepted on $date';
+  }
 
   @override
-  String get consentPrivacyPolicy => 'Privacy Policy';
+  String get consentNotGiven => 'Not given yet';
 
   @override
-  String get consentAcceptAll => 'Accept All';
-
-  @override
-  String get consentAcceptSelected => 'Accept Selected';
-
-  @override
-  String get consentContinueWithout => 'Continue Without Consent';
-
-  @override
-  String get consentWithdrawTitle => 'Withdraw Consent';
-
-  @override
-  String get consentWithdrawMessage =>
-      'You can request deletion of collected data when withdrawing consent.';
-
-  @override
-  String get consentWithdrawButton => 'Withdraw Consent';
+  String get consentSaveError => 'Failed to save consent. Please try again.';
 }

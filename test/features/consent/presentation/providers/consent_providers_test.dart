@@ -1,281 +1,162 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:trip_wallet/features/consent/domain/entities/consent_status.dart';
+import 'package:trip_wallet/features/consent/domain/entities/consent_record.dart';
 import 'package:trip_wallet/features/consent/domain/repositories/consent_repository.dart';
 import 'package:trip_wallet/features/consent/presentation/providers/consent_providers.dart';
 
 class MockConsentRepository extends Mock implements ConsentRepository {}
 
+class FakeConsentRecord extends Fake implements ConsentRecord {}
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late MockConsentRepository mockRepository;
-  late ProviderContainer container;
 
   setUpAll(() {
-    registerFallbackValue(const ConsentStatus(
-      analyticsConsent: false,
-      personalizedAdsConsent: false,
-      attGranted: false,
-      consentDate: null,
-    ));
+    registerFallbackValue(FakeConsentRecord());
+    registerFallbackValue(
+      const AsyncValue<ConsentRecord>.loading(),
+    );
   });
 
   setUp(() {
     mockRepository = MockConsentRepository();
-    container = ProviderContainer(
-      overrides: [
-        consentRepositoryProvider.overrideWithValue(mockRepository),
-      ],
-    );
   });
 
-  tearDown(() {
-    container.dispose();
-  });
+  group('consentRepositoryProvider', () {
+    test('provides ConsentRepository instance', () {
+      final container = ProviderContainer(
+        overrides: [
+          consentRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+      );
+      addTearDown(container.dispose);
 
-  group('consentCompletedProvider', () {
-    test('should return true when consent is completed', () async {
-      // Arrange
-      when(() => mockRepository.isConsentCompleted())
-          .thenAnswer((_) async => true);
-
-      // Act
-      final result = await container.read(consentCompletedProvider.future);
-
-      // Assert
-      expect(result, true);
-      verify(() => mockRepository.isConsentCompleted()).called(1);
-    });
-
-    test('should return false when consent is not completed', () async {
-      // Arrange
-      when(() => mockRepository.isConsentCompleted())
-          .thenAnswer((_) async => false);
-
-      // Act
-      final result = await container.read(consentCompletedProvider.future);
-
-      // Assert
-      expect(result, false);
-      verify(() => mockRepository.isConsentCompleted()).called(1);
+      final repository = container.read(consentRepositoryProvider);
+      expect(repository, equals(mockRepository));
     });
   });
 
-  group('consentStatusProvider', () {
-    test('should return ConsentStatus when saved', () async {
-      // Arrange
-      final consentDate = DateTime(2024, 1, 1);
-      final expectedStatus = ConsentStatus(
-        analyticsConsent: true,
-        personalizedAdsConsent: false,
-        attGranted: true,
-        consentDate: consentDate,
+  group('consentRecordProvider', () {
+    test('loads consent record successfully', () async {
+      final consentRecord = const ConsentRecord(
+        isAccepted: true,
+        acceptedAt: null,
+        policyVersion: '1.0.0',
       );
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => expectedStatus);
 
-      // Act
-      final result = await container.read(consentStatusProvider.future);
+      when(() => mockRepository.getConsentRecord())
+          .thenAnswer((_) async => consentRecord);
 
-      // Assert
-      expect(result, expectedStatus);
-      verify(() => mockRepository.getConsentStatus()).called(1);
+      final container = ProviderContainer(
+        overrides: [
+          consentRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final listener = Listener<AsyncValue<ConsentRecord>>();
+      container.listen(
+        consentRecordProvider,
+        listener.call,
+        fireImmediately: true,
+      );
+
+      // Initial loading state
+      verify(() => listener(null, const AsyncValue.loading()));
+
+      // Wait for data
+      final result = await container.read(consentRecordProvider.future);
+
+      expect(result, equals(consentRecord));
+      verify(() => mockRepository.getConsentRecord()).called(1);
+
+      // Verify data state
+      verify(() => listener(
+            const AsyncValue.loading(),
+            AsyncValue.data(consentRecord),
+          ));
+
+      verifyNoMoreInteractions(listener);
     });
 
-    test('should return null when no consent saved', () async {
-      // Arrange
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
+    test('handles error when repository fails', () async {
+      final exception = Exception('Failed to load consent record');
 
-      // Act
-      final result = await container.read(consentStatusProvider.future);
+      when(() => mockRepository.getConsentRecord())
+          .thenThrow(exception);
 
-      // Assert
-      expect(result, isNull);
-      verify(() => mockRepository.getConsentStatus()).called(1);
+      final container = ProviderContainer(
+        overrides: [
+          consentRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      // Subscribe to trigger the provider
+      container.listen(consentRecordProvider, (_, _) {});
+
+      // Wait for error to propagate
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+
+      // Verify error state
+      final state = container.read(consentRecordProvider);
+      expect(state.hasError, isTrue);
+      expect(state.error, isA<Exception>());
+    });
+
+    test('returns consent record with valid consent', () async {
+      final consentRecord = ConsentRecord(
+        isAccepted: true,
+        acceptedAt: DateTime(2024, 1, 1),
+        policyVersion: '1.0.0',
+      );
+
+      when(() => mockRepository.getConsentRecord())
+          .thenAnswer((_) async => consentRecord);
+
+      final container = ProviderContainer(
+        overrides: [
+          consentRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final result = await container.read(consentRecordProvider.future);
+
+      expect(result.hasValidConsent, isTrue);
+      expect(result.isAccepted, isTrue);
+      expect(result.acceptedAt, isNotNull);
+    });
+
+    test('returns consent record without valid consent', () async {
+      const consentRecord = ConsentRecord(
+        isAccepted: false,
+        acceptedAt: null,
+        policyVersion: '1.0.0',
+      );
+
+      when(() => mockRepository.getConsentRecord())
+          .thenAnswer((_) async => consentRecord);
+
+      final container = ProviderContainer(
+        overrides: [
+          consentRepositoryProvider.overrideWithValue(mockRepository),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final result = await container.read(consentRecordProvider.future);
+
+      expect(result.hasValidConsent, isFalse);
+      expect(result.isAccepted, isFalse);
+      expect(result.acceptedAt, isNull);
     });
   });
+}
 
-  group('ConsentNotifier', () {
-    test('should initialize with loading state and then load consent', () async {
-      // Arrange
-      final consentDate = DateTime(2024, 1, 1);
-      final expectedStatus = ConsentStatus(
-        analyticsConsent: true,
-        personalizedAdsConsent: false,
-        attGranted: true,
-        consentDate: consentDate,
-      );
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => expectedStatus);
-
-      // Act
-      container.read(consentNotifierProvider.notifier);
-
-      // Wait for async initialization
-      await Future.delayed(Duration.zero);
-
-      // Assert
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasValue, true);
-      expect(state.value, expectedStatus);
-      verify(() => mockRepository.getConsentStatus()).called(1);
-    });
-
-    test('should handle error when loading consent fails', () async {
-      // Arrange
-      final error = Exception('Failed to load');
-      when(() => mockRepository.getConsentStatus()).thenAnswer((_) async => throw error);
-
-      // Act
-      container.read(consentNotifierProvider.notifier);
-
-      // Wait for async initialization
-      await Future.delayed(Duration.zero);
-
-      // Assert
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasError, true);
-      expect(state.error, error);
-    });
-
-    test('should save consent status successfully', () async {
-      // Arrange
-      // Initial load returns null
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
-      when(() => mockRepository.saveConsentStatus(any()))
-          .thenAnswer((_) async {});
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-      await notifier.saveConsent(
-        analyticsConsent: true,
-        personalizedAdsConsent: false,
-      );
-
-      // Assert
-      verify(() => mockRepository.saveConsentStatus(any())).called(1);
-
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasValue, true);
-      expect(state.value?.analyticsConsent, true);
-      expect(state.value?.personalizedAdsConsent, false);
-      expect(state.value?.attGranted, false); // Non-iOS defaults to false
-      expect(state.value?.consentDate, isNotNull);
-    });
-
-    test('should handle error when saving consent fails', () async {
-      // Arrange
-      final error = Exception('Failed to save');
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
-      when(() => mockRepository.saveConsentStatus(any())).thenAnswer((_) async => throw error);
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-      await notifier.saveConsent(
-        analyticsConsent: true,
-        personalizedAdsConsent: false,
-      );
-
-      // Assert
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasError, true);
-      expect(state.error, error);
-    });
-
-    test('should clear consent successfully', () async {
-      // Arrange
-      final initialStatus = ConsentStatus(
-        analyticsConsent: true,
-        personalizedAdsConsent: false,
-        attGranted: true,
-        consentDate: DateTime(2024, 1, 1),
-      );
-
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => initialStatus);
-      when(() => mockRepository.clearConsent()).thenAnswer((_) async {});
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-
-      // Wait for initial load
-      await Future.delayed(Duration.zero);
-
-      await notifier.clearConsent();
-
-      // Assert
-      verify(() => mockRepository.clearConsent()).called(1);
-
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasValue, true);
-      expect(state.value, isNull);
-    });
-
-    test('should handle error when clearing consent fails', () async {
-      // Arrange
-      final error = Exception('Failed to clear');
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
-      when(() => mockRepository.clearConsent()).thenAnswer((_) async => throw error);
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-      await notifier.clearConsent();
-
-      // Assert
-      final state = container.read(consentNotifierProvider);
-      expect(state.hasError, true);
-      expect(state.error, error);
-    });
-
-    test('should invalidate related providers after saving consent', () async {
-      // Arrange
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
-      when(() => mockRepository.saveConsentStatus(any()))
-          .thenAnswer((_) async {});
-      when(() => mockRepository.isConsentCompleted())
-          .thenAnswer((_) async => true);
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-      await notifier.saveConsent(
-        analyticsConsent: true,
-        personalizedAdsConsent: true,
-      );
-
-      // Read the invalidated providers to verify they fetch fresh data
-      final isCompleted = await container.read(consentCompletedProvider.future);
-
-      // Assert
-      expect(isCompleted, true);
-      // Verify repository methods were called
-      verify(() => mockRepository.saveConsentStatus(any())).called(1);
-      verify(() => mockRepository.isConsentCompleted()).called(1);
-    });
-
-    test('should invalidate related providers after clearing consent', () async {
-      // Arrange
-      when(() => mockRepository.getConsentStatus())
-          .thenAnswer((_) async => null);
-      when(() => mockRepository.clearConsent()).thenAnswer((_) async {});
-      when(() => mockRepository.isConsentCompleted())
-          .thenAnswer((_) async => false);
-
-      // Act
-      final notifier = container.read(consentNotifierProvider.notifier);
-      await notifier.clearConsent();
-
-      // Read the invalidated providers to verify they fetch fresh data
-      final isCompleted = await container.read(consentCompletedProvider.future);
-
-      // Assert
-      expect(isCompleted, false);
-      verify(() => mockRepository.clearConsent()).called(1);
-      verify(() => mockRepository.isConsentCompleted()).called(1);
-    });
-  });
+class Listener<T> extends Mock {
+  void call(T? previous, T next);
 }

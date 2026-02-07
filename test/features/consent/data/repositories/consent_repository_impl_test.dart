@@ -1,142 +1,166 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:trip_wallet/features/consent/data/datasources/consent_local_datasource.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_wallet/features/consent/data/repositories/consent_repository_impl.dart';
-import 'package:trip_wallet/features/consent/domain/entities/consent_status.dart';
 
-class MockConsentLocalDataSource extends Mock implements ConsentLocalDataSource {}
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  late MockConsentLocalDataSource mockDataSource;
+  late MockSharedPreferences mockPrefs;
   late ConsentRepositoryImpl repository;
 
-  setUpAll(() {
-    registerFallbackValue(const ConsentStatus(
-      analyticsConsent: false,
-      personalizedAdsConsent: false,
-      attGranted: false,
-      consentDate: null,
-    ));
-  });
-
   setUp(() {
-    mockDataSource = MockConsentLocalDataSource();
-    repository = ConsentRepositoryImpl(mockDataSource);
+    mockPrefs = MockSharedPreferences();
+    repository = ConsentRepositoryImpl(mockPrefs);
   });
 
   group('ConsentRepositoryImpl', () {
-    group('getConsentStatus', () {
-      test('should return ConsentStatus from datasource', () async {
-        // Arrange
-        final consentDate = DateTime(2024, 1, 1);
-        final expectedStatus = ConsentStatus(
-          analyticsConsent: true,
-          personalizedAdsConsent: false,
-          attGranted: true,
-          consentDate: consentDate,
-        );
-        when(() => mockDataSource.getConsentStatus())
-            .thenAnswer((_) async => expectedStatus);
+    group('getConsentRecord', () {
+      test('returns consent accepted with all data when all keys exist', () async {
+        const version = '1.0.0';
+        final timestamp = DateTime(2024, 1, 1).millisecondsSinceEpoch;
 
-        // Act
-        final result = await repository.getConsentStatus();
+        when(() => mockPrefs.getBool('privacy_consent_accepted')).thenReturn(true);
+        when(() => mockPrefs.getInt('privacy_consent_timestamp')).thenReturn(timestamp);
+        when(() => mockPrefs.getString('privacy_consent_version')).thenReturn(version);
 
-        // Assert
-        expect(result, expectedStatus);
-        verify(() => mockDataSource.getConsentStatus()).called(1);
+        final result = await repository.getConsentRecord();
+
+        expect(result.isAccepted, true);
+        expect(result.acceptedAt, DateTime.fromMillisecondsSinceEpoch(timestamp));
+        expect(result.policyVersion, version);
+        expect(result.hasValidConsent, true);
+
+        verify(() => mockPrefs.getBool('privacy_consent_accepted')).called(1);
+        verify(() => mockPrefs.getInt('privacy_consent_timestamp')).called(1);
+        verify(() => mockPrefs.getString('privacy_consent_version')).called(1);
       });
 
-      test('should return null when no consent saved', () async {
-        // Arrange
-        when(() => mockDataSource.getConsentStatus())
-            .thenAnswer((_) async => null);
+      test('returns not accepted when consent key is false', () async {
+        when(() => mockPrefs.getBool('privacy_consent_accepted')).thenReturn(false);
+        when(() => mockPrefs.getInt('privacy_consent_timestamp')).thenReturn(null);
+        when(() => mockPrefs.getString('privacy_consent_version')).thenReturn(null);
 
-        // Act
-        final result = await repository.getConsentStatus();
+        final result = await repository.getConsentRecord();
 
-        // Assert
-        expect(result, isNull);
-        verify(() => mockDataSource.getConsentStatus()).called(1);
+        expect(result.isAccepted, false);
+        expect(result.acceptedAt, null);
+        expect(result.policyVersion, '');
+        expect(result.hasValidConsent, false);
+      });
+
+      test('returns not accepted when consent key does not exist', () async {
+        when(() => mockPrefs.getBool('privacy_consent_accepted')).thenReturn(null);
+        when(() => mockPrefs.getInt('privacy_consent_timestamp')).thenReturn(null);
+        when(() => mockPrefs.getString('privacy_consent_version')).thenReturn(null);
+
+        final result = await repository.getConsentRecord();
+
+        expect(result.isAccepted, false);
+        expect(result.acceptedAt, null);
+        expect(result.policyVersion, '');
+        expect(result.hasValidConsent, false);
+      });
+
+      test('returns accepted with null timestamp when timestamp is missing', () async {
+        const version = '1.0.0';
+
+        when(() => mockPrefs.getBool('privacy_consent_accepted')).thenReturn(true);
+        when(() => mockPrefs.getInt('privacy_consent_timestamp')).thenReturn(null);
+        when(() => mockPrefs.getString('privacy_consent_version')).thenReturn(version);
+
+        final result = await repository.getConsentRecord();
+
+        expect(result.isAccepted, true);
+        expect(result.acceptedAt, null);
+        expect(result.policyVersion, version);
+        expect(result.hasValidConsent, false); // No valid consent without timestamp
+      });
+
+      test('returns accepted with empty version when version is missing', () async {
+        final timestamp = DateTime(2024, 1, 1).millisecondsSinceEpoch;
+
+        when(() => mockPrefs.getBool('privacy_consent_accepted')).thenReturn(true);
+        when(() => mockPrefs.getInt('privacy_consent_timestamp')).thenReturn(timestamp);
+        when(() => mockPrefs.getString('privacy_consent_version')).thenReturn(null);
+
+        final result = await repository.getConsentRecord();
+
+        expect(result.isAccepted, true);
+        expect(result.acceptedAt, DateTime.fromMillisecondsSinceEpoch(timestamp));
+        expect(result.policyVersion, '');
+        expect(result.hasValidConsent, true); // Still valid if we have accepted + timestamp
+      });
+
+      test('returns default ConsentRecord when exception occurs', () async {
+        when(() => mockPrefs.getBool('privacy_consent_accepted'))
+            .thenThrow(Exception('SharedPreferences error'));
+
+        final result = await repository.getConsentRecord();
+
+        expect(result.isAccepted, false);
+        expect(result.acceptedAt, null);
+        expect(result.policyVersion, '');
+        expect(result.hasValidConsent, false);
       });
     });
 
-    group('saveConsentStatus', () {
-      test('should call datasource to save consent status', () async {
-        // Arrange
-        final consentDate = DateTime(2024, 1, 1);
-        final status = ConsentStatus(
-          analyticsConsent: true,
-          personalizedAdsConsent: true,
-          attGranted: false,
-          consentDate: consentDate,
-        );
-        when(() => mockDataSource.saveConsentStatus(any()))
-            .thenAnswer((_) async {});
+    group('setConsentAccepted', () {
+      test('persists consent accepted with timestamp and version', () async {
+        const version = '1.0.0';
 
-        // Act
-        await repository.saveConsentStatus(status);
-
-        // Assert
-        verify(() => mockDataSource.saveConsentStatus(status)).called(1);
-      });
-
-      test('should save consent with null date', () async {
-        // Arrange
-        final status = ConsentStatus(
-          analyticsConsent: false,
-          personalizedAdsConsent: false,
-          attGranted: false,
-          consentDate: null,
-        );
-        when(() => mockDataSource.saveConsentStatus(any()))
-            .thenAnswer((_) async {});
-
-        // Act
-        await repository.saveConsentStatus(status);
-
-        // Assert
-        verify(() => mockDataSource.saveConsentStatus(status)).called(1);
-      });
-    });
-
-    group('isConsentCompleted', () {
-      test('should return true when consent is saved', () async {
-        // Arrange
-        when(() => mockDataSource.isConsentCompleted())
+        when(() => mockPrefs.setBool('privacy_consent_accepted', true))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.setInt('privacy_consent_timestamp', any()))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.setString('privacy_consent_version', version))
             .thenAnswer((_) async => true);
 
-        // Act
-        final result = await repository.isConsentCompleted();
+        await repository.setConsentAccepted(version);
 
-        // Assert
-        expect(result, true);
-        verify(() => mockDataSource.isConsentCompleted()).called(1);
+        verify(() => mockPrefs.setBool('privacy_consent_accepted', true)).called(1);
+        verify(() => mockPrefs.setInt('privacy_consent_timestamp', any())).called(1);
+        verify(() => mockPrefs.setString('privacy_consent_version', version)).called(1);
       });
 
-      test('should return false when consent is not saved', () async {
-        // Arrange
-        when(() => mockDataSource.isConsentCompleted())
-            .thenAnswer((_) async => false);
+      test('uses current timestamp when setting consent', () async {
+        const version = '1.0.0';
+        final beforeTime = DateTime.now().millisecondsSinceEpoch;
 
-        // Act
-        final result = await repository.isConsentCompleted();
+        when(() => mockPrefs.setBool('privacy_consent_accepted', true))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.setInt('privacy_consent_timestamp', any()))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.setString('privacy_consent_version', version))
+            .thenAnswer((_) async => true);
 
-        // Assert
-        expect(result, false);
-        verify(() => mockDataSource.isConsentCompleted()).called(1);
+        await repository.setConsentAccepted(version);
+
+        final afterTime = DateTime.now().millisecondsSinceEpoch;
+
+        final captured = verify(
+          () => mockPrefs.setInt('privacy_consent_timestamp', captureAny())
+        ).captured.single as int;
+
+        expect(captured, greaterThanOrEqualTo(beforeTime));
+        expect(captured, lessThanOrEqualTo(afterTime));
       });
     });
 
     group('clearConsent', () {
-      test('should call datasource to clear consent (GDPR deletion)', () async {
-        // Arrange
-        when(() => mockDataSource.clearConsent()).thenAnswer((_) async {});
+      test('removes all consent-related keys', () async {
+        when(() => mockPrefs.remove('privacy_consent_accepted'))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.remove('privacy_consent_timestamp'))
+            .thenAnswer((_) async => true);
+        when(() => mockPrefs.remove('privacy_consent_version'))
+            .thenAnswer((_) async => true);
 
-        // Act
         await repository.clearConsent();
 
-        // Assert
-        verify(() => mockDataSource.clearConsent()).called(1);
+        verify(() => mockPrefs.remove('privacy_consent_accepted')).called(1);
+        verify(() => mockPrefs.remove('privacy_consent_timestamp')).called(1);
+        verify(() => mockPrefs.remove('privacy_consent_version')).called(1);
       });
     });
   });

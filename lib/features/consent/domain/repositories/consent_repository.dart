@@ -1,8 +1,7 @@
-import '../entities/consent_status.dart';
+import 'package:trip_wallet/features/consent/domain/entities/consent_record.dart';
 
 abstract class ConsentRepository {
-  Future<ConsentStatus?> getConsentStatus();
-  Future<void> saveConsentStatus(ConsentStatus status);
-  Future<bool> isConsentCompleted();
+  Future<ConsentRecord> getConsentRecord();
+  Future<void> setConsentAccepted(String version);
   Future<void> clearConsent();
 }

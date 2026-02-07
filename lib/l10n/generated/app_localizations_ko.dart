@@ -698,58 +698,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingGetStarted => '시작하기';
 
   @override
-  String get consentTitle => '개인정보 수집 동의';
+  String get consentTitle => '개인정보 보호 및 데이터 처리';
 
   @override
-  String get consentWelcome => 'Trip Wallet에 오신 것을 환영합니다';
+  String get consentDescription =>
+      'TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.';
 
   @override
-  String get consentDescription => '더 나은 서비스를 위해 아래 정보 수집에 동의해 주세요.';
+  String get consentAccept => '동의합니다';
 
   @override
-  String get consentDataCollected => '수집 항목';
+  String get consentDecline => '동의하지 않습니다';
 
   @override
-  String get consentDataCollectedList =>
-      '• 화면 조회 기록\n• 버튼 클릭 이벤트\n• 기능 사용 빈도\n• 앱 성능 데이터\n• 기기 유형 및 OS 버전';
+  String get consentViewFullPolicy => '전체 개인정보 처리방침 보기';
 
   @override
-  String get consentDataNotCollected => '수집하지 않는 항목';
+  String get consentDeclineTitle => '동의 필요';
 
   @override
-  String get consentDataNotCollectedList =>
-      '• 개인 식별 정보 (이름, 이메일)\n• 실제 지출 금액 및 예산\n• 여행 목적지\n• 결제 수단 정보';
+  String get consentDeclineMessage =>
+      'TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.';
 
   @override
-  String get consentAnalytics => '앱 사용 분석 동의 (선택)';
+  String get consentDeclineUnderstand => '이해했습니다';
 
   @override
-  String get consentAnalyticsDesc => '서비스 개선을 위한 익명 사용 데이터를 수집합니다.';
+  String get consentStatus => '개인정보 동의 상태';
 
   @override
-  String get consentPersonalizedAds => '맞춤 광고 동의 (선택)';
+  String consentAcceptedOn(String date) {
+    return '$date에 동의함';
+  }
 
   @override
-  String get consentPersonalizedAdsDesc => '관심사에 맞는 광고를 표시합니다.';
+  String get consentNotGiven => '아직 동의하지 않음';
 
   @override
-  String get consentPrivacyPolicy => '개인정보 처리방침';
-
-  @override
-  String get consentAcceptAll => '모두 동의';
-
-  @override
-  String get consentAcceptSelected => '선택 동의';
-
-  @override
-  String get consentContinueWithout => '동의 없이 계속';
-
-  @override
-  String get consentWithdrawTitle => '동의 철회';
-
-  @override
-  String get consentWithdrawMessage => '동의를 철회하면 수집된 데이터 삭제를 요청할 수 있습니다.';
-
-  @override
-  String get consentWithdrawButton => '동의 철회';
+  String get consentSaveError => '동의 저장에 실패했습니다. 다시 시도해주세요.';
 }

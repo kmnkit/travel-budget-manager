@@ -1403,110 +1403,74 @@ abstract class AppLocalizations {
   /// No description provided for @consentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Data Collection Consent'**
+  /// **'Privacy & Data Protection'**
   String get consentTitle;
-
-  /// No description provided for @consentWelcome.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome to Trip Wallet'**
-  String get consentWelcome;
 
   /// No description provided for @consentDescription.
   ///
   /// In en, this message translates to:
-  /// **'Please consent to the following data collection for better service.'**
+  /// **'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.'**
   String get consentDescription;
 
-  /// No description provided for @consentDataCollected.
+  /// No description provided for @consentAccept.
   ///
   /// In en, this message translates to:
-  /// **'Data We Collect'**
-  String get consentDataCollected;
+  /// **'I Accept'**
+  String get consentAccept;
 
-  /// No description provided for @consentDataCollectedList.
+  /// No description provided for @consentDecline.
   ///
   /// In en, this message translates to:
-  /// **'• Screen view history\n• Button click events\n• Feature usage frequency\n• App performance data\n• Device type and OS version'**
-  String get consentDataCollectedList;
+  /// **'I Decline'**
+  String get consentDecline;
 
-  /// No description provided for @consentDataNotCollected.
+  /// No description provided for @consentViewFullPolicy.
   ///
   /// In en, this message translates to:
-  /// **'Data We Don\'t Collect'**
-  String get consentDataNotCollected;
+  /// **'View Full Privacy Policy'**
+  String get consentViewFullPolicy;
 
-  /// No description provided for @consentDataNotCollectedList.
+  /// No description provided for @consentDeclineTitle.
   ///
   /// In en, this message translates to:
-  /// **'• Personal information (name, email)\n• Actual expense amounts and budgets\n• Travel destinations\n• Payment method details'**
-  String get consentDataNotCollectedList;
+  /// **'Consent Required'**
+  String get consentDeclineTitle;
 
-  /// No description provided for @consentAnalytics.
+  /// No description provided for @consentDeclineMessage.
   ///
   /// In en, this message translates to:
-  /// **'Analytics Consent (Optional)'**
-  String get consentAnalytics;
+  /// **'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.'**
+  String get consentDeclineMessage;
 
-  /// No description provided for @consentAnalyticsDesc.
+  /// No description provided for @consentDeclineUnderstand.
   ///
   /// In en, this message translates to:
-  /// **'We collect anonymous usage data to improve our service.'**
-  String get consentAnalyticsDesc;
+  /// **'I Understand'**
+  String get consentDeclineUnderstand;
 
-  /// No description provided for @consentPersonalizedAds.
+  /// No description provided for @consentStatus.
   ///
   /// In en, this message translates to:
-  /// **'Personalized Ads Consent (Optional)'**
-  String get consentPersonalizedAds;
+  /// **'Privacy Consent Status'**
+  String get consentStatus;
 
-  /// No description provided for @consentPersonalizedAdsDesc.
+  /// No description provided for @consentAcceptedOn.
   ///
   /// In en, this message translates to:
-  /// **'Show ads based on your interests.'**
-  String get consentPersonalizedAdsDesc;
+  /// **'Accepted on {date}'**
+  String consentAcceptedOn(String date);
 
-  /// No description provided for @consentPrivacyPolicy.
+  /// No description provided for @consentNotGiven.
   ///
   /// In en, this message translates to:
-  /// **'Privacy Policy'**
-  String get consentPrivacyPolicy;
+  /// **'Not given yet'**
+  String get consentNotGiven;
 
-  /// No description provided for @consentAcceptAll.
+  /// No description provided for @consentSaveError.
   ///
   /// In en, this message translates to:
-  /// **'Accept All'**
-  String get consentAcceptAll;
-
-  /// No description provided for @consentAcceptSelected.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept Selected'**
-  String get consentAcceptSelected;
-
-  /// No description provided for @consentContinueWithout.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue Without Consent'**
-  String get consentContinueWithout;
-
-  /// No description provided for @consentWithdrawTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Withdraw Consent'**
-  String get consentWithdrawTitle;
-
-  /// No description provided for @consentWithdrawMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'You can request deletion of collected data when withdrawing consent.'**
-  String get consentWithdrawMessage;
-
-  /// No description provided for @consentWithdrawButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Withdraw Consent'**
-  String get consentWithdrawButton;
+  /// **'Failed to save consent. Please try again.'**
+  String get consentSaveError;
 }
 
 class _AppLocalizationsDelegate
