@@ -3,9 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense_category.dart';
 import 'package:trip_wallet/features/statistics/presentation/providers/statistics_providers.dart';
+import 'package:trip_wallet/features/statistics/presentation/providers/trend_analysis_providers.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/category_pie_chart.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/daily_bar_chart.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/payment_method_chart.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/trend_indicator.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/spending_velocity_card.dart';
+import 'package:trip_wallet/features/statistics/presentation/providers/comparative_analytics_providers.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/comparison_card.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/category_insight_card.dart';
+import 'package:trip_wallet/features/statistics/presentation/providers/insights_provider.dart';
+import 'package:trip_wallet/features/statistics/presentation/widgets/insight_card.dart';
 import 'package:trip_wallet/shared/widgets/loading_indicator.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
 
@@ -86,6 +94,11 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
     final statisticsAsync = ref.watch(statisticsDataProvider(widget.tripId));
+    final trendAnalysisAsync = ref.watch(trendAnalysisProvider(widget.tripId));
+    final velocityAsync = ref.watch(spendingVelocityProvider(widget.tripId));
+    final periodComparisonAsync = ref.watch(periodComparisonProvider(widget.tripId));
+    final categoryInsightsAsync = ref.watch(categoryInsightsProvider(widget.tripId));
+    final insightsAsync = ref.watch(insightsProvider(widget.tripId));
 
     return Scaffold(
       body: Column(
@@ -206,10 +219,70 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
                         totalAmount: filteredTotal,
                         currencyCode: widget.currencyCode,
                       ),
+                      // Overall trend indicator
+                      if (filteredDailyData.length >= 2)
+                        trendAnalysisAsync.when(
+                          data: (trendData) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '전체 지출 추세:',
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                                const SizedBox(width: 12),
+                                TrendIndicator(trendData: trendData.overallTrend),
+                              ],
+                            ),
+                          ),
+                          loading: () => const SizedBox.shrink(),
+                          error: (error, stackTrace) => const SizedBox.shrink(),
+                        ),
                       // Daily bar chart
                       DailyBarChart(
                         dailyData: filteredDailyData,
                         currencyCode: widget.currencyCode,
+                      ),
+                      // Spending velocity card
+                      if (filteredDailyData.isNotEmpty)
+                        velocityAsync.when(
+                          data: (velocityData) => SpendingVelocityCard(
+                            velocity: velocityData.velocity,
+                            currencyCode: widget.currencyCode,
+                          ),
+                          loading: () => const SizedBox.shrink(),
+                          error: (error, stackTrace) => const SizedBox.shrink(),
+                        ),
+                      // Period comparison card
+                      periodComparisonAsync.when(
+                        data: (comparisonData) => ComparisonCard(
+                          comparisons: comparisonData.comparisons,
+                          currencyCode: widget.currencyCode,
+                          periodLabel: comparisonData.periodLabel,
+                        ),
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, stackTrace) => const SizedBox.shrink(),
+                      ),
+                      // Category insights card
+                      categoryInsightsAsync.when(
+                        data: (insightsData) => insightsData.insights.isNotEmpty
+                          ? CategoryInsightCard(
+                              insights: insightsData.insights,
+                              currencyCode: widget.currencyCode,
+                            )
+                          : const SizedBox.shrink(),
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, stackTrace) => const SizedBox.shrink(),
+                      ),
+                      // Smart insights card
+                      insightsAsync.when(
+                        data: (insightsData) => insightsData.insights.isNotEmpty
+                          ? InsightCard(insights: insightsData.insights)
+                          : const SizedBox.shrink(),
+                        loading: () => const SizedBox.shrink(),
+                        error: (error, stackTrace) => const SizedBox.shrink(),
                       ),
                       // Payment method chart
                       PaymentMethodChart(
