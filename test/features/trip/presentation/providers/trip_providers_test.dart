@@ -349,8 +349,9 @@ void main() {
 
   group('TripFilter enum', () {
     test('has all expected values', () {
-      expect(TripFilter.values, hasLength(3));
+      expect(TripFilter.values, hasLength(4));
       expect(TripFilter.values, contains(TripFilter.all));
+      expect(TripFilter.values, contains(TripFilter.upcoming));
       expect(TripFilter.values, contains(TripFilter.active));
       expect(TripFilter.values, contains(TripFilter.past));
     });
