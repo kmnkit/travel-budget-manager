@@ -9,12 +9,14 @@ class StatisticsData {
   final Map<DateTime, double> dailyTotals;
   final Map<String, double> paymentMethodTotals;
   final double totalAmount;
+  final Map<ExpenseCategory, Map<DateTime, double>> categoryDailyTotals;
 
   const StatisticsData({
     required this.categoryTotals,
     required this.dailyTotals,
     required this.paymentMethodTotals,
     required this.totalAmount,
+    required this.categoryDailyTotals,
   });
 }
 
@@ -38,6 +40,9 @@ final statisticsDataProvider = FutureProvider.family<StatisticsData, int>((ref, 
   // Compute payment method totals
   final paymentMethodTotals = <String, double>{};
 
+  // Compute category daily totals
+  final categoryDailyTotals = <ExpenseCategory, Map<DateTime, double>>{};
+
   double totalAmount = 0.0;
 
   for (final expense in expensesAsync) {
@@ -57,6 +62,11 @@ final statisticsDataProvider = FutureProvider.family<StatisticsData, int>((ref, 
     paymentMethodTotals[paymentMethod.name] =
         (paymentMethodTotals[paymentMethod.name] ?? 0.0) + expense.convertedAmount;
 
+    // Category daily totals
+    categoryDailyTotals.putIfAbsent(expense.category, () => <DateTime, double>{});
+    categoryDailyTotals[expense.category]![date] =
+        (categoryDailyTotals[expense.category]![date] ?? 0.0) + expense.convertedAmount;
+
     // Total amount
     totalAmount += expense.convertedAmount;
   }
@@ -66,5 +76,6 @@ final statisticsDataProvider = FutureProvider.family<StatisticsData, int>((ref, 
     dailyTotals: dailyTotals,
     paymentMethodTotals: paymentMethodTotals,
     totalAmount: totalAmount,
+    categoryDailyTotals: categoryDailyTotals,
   );
 });

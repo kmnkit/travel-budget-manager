@@ -806,6 +806,306 @@ abstract class AppLocalizations {
   /// **'Custom'**
   String get periodCustom;
 
+  /// No description provided for @budgetForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Forecast'**
+  String get budgetForecast;
+
+  /// No description provided for @budgetBurndownChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Burn-down'**
+  String get budgetBurndownChart;
+
+  /// No description provided for @projectedTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Total'**
+  String get projectedTotal;
+
+  /// No description provided for @dailySpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Spending'**
+  String get dailySpending;
+
+  /// No description provided for @daysUntilExhaustion.
+  ///
+  /// In en, this message translates to:
+  /// **'Days Until Exhaustion'**
+  String get daysUntilExhaustion;
+
+  /// No description provided for @daysUntilExhaustionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String daysUntilExhaustionValue(int days);
+
+  /// No description provided for @budgetSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Sufficient'**
+  String get budgetSufficient;
+
+  /// No description provided for @forecastStatusOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On Track'**
+  String get forecastStatusOnTrack;
+
+  /// No description provided for @forecastStatusAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'At Risk'**
+  String get forecastStatusAtRisk;
+
+  /// No description provided for @forecastStatusOverBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Over Budget'**
+  String get forecastStatusOverBudget;
+
+  /// No description provided for @forecastStatusExhausted.
+  ///
+  /// In en, this message translates to:
+  /// **'Exhausted'**
+  String get forecastStatusExhausted;
+
+  /// No description provided for @actualSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual Spending'**
+  String get actualSpending;
+
+  /// No description provided for @projectedSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected'**
+  String get projectedSpending;
+
+  /// No description provided for @budgetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Limit'**
+  String get budgetLimit;
+
+  /// No description provided for @bestCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Case'**
+  String get bestCase;
+
+  /// No description provided for @worstCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Worst Case'**
+  String get worstCase;
+
+  /// No description provided for @confidenceInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence Interval'**
+  String get confidenceInterval;
+
+  /// No description provided for @noBudgetSet.
+  ///
+  /// In en, this message translates to:
+  /// **'No budget has been set'**
+  String get noBudgetSet;
+
+  /// No description provided for @overallSpendingTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall Spending Trend:'**
+  String get overallSpendingTrend;
+
+  /// No description provided for @spendingVelocity.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Velocity'**
+  String get spendingVelocity;
+
+  /// No description provided for @dailyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Average'**
+  String get dailyAverage;
+
+  /// No description provided for @weeklyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Average'**
+  String get weeklyAverage;
+
+  /// No description provided for @velocityStable.
+  ///
+  /// In en, this message translates to:
+  /// **'Stable'**
+  String get velocityStable;
+
+  /// No description provided for @velocityIncreasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Increasing'**
+  String get velocityIncreasing;
+
+  /// No description provided for @velocityDecreasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Decreasing'**
+  String get velocityDecreasing;
+
+  /// No description provided for @accelerationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceleration: {status}'**
+  String accelerationLabel(String status);
+
+  /// No description provided for @periodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Period: {period}'**
+  String periodLabel(String period);
+
+  /// No description provided for @periodComparison.
+  ///
+  /// In en, this message translates to:
+  /// **'Period Comparison'**
+  String get periodComparison;
+
+  /// No description provided for @noComparisonData.
+  ///
+  /// In en, this message translates to:
+  /// **'No comparison data available'**
+  String get noComparisonData;
+
+  /// No description provided for @categoryAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Analysis'**
+  String get categoryAnalysis;
+
+  /// No description provided for @noCategoryData.
+  ///
+  /// In en, this message translates to:
+  /// **'No category data available'**
+  String get noCategoryData;
+
+  /// No description provided for @smartInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Insights'**
+  String get smartInsights;
+
+  /// No description provided for @confidenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence: {value}'**
+  String confidenceLabel(String value);
+
+  /// No description provided for @dailyExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Expenses'**
+  String get dailyExpenses;
+
+  /// No description provided for @expensesByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses by Category'**
+  String get expensesByCategory;
+
+  /// No description provided for @expensesByPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses by Payment Method'**
+  String get expensesByPaymentMethod;
+
+  /// No description provided for @totalExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expenses'**
+  String get totalExpense;
+
+  /// No description provided for @thisWeekVsLastWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week vs Last Week'**
+  String get thisWeekVsLastWeek;
+
+  /// No description provided for @dashboardEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Dashboard'**
+  String get dashboardEdit;
+
+  /// No description provided for @resetToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Default'**
+  String get resetToDefault;
+
+  /// No description provided for @widgetCategoryPieChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Spending'**
+  String get widgetCategoryPieChart;
+
+  /// No description provided for @widgetDailyBarChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Spending'**
+  String get widgetDailyBarChart;
+
+  /// No description provided for @widgetPaymentMethodChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method Spending'**
+  String get widgetPaymentMethodChart;
+
+  /// No description provided for @widgetTrendIndicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Trend'**
+  String get widgetTrendIndicator;
+
+  /// No description provided for @widgetSpendingVelocity.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Velocity'**
+  String get widgetSpendingVelocity;
+
+  /// No description provided for @widgetPeriodComparison.
+  ///
+  /// In en, this message translates to:
+  /// **'Period Comparison'**
+  String get widgetPeriodComparison;
+
+  /// No description provided for @widgetCategoryInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Insights'**
+  String get widgetCategoryInsights;
+
+  /// No description provided for @widgetSmartInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Insights'**
+  String get widgetSmartInsights;
+
+  /// No description provided for @widgetBudgetForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Forecast'**
+  String get widgetBudgetForecast;
+
+  /// No description provided for @widgetBudgetBurndown.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Burndown'**
+  String get widgetBudgetBurndown;
+
   /// No description provided for @allCategories.
   ///
   /// In en, this message translates to:
@@ -853,6 +1153,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Past'**
   String get filterPast;
+
+  /// No description provided for @clearAllFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All'**
+  String get clearAllFilters;
+
+  /// No description provided for @filterByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get filterByCategory;
+
+  /// No description provided for @filterByPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get filterByPaymentMethod;
 
   /// No description provided for @language.
   ///

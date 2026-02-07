@@ -239,6 +239,90 @@
   "periodMonth": "이번 달",
   "periodCustom": "직접 설정",
 
+  "@_BUDGET_FORECAST": {},
+  "budgetForecast": "예산 예측",
+  "budgetBurndownChart": "예산 소진 차트",
+  "projectedTotal": "예상 총 지출",
+  "dailySpending": "일일 지출",
+  "daysUntilExhaustion": "예산 소진까지",
+  "daysUntilExhaustionValue": "{days}일",
+  "@daysUntilExhaustionValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetSufficient": "예산 충분",
+  "forecastStatusOnTrack": "순조로움",
+  "forecastStatusAtRisk": "주의 필요",
+  "forecastStatusOverBudget": "초과 예상",
+  "forecastStatusExhausted": "예산 소진",
+  "actualSpending": "실제 지출",
+  "projectedSpending": "예측",
+  "budgetLimit": "예산 한도",
+  "bestCase": "최선",
+  "worstCase": "최악",
+  "confidenceInterval": "신뢰구간",
+  "noBudgetSet": "예산이 설정되지 않았습니다",
+
+  "@_STATISTICS_ANALYTICS": {},
+  "overallSpendingTrend": "전체 지출 추세:",
+  "spendingVelocity": "지출 속도",
+  "dailyAverage": "일평균",
+  "weeklyAverage": "주평균",
+  "velocityStable": "안정",
+  "velocityIncreasing": "증가 중",
+  "velocityDecreasing": "감소 중",
+  "accelerationLabel": "가속도: {status}",
+  "@accelerationLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "periodLabel": "기간: {period}",
+  "@periodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "periodComparison": "기간 비교",
+  "noComparisonData": "비교할 데이터가 없습니다",
+  "categoryAnalysis": "카테고리 분석",
+  "noCategoryData": "카테고리 데이터가 없습니다",
+  "smartInsights": "스마트 인사이트",
+  "confidenceLabel": "신뢰도: {value}",
+  "@confidenceLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyExpenses": "일별 지출",
+  "expensesByCategory": "카테고리별 지출",
+  "expensesByPaymentMethod": "결제 수단별 지출",
+  "totalExpense": "총 지출",
+  "thisWeekVsLastWeek": "이번 주 vs 지난 주",
+
+  "@_DASHBOARD_EDIT": {},
+  "dashboardEdit": "대시보드 편집",
+  "resetToDefault": "기본값 복원",
+  "widgetCategoryPieChart": "카테고리별 지출",
+  "widgetDailyBarChart": "일별 지출",
+  "widgetPaymentMethodChart": "결제 수단별 지출",
+  "widgetTrendIndicator": "지출 트렌드",
+  "widgetSpendingVelocity": "지출 속도",
+  "widgetPeriodComparison": "기간 비교",
+  "widgetCategoryInsights": "카테고리 인사이트",
+  "widgetSmartInsights": "스마트 인사이트",
+  "widgetBudgetForecast": "예산 예측",
+  "widgetBudgetBurndown": "예산 소진율",
+
   "@_FILTER_SORT": {},
   "allCategories": "전체",
   "sortByDate": "최신순",
@@ -248,6 +332,9 @@
   "filterAllTrips": "모든 여행",
   "filterActive": "진행중",
   "filterPast": "완료",
+  "clearAllFilters": "전체 초기화",
+  "filterByCategory": "카테고리",
+  "filterByPaymentMethod": "결제 수단",
 
   "@_SETTINGS": {},
   "language": "언어",
