@@ -1,0 +1,146 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1770425186004,
+  "projectRoot": "/Users/marcoginger/Documents/develop/feature/analytics",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets",
+      "docs",
+      "lib",
+      "scripts",
+      "test"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "android": {
+      "path": "android",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1770425185993,
+      "keyFiles": [
+        "build.gradle.kts",
+        "gradle.properties",
+        "settings.gradle.kts"
+      ]
+    },
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1770425185994,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1770425185994,
+      "keyFiles": [
+        "_config.yml",
+        "index.md",
+        "privacy-policy.md"
+      ]
+    },
+    "integration_test": {
+      "path": "integration_test",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1770425185994,
+      "keyFiles": [
+        "README.md",
+        "app_test.dart",
+        "expense_flow_test.dart",
+        "multi_currency_test.dart",
+        "screenshot_test.dart"
+      ]
+    },
+    "ios": {
+      "path": "ios",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1770425185994,
+      "keyFiles": [
+        "ExportOptions.plist",
+        "Gemfile",
+        "Podfile",
+        "Podfile.lock"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 3,
+      "lastAccessed": 1770425185994,
+      "keyFiles": [
+        "AGENTS.md",
+        "app.dart",
+        "main.dart"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1770425185995,
+      "keyFiles": [
+        "take_screenshots.sh"
+      ]
+    },
+    "test": {
+      "path": "test",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1770425185995,
+      "keyFiles": [
+        "AGENTS.md",
+        "widget_test.dart"
+      ]
+    },
+    "test_driver": {
+      "path": "test_driver",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1770425185995,
+      "keyFiles": [
+        "integration_test.dart"
+      ]
+    },
+    "android/app": {
+      "path": "android/app",
+      "purpose": "Application code",
+      "fileCount": 1,
+      "lastAccessed": 1770425185995,
+      "keyFiles": [
+        "build.gradle.kts"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

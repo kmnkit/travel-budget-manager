@@ -43,6 +43,9 @@ dependencies:
   path_provider: ^2.1.5
   sqlite3_flutter_libs: ^0.5.28
   cupertino_icons: ^1.0.8
+  pdf: ^3.11.1
+  share_plus: ^10.1.2
+  printing: ^5.13.3
 
 dev_dependencies:
   drift_dev: ^2.30.1
@@ -52,6 +55,8 @@ dev_dependencies:
   riverpod_generator: ^4.0.0+1
   mocktail: ^1.0.4
   lints: ^6.1.0
+  path_provider_platform_interface: ^2.1.2
+  plugin_platform_interface: ^2.1.8
   flutter_test:
     sdk: flutter
   integration_test:

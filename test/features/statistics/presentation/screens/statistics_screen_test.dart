@@ -9,6 +9,7 @@ import 'package:trip_wallet/features/statistics/presentation/providers/dashboard
 import 'package:trip_wallet/features/statistics/presentation/providers/statistics_providers.dart';
 import 'package:trip_wallet/features/statistics/presentation/screens/statistics_screen.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/dashboard_edit_sheet.dart';
+import 'package:trip_wallet/features/export/presentation/widgets/export_button.dart';
 import 'package:trip_wallet/l10n/generated/app_localizations.dart';
 
 class MockDashboardConfigNotifier extends AsyncNotifier<DashboardConfig>
@@ -60,6 +61,21 @@ void main() {
   });
 
   group('StatisticsScreen Dashboard Integration', () {
+    testWidgets('renders ExportButton in AppBar', (tester) async {
+      await tester.pumpWidget(
+        createTestWidget(
+          const StatisticsScreen(tripId: 1, currencyCode: 'KRW'),
+          overrides: [
+            statisticsDataProvider(1).overrideWith((ref) async => mockStatisticsData),
+          ],
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ExportButton), findsOneWidget);
+    });
+
     testWidgets('renders edit button (Icons.tune)', (tester) async {
       await tester.pumpWidget(
         createTestWidget(

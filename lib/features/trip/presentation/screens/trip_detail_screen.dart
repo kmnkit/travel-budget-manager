@@ -5,6 +5,7 @@ import 'package:trip_wallet/core/utils/date_formatter.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
 import 'package:trip_wallet/features/budget/presentation/widgets/budget_summary_card.dart';
 import 'package:trip_wallet/features/expense/presentation/screens/expense_list_screen.dart';
+import 'package:trip_wallet/features/export/presentation/widgets/export_button.dart';
 import 'package:trip_wallet/features/trip/domain/entities/trip.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
@@ -70,6 +71,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
           appBar: AppBar(
             title: Text(trip.title),
             actions: [
+              ExportButton(tripId: widget.tripId),
               IconButton(
                 icon: const Icon(Icons.edit),
                 tooltip: '수정',

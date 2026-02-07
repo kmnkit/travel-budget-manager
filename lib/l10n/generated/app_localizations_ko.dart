@@ -669,6 +669,39 @@ class AppLocalizationsKo extends AppLocalizations {
   String get unknownError => '알 수 없는 오류가 발생했습니다';
 
   @override
+  String get exportReport => '보고서 내보내기';
+
+  @override
+  String get generatePdf => 'PDF 생성';
+
+  @override
+  String get generatingPdf => 'PDF 생성 중...';
+
+  @override
+  String get shareReport => '공유하기';
+
+  @override
+  String get pdfGenerated => 'PDF가 생성되었습니다';
+
+  @override
+  String get exportFailed => '내보내기 실패';
+
+  @override
+  String get tripReport => '여행 보고서';
+
+  @override
+  String get summary => '요약';
+
+  @override
+  String get expenseList => '지출 목록';
+
+  @override
+  String get charts => '차트';
+
+  @override
+  String get insights => '인사이트';
+
+  @override
   String get onboardingWelcomeTitle => '트립월렛에 오신 것을 환영합니다';
 
   @override

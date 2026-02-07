@@ -673,6 +673,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unknownError => 'An unknown error occurred';
 
   @override
+  String get exportReport => 'Export Report';
+
+  @override
+  String get generatePdf => 'Generate PDF';
+
+  @override
+  String get generatingPdf => 'Generating PDF...';
+
+  @override
+  String get shareReport => 'Share';
+
+  @override
+  String get pdfGenerated => 'PDF generated';
+
+  @override
+  String get exportFailed => 'Export failed';
+
+  @override
+  String get tripReport => 'Trip Report';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get expenseList => 'Expense List';
+
+  @override
+  String get charts => 'Charts';
+
+  @override
+  String get insights => 'Insights';
+
+  @override
   String get onboardingWelcomeTitle => 'Welcome to TripWallet';
 
   @override
