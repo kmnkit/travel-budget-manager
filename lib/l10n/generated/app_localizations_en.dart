@@ -734,4 +734,171 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get consentTitle => 'Privacy & Data Protection';
+
+  @override
+  String get consentDescription =>
+      'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.';
+
+  @override
+  String get consentAccept => 'I Accept';
+
+  @override
+  String get consentDecline => 'I Decline';
+
+  @override
+  String get consentViewFullPolicy => 'View Full Privacy Policy';
+
+  @override
+  String get consentDeclineTitle => 'Consent Required';
+
+  @override
+  String get consentDeclineMessage =>
+      'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.';
+
+  @override
+  String get consentDeclineUnderstand => 'I Understand';
+
+  @override
+  String get consentStatus => 'Privacy Consent Status';
+
+  @override
+  String consentAcceptedOn(String date) {
+    return 'Accepted on $date';
+  }
+
+  @override
+  String get consentNotGiven => 'Not given yet';
+
+  @override
+  String get consentSaveError => 'Failed to save consent. Please try again.';
+
+  @override
+  String get premium => 'Premium';
+
+  @override
+  String get premiumTitle => 'Trip Wallet Premium';
+
+  @override
+  String get unlockPremium => 'Unlock Premium Features';
+
+  @override
+  String get premiumSubtitle => 'Enjoy ad-free experience and more';
+
+  @override
+  String get upgradeToPremium => 'Upgrade to Premium';
+
+  @override
+  String get restorePurchase => 'Restore Purchase';
+
+  @override
+  String get premiumFeatureAdFree => 'Ad-free experience';
+
+  @override
+  String get premiumFeatureAnalytics => 'Advanced analytics';
+
+  @override
+  String get premiumFeatureReports => 'Custom reports';
+
+  @override
+  String get premiumFeatureSupport => 'Priority support';
+
+  @override
+  String get premiumFeatureExports => 'Unlimited exports';
+
+  @override
+  String premiumPrice(String price) {
+    return '$price per year';
+  }
+
+  @override
+  String get premiumBestValue => 'Best value';
+
+  @override
+  String get premiumAutoRenewDisclaimers =>
+      'Subscription renews automatically unless cancelled';
+
+  @override
+  String get premiumPurchaseSuccess => 'Thank you for upgrading!';
+
+  @override
+  String get premiumPurchaseFailed => 'Purchase failed. Please try again.';
+
+  @override
+  String get premiumRestoreSuccess => 'Previous purchases restored';
+
+  @override
+  String get premiumRestoreFailed => 'Failed to restore purchases';
+
+  @override
+  String get premiumAlreadyOwned => 'You already own this feature';
+
+  @override
+  String get whatIncluded => 'What\'s Included';
+
+  @override
+  String get oneYearSubscription => 'One Year Subscription';
+
+  @override
+  String get later => 'Later';
+
+  @override
+  String get upgrade => 'Upgrade';
+
+  @override
+  String get ads => 'Ads';
+
+  @override
+  String get adFree => 'Ad-Free';
+
+  @override
+  String get upgradeForAdFree => 'Upgrade to remove ads';
+
+  @override
+  String get ad => 'Ad';
+
+  @override
+  String get premiumActive => 'Premium Active';
+
+  @override
+  String get removeAds => 'Remove Ads';
+
+  @override
+  String get adFreeExperience => 'Enjoy ad-free experience';
+
+  @override
+  String get supportDevelopment => 'Support development';
+
+  @override
+  String get thankYouForSupport => 'Thank you for your support!';
+
+  @override
+  String get maybeLater => 'Maybe Later';
+
+  @override
+  String get upgradeNow => 'Upgrade Now';
+
+  @override
+  String get oneTimePurchase => 'One-time purchase';
+
+  @override
+  String get featureAdFree => 'Ad-free experience';
+
+  @override
+  String get featureSupportDev => 'Support ongoing development';
+
+  @override
+  String get featurePremiumBadge => 'Premium badge in settings';
+
+  @override
+  String get purchaseSuccess =>
+      'Purchase successful! Thank you for your support.';
+
+  @override
+  String get purchaseFailed => 'Purchase failed. Please try again.';
+
+  @override
+  String get purchaseRestored => 'Purchase restored successfully';
 }

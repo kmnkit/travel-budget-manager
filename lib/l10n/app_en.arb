@@ -393,5 +393,78 @@
   "onboardingGetStartedDescription": "Create your first trip and start tracking your travel budget today!",
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
-  "onboardingGetStarted": "Get Started"
+  "onboardingGetStarted": "Get Started",
+
+  "@_CONSENT": {},
+  "consentTitle": "Privacy & Data Protection",
+  "consentDescription": "TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.",
+  "consentAccept": "I Accept",
+  "consentDecline": "I Decline",
+  "consentViewFullPolicy": "View Full Privacy Policy",
+  "consentDeclineTitle": "Consent Required",
+  "consentDeclineMessage": "TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.",
+  "consentDeclineUnderstand": "I Understand",
+  "consentStatus": "Privacy Consent Status",
+  "consentAcceptedOn": "Accepted on {date}",
+  "@consentAcceptedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "consentNotGiven": "Not given yet",
+  "consentSaveError": "Failed to save consent. Please try again.",
+
+  "@_PREMIUM": {},
+  "premium": "Premium",
+  "premiumTitle": "Trip Wallet Premium",
+  "unlockPremium": "Unlock Premium Features",
+  "premiumSubtitle": "Enjoy ad-free experience and more",
+  "upgradeToPremium": "Upgrade to Premium",
+  "restorePurchase": "Restore Purchase",
+  "premiumFeatureAdFree": "Ad-free experience",
+  "premiumFeatureAnalytics": "Advanced analytics",
+  "premiumFeatureReports": "Custom reports",
+  "premiumFeatureSupport": "Priority support",
+  "premiumFeatureExports": "Unlimited exports",
+  "premiumPrice": "{price} per year",
+  "@premiumPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumBestValue": "Best value",
+  "premiumAutoRenewDisclaimers": "Subscription renews automatically unless cancelled",
+  "premiumPurchaseSuccess": "Thank you for upgrading!",
+  "premiumPurchaseFailed": "Purchase failed. Please try again.",
+  "premiumRestoreSuccess": "Previous purchases restored",
+  "premiumRestoreFailed": "Failed to restore purchases",
+  "premiumAlreadyOwned": "You already own this feature",
+  "whatIncluded": "What's Included",
+  "oneYearSubscription": "One Year Subscription",
+  "later": "Later",
+  "upgrade": "Upgrade",
+
+  "@_ADS": {},
+  "ads": "Ads",
+  "adFree": "Ad-Free",
+  "upgradeForAdFree": "Upgrade to remove ads",
+  "ad": "Ad",
+  "premiumActive": "Premium Active",
+  "removeAds": "Remove Ads",
+  "adFreeExperience": "Enjoy ad-free experience",
+  "supportDevelopment": "Support development",
+  "thankYouForSupport": "Thank you for your support!",
+  "maybeLater": "Maybe Later",
+  "upgradeNow": "Upgrade Now",
+  "oneTimePurchase": "One-time purchase",
+  "featureAdFree": "Ad-free experience",
+  "featureSupportDev": "Support ongoing development",
+  "featurePremiumBadge": "Premium badge in settings",
+  "purchaseSuccess": "Purchase successful! Thank you for your support.",
+  "purchaseFailed": "Purchase failed. Please try again.",
+  "purchaseRestored": "Purchase restored successfully"
 }

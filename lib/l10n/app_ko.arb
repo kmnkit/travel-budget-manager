@@ -393,5 +393,78 @@
   "onboardingGetStartedDescription": "첫 번째 여행을 만들고 오늘부터 여행 예산을 관리해보세요!",
   "onboardingSkip": "건너뛰기",
   "onboardingNext": "다음",
-  "onboardingGetStarted": "시작하기"
+  "onboardingGetStarted": "시작하기",
+
+  "@_CONSENT": {},
+  "consentTitle": "개인정보 보호 및 데이터 처리",
+  "consentDescription": "TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.",
+  "consentAccept": "동의합니다",
+  "consentDecline": "동의하지 않습니다",
+  "consentViewFullPolicy": "전체 개인정보 처리방침 보기",
+  "consentDeclineTitle": "동의 필요",
+  "consentDeclineMessage": "TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.",
+  "consentDeclineUnderstand": "이해했습니다",
+  "consentStatus": "개인정보 동의 상태",
+  "consentAcceptedOn": "{date}에 동의함",
+  "@consentAcceptedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "consentNotGiven": "아직 동의하지 않음",
+  "consentSaveError": "동의 저장에 실패했습니다. 다시 시도해주세요.",
+
+  "@_PREMIUM": {},
+  "premium": "프리미엄",
+  "premiumTitle": "트립월렛 프리미엄",
+  "unlockPremium": "프리미엄 기능 잠금 해제",
+  "premiumSubtitle": "광고 없는 환경과 더 많은 기능을 즐기세요",
+  "upgradeToPremium": "프리미엄으로 업그레이드",
+  "restorePurchase": "구매 복원",
+  "premiumFeatureAdFree": "광고 없는 환경",
+  "premiumFeatureAnalytics": "고급 분석",
+  "premiumFeatureReports": "맞춤형 보고서",
+  "premiumFeatureSupport": "우선 지원",
+  "premiumFeatureExports": "무제한 내보내기",
+  "premiumPrice": "연 {price}",
+  "@premiumPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumBestValue": "최고의 가치",
+  "premiumAutoRenewDisclaimers": "구독은 취소하지 않는 한 자동으로 갱신됩니다",
+  "premiumPurchaseSuccess": "업그레이드해주셔서 감사합니다!",
+  "premiumPurchaseFailed": "구매에 실패했습니다. 다시 시도해주세요.",
+  "premiumRestoreSuccess": "이전 구매가 복원되었습니다",
+  "premiumRestoreFailed": "구매 복원에 실패했습니다",
+  "premiumAlreadyOwned": "이미 보유한 기능입니다",
+  "whatIncluded": "포함된 기능",
+  "oneYearSubscription": "1년 구독",
+  "later": "나중에",
+  "upgrade": "업그레이드",
+
+  "@_ADS": {},
+  "ads": "광고",
+  "adFree": "광고 없음",
+  "upgradeForAdFree": "프리미엄으로 업그레이드하여 광고 제거",
+  "ad": "광고",
+  "premiumActive": "프리미엄 활성화",
+  "removeAds": "광고 제거",
+  "adFreeExperience": "광고 없는 경험을 즐기세요",
+  "supportDevelopment": "개발을 지원하세요",
+  "thankYouForSupport": "지원해주셔서 감사합니다!",
+  "maybeLater": "나중에",
+  "upgradeNow": "지금 업그레이드",
+  "oneTimePurchase": "일회성 구매",
+  "featureAdFree": "광고 없는 경험",
+  "featureSupportDev": "지속적인 개발 지원",
+  "featurePremiumBadge": "설정에서 프리미엄 배지",
+  "purchaseSuccess": "구매 완료! 지원해주셔서 감사합니다.",
+  "purchaseFailed": "구매에 실패했습니다. 다시 시도해주세요.",
+  "purchaseRestored": "구매를 성공적으로 복원했습니다"
 }

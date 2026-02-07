@@ -729,4 +729,169 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => '시작하기';
+
+  @override
+  String get consentTitle => '개인정보 보호 및 데이터 처리';
+
+  @override
+  String get consentDescription =>
+      'TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.';
+
+  @override
+  String get consentAccept => '동의합니다';
+
+  @override
+  String get consentDecline => '동의하지 않습니다';
+
+  @override
+  String get consentViewFullPolicy => '전체 개인정보 처리방침 보기';
+
+  @override
+  String get consentDeclineTitle => '동의 필요';
+
+  @override
+  String get consentDeclineMessage =>
+      'TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.';
+
+  @override
+  String get consentDeclineUnderstand => '이해했습니다';
+
+  @override
+  String get consentStatus => '개인정보 동의 상태';
+
+  @override
+  String consentAcceptedOn(String date) {
+    return '$date에 동의함';
+  }
+
+  @override
+  String get consentNotGiven => '아직 동의하지 않음';
+
+  @override
+  String get consentSaveError => '동의 저장에 실패했습니다. 다시 시도해주세요.';
+
+  @override
+  String get premium => '프리미엄';
+
+  @override
+  String get premiumTitle => '트립월렛 프리미엄';
+
+  @override
+  String get unlockPremium => '프리미엄 기능 잠금 해제';
+
+  @override
+  String get premiumSubtitle => '광고 없는 환경과 더 많은 기능을 즐기세요';
+
+  @override
+  String get upgradeToPremium => '프리미엄으로 업그레이드';
+
+  @override
+  String get restorePurchase => '구매 복원';
+
+  @override
+  String get premiumFeatureAdFree => '광고 없는 환경';
+
+  @override
+  String get premiumFeatureAnalytics => '고급 분석';
+
+  @override
+  String get premiumFeatureReports => '맞춤형 보고서';
+
+  @override
+  String get premiumFeatureSupport => '우선 지원';
+
+  @override
+  String get premiumFeatureExports => '무제한 내보내기';
+
+  @override
+  String premiumPrice(String price) {
+    return '연 $price';
+  }
+
+  @override
+  String get premiumBestValue => '최고의 가치';
+
+  @override
+  String get premiumAutoRenewDisclaimers => '구독은 취소하지 않는 한 자동으로 갱신됩니다';
+
+  @override
+  String get premiumPurchaseSuccess => '업그레이드해주셔서 감사합니다!';
+
+  @override
+  String get premiumPurchaseFailed => '구매에 실패했습니다. 다시 시도해주세요.';
+
+  @override
+  String get premiumRestoreSuccess => '이전 구매가 복원되었습니다';
+
+  @override
+  String get premiumRestoreFailed => '구매 복원에 실패했습니다';
+
+  @override
+  String get premiumAlreadyOwned => '이미 보유한 기능입니다';
+
+  @override
+  String get whatIncluded => '포함된 기능';
+
+  @override
+  String get oneYearSubscription => '1년 구독';
+
+  @override
+  String get later => '나중에';
+
+  @override
+  String get upgrade => '업그레이드';
+
+  @override
+  String get ads => '광고';
+
+  @override
+  String get adFree => '광고 없음';
+
+  @override
+  String get upgradeForAdFree => '프리미엄으로 업그레이드하여 광고 제거';
+
+  @override
+  String get ad => '광고';
+
+  @override
+  String get premiumActive => '프리미엄 활성화';
+
+  @override
+  String get removeAds => '광고 제거';
+
+  @override
+  String get adFreeExperience => '광고 없는 경험을 즐기세요';
+
+  @override
+  String get supportDevelopment => '개발을 지원하세요';
+
+  @override
+  String get thankYouForSupport => '지원해주셔서 감사합니다!';
+
+  @override
+  String get maybeLater => '나중에';
+
+  @override
+  String get upgradeNow => '지금 업그레이드';
+
+  @override
+  String get oneTimePurchase => '일회성 구매';
+
+  @override
+  String get featureAdFree => '광고 없는 경험';
+
+  @override
+  String get featureSupportDev => '지속적인 개발 지원';
+
+  @override
+  String get featurePremiumBadge => '설정에서 프리미엄 배지';
+
+  @override
+  String get purchaseSuccess => '구매 완료! 지원해주셔서 감사합니다.';
+
+  @override
+  String get purchaseFailed => '구매에 실패했습니다. 다시 시도해주세요.';
+
+  @override
+  String get purchaseRestored => '구매를 성공적으로 복원했습니다';
 }

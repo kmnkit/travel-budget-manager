@@ -316,6 +316,19 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
                     ),
                   ),
                 ),
+                IconButton(
+                  icon: const Icon(Icons.tune),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                      ),
+                      builder: (context) => const DashboardEditSheet(),
+                    );
+                  },
+                ),
               ],
             ),
           ),

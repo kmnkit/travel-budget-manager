@@ -1,0 +1,28 @@
+My Trip Wallet helps you manage travel expenses across multiple currencies with ease.
+
+KEY FEATURES:
+• Multi-currency support (KRW, USD, EUR, JPY, GBP, AUD, CAD)
+• Real-time exchange rate updates
+• Budget tracking with visual alerts
+• 8 expense categories (Food, Transport, Accommodation, etc.)
+• Multiple payment methods (Cash, Card, Mobile Payment)
+• Beautiful charts and statistics
+• Dual-currency display (original + converted)
+• Offline-first: all data stored locally
+• Ad-free premium option available
+
+PERFECT FOR:
+✓ International travelers
+✓ Business trips
+✓ Budget-conscious tourists
+✓ Multi-country vacations
+✓ Expense tracking enthusiasts
+
+PRIVACY:
+Your data stays on your device. We don't collect, store, or transmit any personal information to external servers.
+
+PREMIUM FEATURES:
+• Remove all ads
+• Support development
+
+Download My Trip Wallet today and take control of your travel spending!

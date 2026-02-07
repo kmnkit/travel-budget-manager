@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/constants/app_constants.dart';
 import 'package:trip_wallet/core/constants/currency_constants.dart';
 import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
+import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
+import 'package:trip_wallet/features/consent/presentation/screens/privacy_policy_viewer_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -14,6 +17,7 @@ class SettingsScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final locale = ref.watch(localeProvider);
     final defaultCurrency = ref.watch(defaultCurrencyProvider);
+    final isPremium = ref.watch(isPremiumActiveProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,6 +26,14 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Premium section (only for non-premium users)
+          if (!isPremium) ...[
+            _buildSectionLabel(theme, 'Premium'),
+            const SizedBox(height: 8),
+            _buildPremiumCard(context),
+            const SizedBox(height: 24),
+          ],
+
           // General section
           _buildSectionLabel(theme, context.l10n.general),
           const SizedBox(height: 8),
@@ -101,8 +113,11 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(context.l10n.privacyPolicy),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(context.l10n.comingSoon)),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicyViewerScreen(),
+                    ),
                   );
                 },
               ),
@@ -158,6 +173,94 @@ class SettingsScreen extends ConsumerWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
+    );
+  }
+
+  Widget _buildPremiumCard(BuildContext context) {
+    return InkWell(
+      onTap: () => context.push('/premium'),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary,
+              AppColors.primary.withValues(alpha: 0.7),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: AppConstants.cardShadow,
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.workspace_premium,
+                  color: Colors.white,
+                  size: 32,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Premium으로 업그레이드',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildPremiumBenefit('광고 없음'),
+            const SizedBox(height: 8),
+            _buildPremiumBenefit('무제한 여행 생성'),
+            const SizedBox(height: 8),
+            _buildPremiumBenefit('고급 통계 분석'),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '자세히 보기',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                  size: 16,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPremiumBenefit(String text) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.check_circle,
+          color: Colors.white,
+          size: 20,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+      ],
     );
   }
 
