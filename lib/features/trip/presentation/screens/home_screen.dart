@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
+import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/budget/presentation/providers/budget_providers.dart';
+import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/widgets/empty_trip_state.dart';
 import 'package:trip_wallet/features/trip/presentation/widgets/trip_card.dart';
@@ -54,11 +56,53 @@ class HomeScreen extends ConsumerWidget {
                   return const EmptyTripState();
                 }
 
+                final shouldShowAds = ref.watch(shouldShowAdsProvider);
+
+                // Fixed top banner (always 1) + interleave every 4 trips
+                const adInterval = 4;
+                final fixedAdCount = shouldShowAds ? 1 : 0;
+                final interleaveAdCount =
+                    shouldShowAds ? (trips.length ~/ adInterval) : 0;
+                final totalItems =
+                    trips.length + fixedAdCount + interleaveAdCount;
+
                 return ListView.builder(
-                  itemCount: trips.length,
+                  itemCount: totalItems,
                   padding: const EdgeInsets.only(top: 8, bottom: 80),
                   itemBuilder: (context, index) {
-                    return TripCard(trip: trips[index]);
+                    // Index 0: fixed top banner ad
+                    if (shouldShowAds && index == 0) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: AdBannerWidget(),
+                      );
+                    }
+
+                    // Offset by 1 for the fixed banner
+                    final adjustedIndex =
+                        shouldShowAds ? index - 1 : index;
+
+                    // Interleave ads every 4 trips
+                    final adsBefore = shouldShowAds
+                        ? (adjustedIndex ~/ (adInterval + 1))
+                            .clamp(0, interleaveAdCount)
+                        : 0;
+                    final tripIndex = adjustedIndex - adsBefore;
+
+                    // Check if this position is an interleave ad slot
+                    final isAdPosition = shouldShowAds &&
+                        adsBefore < interleaveAdCount &&
+                        (adjustedIndex + 1) % (adInterval + 1) == 0;
+
+                    if (isAdPosition) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: AdBannerWidget(),
+                      );
+                    }
+
+                    // Show trip card
+                    return TripCard(trip: trips[tripIndex]);
                   },
                 );
               },

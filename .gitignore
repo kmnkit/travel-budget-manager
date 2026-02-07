@@ -50,3 +50,8 @@ app.*.map.json
 
 # Android build reports
 android/build/
+
+# Keystore / signing
+android/keystore.properties
+*.jks
+*.keystore

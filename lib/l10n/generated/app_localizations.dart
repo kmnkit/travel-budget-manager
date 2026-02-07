@@ -1081,6 +1081,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get onboardingGetStarted;
+
+  /// No description provided for @premium.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get premium;
+
+  /// No description provided for @premiumTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Wallet Premium'**
+  String get premiumTitle;
+
+  /// No description provided for @unlockPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium Features'**
+  String get unlockPremium;
+
+  /// No description provided for @premiumSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy ad-free experience and more'**
+  String get premiumSubtitle;
+
+  /// No description provided for @upgradeToPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium'**
+  String get upgradeToPremium;
+
+  /// No description provided for @restorePurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Purchase'**
+  String get restorePurchase;
+
+  /// No description provided for @premiumFeatureAdFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-free experience'**
+  String get premiumFeatureAdFree;
+
+  /// No description provided for @premiumFeatureAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced analytics'**
+  String get premiumFeatureAnalytics;
+
+  /// No description provided for @premiumFeatureReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom reports'**
+  String get premiumFeatureReports;
+
+  /// No description provided for @premiumFeatureSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority support'**
+  String get premiumFeatureSupport;
+
+  /// No description provided for @premiumFeatureExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited exports'**
+  String get premiumFeatureExports;
+
+  /// No description provided for @premiumPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} per year'**
+  String premiumPrice(String price);
+
+  /// No description provided for @premiumBestValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Best value'**
+  String get premiumBestValue;
+
+  /// No description provided for @premiumAutoRenewDisclaimers.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription renews automatically unless cancelled'**
+  String get premiumAutoRenewDisclaimers;
+
+  /// No description provided for @premiumPurchaseSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for upgrading!'**
+  String get premiumPurchaseSuccess;
+
+  /// No description provided for @premiumPurchaseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase failed. Please try again.'**
+  String get premiumPurchaseFailed;
+
+  /// No description provided for @premiumRestoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous purchases restored'**
+  String get premiumRestoreSuccess;
+
+  /// No description provided for @premiumRestoreFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to restore purchases'**
+  String get premiumRestoreFailed;
+
+  /// No description provided for @premiumAlreadyOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'You already own this feature'**
+  String get premiumAlreadyOwned;
+
+  /// No description provided for @whatIncluded.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s Included'**
+  String get whatIncluded;
+
+  /// No description provided for @oneYearSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'One Year Subscription'**
+  String get oneYearSubscription;
+
+  /// No description provided for @later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
+
+  /// No description provided for @upgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade'**
+  String get upgrade;
+
+  /// No description provided for @ads.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads'**
+  String get ads;
+
+  /// No description provided for @adFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-Free'**
+  String get adFree;
+
+  /// No description provided for @upgradeForAdFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to remove ads'**
+  String get upgradeForAdFree;
+
+  /// No description provided for @ad.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad'**
+  String get ad;
+
+  /// No description provided for @premiumActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Active'**
+  String get premiumActive;
+
+  /// No description provided for @removeAds.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Ads'**
+  String get removeAds;
+
+  /// No description provided for @adFreeExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy ad-free experience'**
+  String get adFreeExperience;
+
+  /// No description provided for @supportDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'Support development'**
+  String get supportDevelopment;
+
+  /// No description provided for @thankYouForSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your support!'**
+  String get thankYouForSupport;
+
+  /// No description provided for @maybeLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Maybe Later'**
+  String get maybeLater;
+
+  /// No description provided for @upgradeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Now'**
+  String get upgradeNow;
+
+  /// No description provided for @oneTimePurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'One-time purchase'**
+  String get oneTimePurchase;
+
+  /// No description provided for @featureAdFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-free experience'**
+  String get featureAdFree;
+
+  /// No description provided for @featureSupportDev.
+  ///
+  /// In en, this message translates to:
+  /// **'Support ongoing development'**
+  String get featureSupportDev;
+
+  /// No description provided for @featurePremiumBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium badge in settings'**
+  String get featurePremiumBadge;
+
+  /// No description provided for @purchaseSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase successful! Thank you for your support.'**
+  String get purchaseSuccess;
+
+  /// No description provided for @purchaseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase failed. Please try again.'**
+  String get purchaseFailed;
+
+  /// No description provided for @purchaseRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase restored successfully'**
+  String get purchaseRestored;
 }
 
 class _AppLocalizationsDelegate

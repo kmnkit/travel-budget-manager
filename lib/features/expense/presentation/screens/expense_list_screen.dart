@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:trip_wallet/core/utils/currency_formatter.dart';
+import 'package:trip_wallet/features/ads/presentation/widgets/ad_banner_widget.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense.dart';
 import 'package:trip_wallet/features/expense/domain/entities/expense_category.dart';
 import 'package:trip_wallet/features/expense/presentation/providers/expense_providers.dart';
 import 'package:trip_wallet/features/expense/presentation/widgets/expense_item_card.dart';
+import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/trip/presentation/providers/trip_providers.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
 import 'package:trip_wallet/shared/widgets/loading_indicator.dart';
@@ -74,6 +76,17 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
         final sortedExpenses = _sortExpenses(filteredExpenses);
         final groupedExpenses = _groupByDate(sortedExpenses);
 
+        final shouldShowAds = ref.watch(shouldShowAdsProvider);
+
+        // Fixed top banner (always 1) + interleave every 3 date groups
+        const adInterval = 3;
+        final dateGroupCount = groupedExpenses.length;
+        final fixedAdCount = shouldShowAds ? 1 : 0;
+        final interleaveAdCount =
+            shouldShowAds ? (dateGroupCount ~/ adInterval) : 0;
+        final totalItems =
+            dateGroupCount + fixedAdCount + interleaveAdCount;
+
         return Column(
           children: [
             // Filter and sort bar
@@ -83,9 +96,42 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
             // Expense list
             Expanded(
               child: ListView.builder(
-                itemCount: groupedExpenses.length,
+                itemCount: totalItems,
                 itemBuilder: (context, index) {
-                  final entry = groupedExpenses.entries.elementAt(index);
+                  // Index 0: fixed top banner ad
+                  if (shouldShowAds && index == 0) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: AdBannerWidget(),
+                    );
+                  }
+
+                  // Offset by 1 for the fixed banner
+                  final adjustedIndex =
+                      shouldShowAds ? index - 1 : index;
+
+                  // Interleave ads every 3 date groups
+                  final adsBefore = shouldShowAds
+                      ? (adjustedIndex ~/ (adInterval + 1))
+                          .clamp(0, interleaveAdCount)
+                      : 0;
+                  final groupIndex = adjustedIndex - adsBefore;
+
+                  // Check if this position is an interleave ad slot
+                  final isAdPosition = shouldShowAds &&
+                      adsBefore < interleaveAdCount &&
+                      (adjustedIndex + 1) % (adInterval + 1) == 0;
+
+                  if (isAdPosition) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: AdBannerWidget(),
+                    );
+                  }
+
+                  // Show date group
+                  final entry =
+                      groupedExpenses.entries.elementAt(groupIndex);
                   final date = entry.key;
                   final dayExpenses = entry.value;
                   final dailyTotal = dayExpenses.fold(

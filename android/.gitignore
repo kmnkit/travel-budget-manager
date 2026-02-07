@@ -13,3 +13,18 @@ key.properties
 keystore.properties
 **/*.keystore
 **/*.jks
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/README.md
+
+# Bundler
+.bundle/
+vendor/
+
+# Service account JSON (NEVER commit this)
+*.json
+!google-services.json
