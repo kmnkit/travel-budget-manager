@@ -1081,6 +1081,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get onboardingGetStarted;
+
+  /// No description provided for @consentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Collection Consent'**
+  String get consentTitle;
+
+  /// No description provided for @consentWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Trip Wallet'**
+  String get consentWelcome;
+
+  /// No description provided for @consentDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please consent to the following data collection for better service.'**
+  String get consentDescription;
+
+  /// No description provided for @consentDataCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Data We Collect'**
+  String get consentDataCollected;
+
+  /// No description provided for @consentDataCollectedList.
+  ///
+  /// In en, this message translates to:
+  /// **'• Screen view history\n• Button click events\n• Feature usage frequency\n• App performance data\n• Device type and OS version'**
+  String get consentDataCollectedList;
+
+  /// No description provided for @consentDataNotCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Data We Don\'t Collect'**
+  String get consentDataNotCollected;
+
+  /// No description provided for @consentDataNotCollectedList.
+  ///
+  /// In en, this message translates to:
+  /// **'• Personal information (name, email)\n• Actual expense amounts and budgets\n• Travel destinations\n• Payment method details'**
+  String get consentDataNotCollectedList;
+
+  /// No description provided for @consentAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics Consent (Optional)'**
+  String get consentAnalytics;
+
+  /// No description provided for @consentAnalyticsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'We collect anonymous usage data to improve our service.'**
+  String get consentAnalyticsDesc;
+
+  /// No description provided for @consentPersonalizedAds.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized Ads Consent (Optional)'**
+  String get consentPersonalizedAds;
+
+  /// No description provided for @consentPersonalizedAdsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show ads based on your interests.'**
+  String get consentPersonalizedAdsDesc;
+
+  /// No description provided for @consentPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get consentPrivacyPolicy;
+
+  /// No description provided for @consentAcceptAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept All'**
+  String get consentAcceptAll;
+
+  /// No description provided for @consentAcceptSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Selected'**
+  String get consentAcceptSelected;
+
+  /// No description provided for @consentContinueWithout.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Without Consent'**
+  String get consentContinueWithout;
+
+  /// No description provided for @consentWithdrawTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw Consent'**
+  String get consentWithdrawTitle;
+
+  /// No description provided for @consentWithdrawMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request deletion of collected data when withdrawing consent.'**
+  String get consentWithdrawMessage;
+
+  /// No description provided for @consentWithdrawButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw Consent'**
+  String get consentWithdrawButton;
 }
 
 class _AppLocalizationsDelegate

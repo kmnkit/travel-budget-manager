@@ -50,3 +50,6 @@ app.*.map.json
 
 # Android build reports
 android/build/
+
+# App Store Connect API Key
+AuthKey_*.p8

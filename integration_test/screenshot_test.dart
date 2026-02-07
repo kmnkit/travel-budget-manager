@@ -2,7 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:trip_wallet/main.dart' as app;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_wallet/app.dart';
+import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
+import 'package:trip_wallet/features/consent/presentation/providers/consent_providers.dart';
+import 'package:trip_wallet/features/consent/data/datasources/consent_local_datasource.dart';
+import 'package:trip_wallet/features/consent/data/repositories/consent_repository_impl.dart';
 
 /// Screenshot test for App Store submission
 ///
@@ -18,7 +24,24 @@ void main() {
 
   group('App Store Screenshots', () {
     testWidgets('Capture all screens for App Store', (tester) async {
-      app.main();
+      // Initialize SharedPreferences for testing
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+
+      // Initialize consent data source and repository
+      final consentDataSource = ConsentLocalDataSource(prefs);
+      final consentRepository = ConsentRepositoryImpl(consentDataSource);
+
+      // Start app without Firebase
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            consentRepositoryProvider.overrideWithValue(consentRepository),
+          ],
+          child: const TripWalletApp(),
+        ),
+      );
       await tester.pumpAndSettle(const Duration(seconds: 3));
 
       // Screenshot 1: Home Screen (Trip List)

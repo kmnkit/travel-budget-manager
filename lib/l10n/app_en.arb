@@ -293,5 +293,25 @@
   "onboardingGetStartedDescription": "Create your first trip and start tracking your travel budget today!",
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
-  "onboardingGetStarted": "Get Started"
+  "onboardingGetStarted": "Get Started",
+
+  "@_CONSENT": {},
+  "consentTitle": "Data Collection Consent",
+  "consentWelcome": "Welcome to Trip Wallet",
+  "consentDescription": "Please consent to the following data collection for better service.",
+  "consentDataCollected": "Data We Collect",
+  "consentDataCollectedList": "• Screen view history\n• Button click events\n• Feature usage frequency\n• App performance data\n• Device type and OS version",
+  "consentDataNotCollected": "Data We Don't Collect",
+  "consentDataNotCollectedList": "• Personal information (name, email)\n• Actual expense amounts and budgets\n• Travel destinations\n• Payment method details",
+  "consentAnalytics": "Analytics Consent (Optional)",
+  "consentAnalyticsDesc": "We collect anonymous usage data to improve our service.",
+  "consentPersonalizedAds": "Personalized Ads Consent (Optional)",
+  "consentPersonalizedAdsDesc": "Show ads based on your interests.",
+  "consentPrivacyPolicy": "Privacy Policy",
+  "consentAcceptAll": "Accept All",
+  "consentAcceptSelected": "Accept Selected",
+  "consentContinueWithout": "Continue Without Consent",
+  "consentWithdrawTitle": "Withdraw Consent",
+  "consentWithdrawMessage": "You can request deletion of collected data when withdrawing consent.",
+  "consentWithdrawButton": "Withdraw Consent"
 }

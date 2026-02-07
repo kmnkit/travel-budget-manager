@@ -293,5 +293,25 @@
   "onboardingGetStartedDescription": "첫 번째 여행을 만들고 오늘부터 여행 예산을 관리해보세요!",
   "onboardingSkip": "건너뛰기",
   "onboardingNext": "다음",
-  "onboardingGetStarted": "시작하기"
+  "onboardingGetStarted": "시작하기",
+
+  "@_CONSENT": {},
+  "consentTitle": "개인정보 수집 동의",
+  "consentWelcome": "Trip Wallet에 오신 것을 환영합니다",
+  "consentDescription": "더 나은 서비스를 위해 아래 정보 수집에 동의해 주세요.",
+  "consentDataCollected": "수집 항목",
+  "consentDataCollectedList": "• 화면 조회 기록\n• 버튼 클릭 이벤트\n• 기능 사용 빈도\n• 앱 성능 데이터\n• 기기 유형 및 OS 버전",
+  "consentDataNotCollected": "수집하지 않는 항목",
+  "consentDataNotCollectedList": "• 개인 식별 정보 (이름, 이메일)\n• 실제 지출 금액 및 예산\n• 여행 목적지\n• 결제 수단 정보",
+  "consentAnalytics": "앱 사용 분석 동의 (선택)",
+  "consentAnalyticsDesc": "서비스 개선을 위한 익명 사용 데이터를 수집합니다.",
+  "consentPersonalizedAds": "맞춤 광고 동의 (선택)",
+  "consentPersonalizedAdsDesc": "관심사에 맞는 광고를 표시합니다.",
+  "consentPrivacyPolicy": "개인정보 처리방침",
+  "consentAcceptAll": "모두 동의",
+  "consentAcceptSelected": "선택 동의",
+  "consentContinueWithout": "동의 없이 계속",
+  "consentWithdrawTitle": "동의 철회",
+  "consentWithdrawMessage": "동의를 철회하면 수집된 데이터 삭제를 요청할 수 있습니다.",
+  "consentWithdrawButton": "동의 철회"
 }

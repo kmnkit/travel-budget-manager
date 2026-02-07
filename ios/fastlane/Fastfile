@@ -8,6 +8,16 @@ default_platform(:ios)
 platform :ios do
   before_all do
     setup_ci if ENV['CI']
+    # Ensure Homebrew binaries (including CocoaPods) are in PATH
+    ENV['PATH'] = "/opt/homebrew/bin:/opt/homebrew/sbin:#{ENV['PATH']}"
+
+    # App Store Connect API Key authentication
+    app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"] || "S37Y5ZNV84",
+      issuer_id: ENV["ASC_ISSUER_ID"] || "af69e6a2-d64e-4f95-9096-6412a772c0e0",
+      key_filepath: ENV["ASC_KEY_FILEPATH"] || File.join(Dir.pwd, "..", "AuthKey_S37Y5ZNV84.p8"),
+      in_house: false
+    )
   end
 
   desc "Push a new beta build to TestFlight"

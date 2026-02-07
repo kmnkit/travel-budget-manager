@@ -534,4 +534,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingGetStarted => 'Get Started';
+
+  @override
+  String get consentTitle => 'Data Collection Consent';
+
+  @override
+  String get consentWelcome => 'Welcome to Trip Wallet';
+
+  @override
+  String get consentDescription =>
+      'Please consent to the following data collection for better service.';
+
+  @override
+  String get consentDataCollected => 'Data We Collect';
+
+  @override
+  String get consentDataCollectedList =>
+      '• Screen view history\n• Button click events\n• Feature usage frequency\n• App performance data\n• Device type and OS version';
+
+  @override
+  String get consentDataNotCollected => 'Data We Don\'t Collect';
+
+  @override
+  String get consentDataNotCollectedList =>
+      '• Personal information (name, email)\n• Actual expense amounts and budgets\n• Travel destinations\n• Payment method details';
+
+  @override
+  String get consentAnalytics => 'Analytics Consent (Optional)';
+
+  @override
+  String get consentAnalyticsDesc =>
+      'We collect anonymous usage data to improve our service.';
+
+  @override
+  String get consentPersonalizedAds => 'Personalized Ads Consent (Optional)';
+
+  @override
+  String get consentPersonalizedAdsDesc => 'Show ads based on your interests.';
+
+  @override
+  String get consentPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get consentAcceptAll => 'Accept All';
+
+  @override
+  String get consentAcceptSelected => 'Accept Selected';
+
+  @override
+  String get consentContinueWithout => 'Continue Without Consent';
+
+  @override
+  String get consentWithdrawTitle => 'Withdraw Consent';
+
+  @override
+  String get consentWithdrawMessage =>
+      'You can request deletion of collected data when withdrawing consent.';
+
+  @override
+  String get consentWithdrawButton => 'Withdraw Consent';
 }
