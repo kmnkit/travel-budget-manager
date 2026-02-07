@@ -395,6 +395,164 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodCustom => 'Custom';
 
   @override
+  String get budgetForecast => 'Budget Forecast';
+
+  @override
+  String get budgetBurndownChart => 'Budget Burn-down';
+
+  @override
+  String get projectedTotal => 'Projected Total';
+
+  @override
+  String get dailySpending => 'Daily Spending';
+
+  @override
+  String get daysUntilExhaustion => 'Days Until Exhaustion';
+
+  @override
+  String daysUntilExhaustionValue(int days) {
+    return '$days days';
+  }
+
+  @override
+  String get budgetSufficient => 'Budget Sufficient';
+
+  @override
+  String get forecastStatusOnTrack => 'On Track';
+
+  @override
+  String get forecastStatusAtRisk => 'At Risk';
+
+  @override
+  String get forecastStatusOverBudget => 'Over Budget';
+
+  @override
+  String get forecastStatusExhausted => 'Exhausted';
+
+  @override
+  String get actualSpending => 'Actual Spending';
+
+  @override
+  String get projectedSpending => 'Projected';
+
+  @override
+  String get budgetLimit => 'Budget Limit';
+
+  @override
+  String get bestCase => 'Best Case';
+
+  @override
+  String get worstCase => 'Worst Case';
+
+  @override
+  String get confidenceInterval => 'Confidence Interval';
+
+  @override
+  String get noBudgetSet => 'No budget has been set';
+
+  @override
+  String get overallSpendingTrend => 'Overall Spending Trend:';
+
+  @override
+  String get spendingVelocity => 'Spending Velocity';
+
+  @override
+  String get dailyAverage => 'Daily Average';
+
+  @override
+  String get weeklyAverage => 'Weekly Average';
+
+  @override
+  String get velocityStable => 'Stable';
+
+  @override
+  String get velocityIncreasing => 'Increasing';
+
+  @override
+  String get velocityDecreasing => 'Decreasing';
+
+  @override
+  String accelerationLabel(String status) {
+    return 'Acceleration: $status';
+  }
+
+  @override
+  String periodLabel(String period) {
+    return 'Period: $period';
+  }
+
+  @override
+  String get periodComparison => 'Period Comparison';
+
+  @override
+  String get noComparisonData => 'No comparison data available';
+
+  @override
+  String get categoryAnalysis => 'Category Analysis';
+
+  @override
+  String get noCategoryData => 'No category data available';
+
+  @override
+  String get smartInsights => 'Smart Insights';
+
+  @override
+  String confidenceLabel(String value) {
+    return 'Confidence: $value';
+  }
+
+  @override
+  String get dailyExpenses => 'Daily Expenses';
+
+  @override
+  String get expensesByCategory => 'Expenses by Category';
+
+  @override
+  String get expensesByPaymentMethod => 'Expenses by Payment Method';
+
+  @override
+  String get totalExpense => 'Total Expenses';
+
+  @override
+  String get thisWeekVsLastWeek => 'This Week vs Last Week';
+
+  @override
+  String get dashboardEdit => 'Edit Dashboard';
+
+  @override
+  String get resetToDefault => 'Reset to Default';
+
+  @override
+  String get widgetCategoryPieChart => 'Category Spending';
+
+  @override
+  String get widgetDailyBarChart => 'Daily Spending';
+
+  @override
+  String get widgetPaymentMethodChart => 'Payment Method Spending';
+
+  @override
+  String get widgetTrendIndicator => 'Spending Trend';
+
+  @override
+  String get widgetSpendingVelocity => 'Spending Velocity';
+
+  @override
+  String get widgetPeriodComparison => 'Period Comparison';
+
+  @override
+  String get widgetCategoryInsights => 'Category Insights';
+
+  @override
+  String get widgetSmartInsights => 'Smart Insights';
+
+  @override
+  String get widgetBudgetForecast => 'Budget Forecast';
+
+  @override
+  String get widgetBudgetBurndown => 'Budget Burndown';
+
+  @override
   String get allCategories => 'All';
 
   @override
@@ -417,6 +575,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get filterPast => 'Past';
+
+  @override
+  String get clearAllFilters => 'Clear All';
+
+  @override
+  String get filterByCategory => 'Category';
+
+  @override
+  String get filterByPaymentMethod => 'Payment Method';
 
   @override
   String get language => 'Language';

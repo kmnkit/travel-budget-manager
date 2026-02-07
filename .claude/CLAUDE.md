@@ -133,3 +133,82 @@ dart run build_runner build --delete-conflicting-outputs  # After Drift/Freezed 
 
 - **Working branch**: `ralph/trip-wallet-v2`
 - **Commits**: Write in Korean (한글)
+
+## Tool Usage Priority (MANDATORY)
+
+**Serena tools are PRIMARY. Use Claude Code basic tools only when Serena cannot.**
+
+### Code Exploration & Navigation
+
+| Task | Use This (Serena) | Fallback (Claude Code) |
+|------|-------------------|-------------------------|
+| Understand file structure | `mcp__serena__get_symbols_overview` | `Read` (entire file) |
+| Find class/method by name | `mcp__serena__find_symbol` | `Grep` |
+| Find references to symbol | `mcp__serena__find_referencing_symbols` | `Grep` + manual search |
+| Search code patterns | `mcp__serena__search_for_pattern` | `Grep` |
+| List directory | `mcp__serena__list_dir` | `Glob` or `Bash(ls)` |
+| Find files by name | `mcp__serena__find_file` | `Glob` |
+
+### Code Editing
+
+| Task | Use This (Serena) | Fallback (Claude Code) |
+|------|-------------------|-------------------------|
+| Replace method/function | `mcp__serena__replace_symbol_body` | `Edit` (manual range) |
+| Add new method/class | `mcp__serena__insert_after_symbol` | `Edit` or `Write` |
+| Insert import/code before | `mcp__serena__insert_before_symbol` | `Edit` |
+| Rename symbol globally | `mcp__serena__rename_symbol` | LSP `lsp_rename` |
+| **Create new file** | ❌ | `Write` (Serena cannot create files) |
+
+### Memory & Context Management
+
+**ALWAYS use Serena for project memory:**
+- `mcp__serena__read_memory` - Load project context (do this first!)
+- `mcp__serena__write_memory` - Save important findings
+- `mcp__serena__list_memories` - Check available memories
+- `mcp__serena__edit_memory` - Update existing memory
+
+### When to Use Claude Code Basic Tools
+
+**ONLY use these when Serena cannot handle it:**
+
+1. **File Creation**: `Write` (Serena cannot create new files)
+2. **Quick Pattern Search**: `Grep` (when you know exact pattern, faster than Serena)
+3. **Simple File Listing**: `Glob` (when you just need file names, not structure)
+4. **Manual String Replacement**: `Edit` (when symbol-based editing is not applicable)
+5. **Shell Commands**: `Bash` (non-code operations)
+
+### Code Intelligence (LSP)
+
+Use MCP LSP plugin for advanced refactoring:
+- `mcp__plugin_oh-my-claudecode_t__lsp_find_references`
+- `mcp__plugin_oh-my-claudecode_t__lsp_rename`
+- `mcp__plugin_oh-my-claudecode_t__lsp_goto_definition`
+- `mcp__plugin_oh-my-claudecode_t__lsp_diagnostics`
+
+### Workflow Example
+
+**CORRECT (Serena-first approach):**
+```
+1. mcp__serena__list_memories → Read project context
+2. mcp__serena__get_symbols_overview → Understand file structure
+3. mcp__serena__find_symbol → Locate specific method
+4. mcp__serena__replace_symbol_body → Edit the method
+5. mcp__serena__write_memory → Save insights
+```
+
+**WRONG (Token-wasteful approach):**
+```
+1. Read entire file → Wastes tokens
+2. Grep for method → Manual work
+3. Edit with string replacement → Error-prone
+```
+
+### Summary
+
+```
+Priority 1: Serena (code exploration, symbol editing, memory)
+Priority 2: MCP LSP plugin (advanced refactoring)
+Priority 3: Claude Code basic tools (file creation, shell commands)
+```
+
+**Key Principle**: Use Serena's symbol-based tools to avoid reading entire files. This saves tokens and provides more precise code manipulation.

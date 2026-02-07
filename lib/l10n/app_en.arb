@@ -239,6 +239,90 @@
   "periodMonth": "This Month",
   "periodCustom": "Custom",
 
+  "@_BUDGET_FORECAST": {},
+  "budgetForecast": "Budget Forecast",
+  "budgetBurndownChart": "Budget Burn-down",
+  "projectedTotal": "Projected Total",
+  "dailySpending": "Daily Spending",
+  "daysUntilExhaustion": "Days Until Exhaustion",
+  "daysUntilExhaustionValue": "{days} days",
+  "@daysUntilExhaustionValue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "budgetSufficient": "Budget Sufficient",
+  "forecastStatusOnTrack": "On Track",
+  "forecastStatusAtRisk": "At Risk",
+  "forecastStatusOverBudget": "Over Budget",
+  "forecastStatusExhausted": "Exhausted",
+  "actualSpending": "Actual Spending",
+  "projectedSpending": "Projected",
+  "budgetLimit": "Budget Limit",
+  "bestCase": "Best Case",
+  "worstCase": "Worst Case",
+  "confidenceInterval": "Confidence Interval",
+  "noBudgetSet": "No budget has been set",
+
+  "@_STATISTICS_ANALYTICS": {},
+  "overallSpendingTrend": "Overall Spending Trend:",
+  "spendingVelocity": "Spending Velocity",
+  "dailyAverage": "Daily Average",
+  "weeklyAverage": "Weekly Average",
+  "velocityStable": "Stable",
+  "velocityIncreasing": "Increasing",
+  "velocityDecreasing": "Decreasing",
+  "accelerationLabel": "Acceleration: {status}",
+  "@accelerationLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "periodLabel": "Period: {period}",
+  "@periodLabel": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "periodComparison": "Period Comparison",
+  "noComparisonData": "No comparison data available",
+  "categoryAnalysis": "Category Analysis",
+  "noCategoryData": "No category data available",
+  "smartInsights": "Smart Insights",
+  "confidenceLabel": "Confidence: {value}",
+  "@confidenceLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyExpenses": "Daily Expenses",
+  "expensesByCategory": "Expenses by Category",
+  "expensesByPaymentMethod": "Expenses by Payment Method",
+  "totalExpense": "Total Expenses",
+  "thisWeekVsLastWeek": "This Week vs Last Week",
+
+  "@_DASHBOARD_EDIT": {},
+  "dashboardEdit": "Edit Dashboard",
+  "resetToDefault": "Reset to Default",
+  "widgetCategoryPieChart": "Category Spending",
+  "widgetDailyBarChart": "Daily Spending",
+  "widgetPaymentMethodChart": "Payment Method Spending",
+  "widgetTrendIndicator": "Spending Trend",
+  "widgetSpendingVelocity": "Spending Velocity",
+  "widgetPeriodComparison": "Period Comparison",
+  "widgetCategoryInsights": "Category Insights",
+  "widgetSmartInsights": "Smart Insights",
+  "widgetBudgetForecast": "Budget Forecast",
+  "widgetBudgetBurndown": "Budget Burndown",
+
   "@_FILTER_SORT": {},
   "allCategories": "All",
   "sortByDate": "Latest First",
@@ -248,6 +332,9 @@
   "filterAllTrips": "All Trips",
   "filterActive": "Active",
   "filterPast": "Past",
+  "clearAllFilters": "Clear All",
+  "filterByCategory": "Category",
+  "filterByPaymentMethod": "Payment Method",
 
   "@_SETTINGS": {},
   "language": "Language",
