@@ -19,6 +19,7 @@ import 'package:trip_wallet/features/statistics/presentation/providers/budget_fo
 import 'package:trip_wallet/features/statistics/presentation/widgets/budget_forecast_card.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/budget_burndown_chart.dart';
 import 'package:trip_wallet/shared/widgets/loading_indicator.dart';
+import 'package:trip_wallet/features/export/presentation/widgets/export_button.dart';
 import 'package:trip_wallet/shared/widgets/error_widget.dart';
 import 'package:trip_wallet/features/statistics/presentation/providers/dashboard_providers.dart';
 import 'package:trip_wallet/features/statistics/presentation/widgets/dashboard_edit_sheet.dart';
@@ -243,6 +244,24 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
     final dashboardConfigAsync = ref.watch(dashboardConfigProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          ExportButton(tripId: widget.tripId),
+          IconButton(
+            icon: const Icon(Icons.tune),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                ),
+                builder: (context) => const DashboardEditSheet(),
+              );
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // Period filter chips

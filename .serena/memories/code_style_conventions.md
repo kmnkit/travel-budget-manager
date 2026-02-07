@@ -1,80 +1,45 @@
-# Code Style & Conventions
+# TripWallet Code Style & Conventions
 
 ## Linting
-- Uses `package:lints/recommended.yaml` (NOT deprecated flutter_lints)
-- Excludes generated files: `**/*.g.dart`, `**/*.freezed.dart`
-- Ignores `invalid_annotation_target` error (Freezed/JSON serialization)
+- Uses `package:lints/recommended.yaml`
+- Excludes: `**/*.g.dart`, `**/*.freezed.dart`
+- Ignores: `invalid_annotation_target`
 
-## Naming Conventions
+## Code Style
+- **Immutability**: Use Freezed for entities/models
+- **Naming**: 
+  - Files: snake_case (e.g., `expense_repository.dart`)
+  - Classes: PascalCase (e.g., `ExpenseRepository`)
+  - Variables/Functions: camelCase (e.g., `getExpenses`)
+- **State Management**: Riverpod v3
+  - Use `NotifierProvider` for state with logic
+  - Use `StreamProvider` for Drift reactive queries
+  - Use `FutureProvider.family` for parameterized async
+  - ❌ NO `StateProvider` or `StateNotifier` (removed in v3)
 
-### Files
-- Snake_case for all file names: `trip_repository.dart`
-- Test files: `{filename}_test.dart`
-- Generated files: `{filename}.freezed.dart`, `{filename}.g.dart`
+## Architecture Rules
+- ❌ `domain/` MUST NOT import from `data/` or `presentation/`
+- ❌ `presentation/` MUST NOT import from `data/` directly
+- ✅ `presentation/` → `domain/`
+- ✅ `data/` → `domain/` (interfaces only)
 
-### Classes
-- PascalCase: `TripRepository`, `TripModel`
-- Abstract classes: `TripRepository` (interface in domain)
-- Implementations: `TripRepositoryImpl` (implementation in data)
-- Mocks: `MockTripRepository` (in test files)
-
-### Variables & Functions
-- camelCase: `createTrip`, `tripList`, `isLoading`
-- Private members: `_internalMethod`, `_privateField`
-
-## Freezed Entities
-```dart
-@freezed
-class Trip with _$Trip {
-  const factory Trip({
-    required String id,
-    required String name,
-    // ... other fields
-  }) = _Trip;
-}
+## Dependencies Flow
+```
+presentation → domain ← data
 ```
 
-## Repository Pattern
-```dart
-// domain/repositories/trip_repository.dart
-abstract class TripRepository {
-  Future<Trip> createTrip(Trip trip);
-  Stream<List<Trip>> watchTrips();
-}
+## Testing Style
+- Use `mocktail` (NOT mockito)
+- Test file naming: `*_test.dart`
+- Mock class naming: `Mock{ClassName}` (e.g., `MockExpenseRepository`)
+- For Freezed objects: use `any()` matcher
+- Register fallback values: `registerFallbackValue(AsyncValue.data(...))`
 
-// data/repositories/trip_repository_impl.dart
-class TripRepositoryImpl implements TripRepository {
-  final TripLocalDataSource _localDataSource;
-  
-  TripRepositoryImpl(this._localDataSource);
-  
-  @override
-  Future<Trip> createTrip(Trip trip) => _localDataSource.insertTrip(trip);
-}
-```
-
-## Riverpod Providers
-```dart
-@riverpod
-class TripNotifier extends _$TripNotifier {
-  @override
-  FutureOr<List<Trip>> build() async {
-    // initialization
-  }
-  
-  Future<void> createTrip(Trip trip) async {
-    // business logic
-  }
-}
-```
-
-## Import Order
-1. Dart SDK imports
-2. Flutter SDK imports
-3. External package imports
-4. Internal project imports (relative)
-
-## Flutter 3.x Compatibility
-- Use `surfaceContainerHighest` instead of removed `surfaceVariant`
-- Use `activeTrackColor` instead of deprecated `activeColor` on Switch
-- Add null coalescing for nullable text styles: `bodyMedium ?? const TextStyle()`
+## Commit Messages
+- **Language**: Korean (한글)
+- **Format**: 
+  - `feat: 기능 추가`
+  - `fix: 버그 수정`
+  - `refactor: 리팩토링`
+  - `test: 테스트 추가`
+  - `docs: 문서 수정`

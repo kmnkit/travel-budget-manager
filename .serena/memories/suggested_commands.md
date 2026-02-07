@@ -1,48 +1,59 @@
-# Suggested Commands
+# TripWallet - Essential Commands
 
-## Before Every Commit (MANDATORY)
+## Pre-Commit (MANDATORY)
 ```bash
-flutter analyze   # MUST pass with zero warnings
-flutter test      # MUST pass with zero failures
+flutter analyze   # MUST pass with 0 warnings
+flutter test      # MUST pass with 0 failures
 ```
 
 ## Development Commands
-
-### Testing
 ```bash
-flutter test                              # Run all tests
-flutter test test/features/trip/         # Run specific feature tests
-flutter test --coverage                   # Generate coverage report
+# Install dependencies
+flutter pub get
+
+# Run app
+flutter run
+
+# Code generation (after Drift/Freezed changes)
+dart run build_runner build --delete-conflicting-outputs
+
+# Generate localization (after ARB file changes)
+flutter gen-l10n
+
+# Clean build artifacts
+flutter clean
+dart run build_runner clean
 ```
 
-### Code Generation
+## Testing
 ```bash
-dart run build_runner build --delete-conflicting-outputs  # After Drift/Freezed changes
-flutter gen-l10n                                          # Regenerate localization after ARB changes
+# Run all tests
+flutter test
+
+# Run specific test file
+flutter test test/features/expense/domain/usecases/add_expense_usecase_test.dart
+
+# Verbose output
+flutter test -v
+
+# Coverage report
+flutter test --coverage
 ```
 
-### Dependencies
+## Build Commands
 ```bash
-flutter pub get                           # Install dependencies
-flutter pub upgrade                       # Upgrade dependencies
+# Android
+flutter build apk              # APK
+flutter build appbundle        # Play Store AAB
+
+# iOS
+flutter build ios              # iOS app
+flutter build ipa              # App Store IPA
 ```
 
-### Running the App
-```bash
-flutter run                               # Run on connected device
-flutter run -d ios                        # Run on iOS simulator
-flutter run -d android                    # Run on Android emulator
-```
-
-### Linting & Analysis
-```bash
-flutter analyze                           # Run static analysis
-dart fix --dry-run                        # Preview available fixes
-dart fix --apply                          # Apply automated fixes
-```
-
-## macOS-Specific Notes
-- System: Darwin (macOS)
-- Standard Unix commands available: git, ls, cd, grep, find, cat, etc.
-- Use `open .` to open current directory in Finder
-- Use `open -a Xcode ios/Runner.xcworkspace` to open iOS project in Xcode
+## System Commands (macOS/Darwin)
+- `git` - Version control
+- `ls` - List files
+- `cd` - Change directory
+- `grep` - Search text patterns
+- `find` - Find files

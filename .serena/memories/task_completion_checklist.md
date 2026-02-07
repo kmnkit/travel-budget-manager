@@ -1,35 +1,46 @@
 # Task Completion Checklist
 
-When a task is marked as complete, verify ALL of these:
+## When a Task is Completed
 
-## Code Quality
-- [ ] All new code has corresponding tests (TDD Red-Green-Refactor)
-- [ ] Tests follow the same directory structure as source code
-- [ ] `flutter analyze` passes with ZERO warnings
-- [ ] `flutter test` passes with ZERO failures
-- [ ] Code follows Clean Architecture dependency rules
-- [ ] No direct imports from `data/` layer in `presentation/` layer
-- [ ] No imports from `data/` or `presentation/` in `domain/` layer
+### 1. Code Quality
+- [ ] Code follows Clean Architecture principles
+- [ ] No direct cross-layer imports (presentation → data)
+- [ ] Used appropriate Riverpod provider types (v3)
+- [ ] Freezed used for immutable entities
 
-## Code Generation (if applicable)
-- [ ] Run `dart run build_runner build --delete-conflicting-outputs` after Drift/Freezed changes
-- [ ] Run `flutter gen-l10n` after ARB file changes
-- [ ] Generated files (*.g.dart, *.freezed.dart) are properly excluded in analysis_options.yaml
+### 2. Testing (MANDATORY - TDD)
+- [ ] Tests written BEFORE implementation (Red-Green-Refactor)
+- [ ] Domain layer: Unit tests exist
+- [ ] Data layer: Unit tests with mocktail mocks exist
+- [ ] Presentation: Provider tests exist (if applicable)
+- [ ] Custom widgets: Widget tests exist
+- [ ] All tests pass: `flutter test`
 
-## Testing Requirements
-- [ ] Domain entities have unit tests
-- [ ] Repository interfaces have unit tests (mock implementations)
-- [ ] Repository implementations have unit tests (with mocktail mocks)
-- [ ] Datasources have unit tests (with mocktail mocks)
-- [ ] Providers have unit tests (if applicable)
-- [ ] Custom widgets have widget tests (if interactive)
+### 3. Code Generation
+If changed Drift tables or Freezed models:
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
 
-## Documentation
-- [ ] Code has meaningful comments where complexity warrants
-- [ ] Public APIs have dartdoc comments (if creating new APIs)
-- [ ] AGENTS.md updated if new patterns/conventions introduced
+### 4. Localization
+If added new UI strings:
+```bash
+flutter gen-l10n
+```
 
-## Git
-- [ ] Commits written in Korean (한글)
-- [ ] Working on branch: ralph/trip-wallet-v2
-- [ ] No debug code or commented-out code left in commit
+### 5. Static Analysis
+```bash
+flutter analyze   # MUST show 0 issues
+```
+
+### 6. Final Verification
+- [ ] App runs without errors: `flutter run`
+- [ ] No console warnings or errors
+- [ ] Feature works as expected
+- [ ] Commit message in Korean
+
+## TDD Workflow (STRICT)
+1. **RED**: Write failing test describing expected behavior
+2. **GREEN**: Write minimum code to pass the test
+3. **REFACTOR**: Improve code quality while keeping tests green
+4. **VERIFY**: Run `flutter test` and `flutter analyze`

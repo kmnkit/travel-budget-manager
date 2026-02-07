@@ -2,10 +2,10 @@
 
 ## Project Status
 
-- **All 38 tasks complete** across 7 implementation phases
-- **199+ unit and widget tests passing**
+- **Phase 3.3 (Export & Reporting) COMPLETE**: PDF generation + native share
+- **713 tests passing** (all unit, widget, integration tests)
 - **flutter analyze**: zero warnings
-- **Integration tests**: 4 files created
+- **Code quality**: Production-ready with architect verification
 - **Status**: Production-ready
 
 ## TDD Enforcement (MANDATORY)
@@ -47,10 +47,12 @@ flutter test      # MUST pass with zero failures
   - SQL SUM for budget aggregation
   - 4 tables: Trips, Expenses, PaymentMethods, ExchangeRates
 - **Routing**: GoRouter ^17.0.1
-- **i18n**: intl + ARB (137 strings, Korean/English)
+- **i18n**: intl + ARB (148 strings, Korean/English)
 - **Charts**: fl_chart ^1.1.1
+- **PDF Generation**: pdf ^3.11.1, printing ^5.13.3
+- **Sharing**: share_plus ^10.1.2
 - **Code Generation**: Freezed v3 + Drift build_runner
-- **Design**: Material Design 3, Teal #00897B, Lexend font, 8px/12px radius
+- **Design**: Material Design 3, Teal #00897B, Lexend + NotoSansKR fonts, 8px/12px radius
 
 ### Layer Rules
 
@@ -79,7 +81,8 @@ dart run build_runner build --delete-conflicting-outputs
   4. USD pivot rate
 - **Dual API fallback**: open.er-api.com → jsdelivr
 - **Budget tracking**: 4 status levels (under, warning, at limit, over)
-- **Statistics**: Pie chart (by category), bar chart (by date), payment method breakdown
+- **Statistics**: Pie chart (by category), bar chart (by date), payment method breakdown, trend analysis, budget forecast, smart insights, custom dashboard
+- **Export & Reporting**: PDF generation (5 pages), native share integration, Korean font support
 
 ## Key Development Notes
 
@@ -131,7 +134,8 @@ dart run build_runner build --delete-conflicting-outputs  # After Drift/Freezed 
 
 ## Branch & Git
 
-- **Working branch**: `ralph/trip-wallet-v2`
+- **Working branch**: `analytics`
+- **Main branch**: `main`
 - **Commits**: Write in Korean (한글)
 
 ## Tool Usage Priority (MANDATORY)

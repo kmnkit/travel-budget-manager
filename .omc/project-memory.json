@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1770425170730,
-  "projectRoot": "/Users/marcoginger/Documents/develop/feature/ads",
+  "lastScanned": 1770425186004,
+  "projectRoot": "/Users/marcoginger/Documents/develop/feature/analytics",
   "techStack": {
     "languages": [],
     "frameworks": [],
@@ -42,7 +42,7 @@
       "path": "android",
       "purpose": null,
       "fileCount": 4,
-      "lastAccessed": 1770425170719,
+      "lastAccessed": 1770425185993,
       "keyFiles": [
         "build.gradle.kts",
         "gradle.properties",
@@ -53,14 +53,14 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 0,
-      "lastAccessed": 1770425170720,
+      "lastAccessed": 1770425185994,
       "keyFiles": []
     },
     "docs": {
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 3,
-      "lastAccessed": 1770425170721,
+      "lastAccessed": 1770425185994,
       "keyFiles": [
         "_config.yml",
         "index.md",
@@ -71,7 +71,7 @@
       "path": "integration_test",
       "purpose": null,
       "fileCount": 6,
-      "lastAccessed": 1770425170721,
+      "lastAccessed": 1770425185994,
       "keyFiles": [
         "README.md",
         "app_test.dart",
@@ -84,7 +84,7 @@
       "path": "ios",
       "purpose": null,
       "fileCount": 5,
-      "lastAccessed": 1770425170721,
+      "lastAccessed": 1770425185994,
       "keyFiles": [
         "ExportOptions.plist",
         "Gemfile",
@@ -96,7 +96,7 @@
       "path": "lib",
       "purpose": "Library code",
       "fileCount": 3,
-      "lastAccessed": 1770425170721,
+      "lastAccessed": 1770425185994,
       "keyFiles": [
         "AGENTS.md",
         "app.dart",
@@ -107,7 +107,7 @@
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 1,
-      "lastAccessed": 1770425170722,
+      "lastAccessed": 1770425185995,
       "keyFiles": [
         "take_screenshots.sh"
       ]
@@ -116,7 +116,7 @@
       "path": "test",
       "purpose": "Test files",
       "fileCount": 2,
-      "lastAccessed": 1770425170722,
+      "lastAccessed": 1770425185995,
       "keyFiles": [
         "AGENTS.md",
         "widget_test.dart"
@@ -126,7 +126,7 @@
       "path": "test_driver",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1770425170722,
+      "lastAccessed": 1770425185995,
       "keyFiles": [
         "integration_test.dart"
       ]
@@ -135,7 +135,7 @@
       "path": "android/app",
       "purpose": "Application code",
       "fileCount": 1,
-      "lastAccessed": 1770425170722,
+      "lastAccessed": 1770425185995,
       "keyFiles": [
         "build.gradle.kts"
       ]
