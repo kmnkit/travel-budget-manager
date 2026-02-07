@@ -4,7 +4,7 @@ import 'package:trip_wallet/features/premium/data/datasources/iap_datasource.dar
 import 'package:trip_wallet/features/premium/data/datasources/premium_local_datasource.dart';
 import 'package:trip_wallet/features/premium/data/repositories/premium_repository_impl.dart';
 import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
-import 'package:trip_wallet/shared/providers/shared_preferences_provider.dart';
+import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
 
 /// Provider for IAP datasource
 final iapDatasourceProvider = Provider<IapDatasource>((ref) {
