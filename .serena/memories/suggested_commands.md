@@ -1,101 +1,48 @@
-# Suggested Commands for TripWallet
+# Suggested Commands
 
-## Essential Development Commands
-
-### Testing (MANDATORY before commits)
+## Before Every Commit (MANDATORY)
 ```bash
-# Run all tests - MUST pass with zero failures
-flutter test
-
-# Run specific test file
-flutter test test/features/trip/domain/usecases/create_trip_test.dart
-
-# Run tests with coverage
-flutter test --coverage
+flutter analyze   # MUST pass with zero warnings
+flutter test      # MUST pass with zero failures
 ```
 
-### Static Analysis (MANDATORY before commits)
+## Development Commands
+
+### Testing
 ```bash
-# Analyze code - MUST pass with zero warnings
-flutter analyze
+flutter test                              # Run all tests
+flutter test test/features/trip/         # Run specific feature tests
+flutter test --coverage                   # Generate coverage report
 ```
 
 ### Code Generation
 ```bash
-# After changing Drift tables or Freezed models
-dart run build_runner build --delete-conflicting-outputs
-
-# Watch mode for continuous generation
-dart run build_runner watch --delete-conflicting-outputs
-```
-
-### Localization
-```bash
-# Regenerate localization after ARB file changes
-flutter gen-l10n
+dart run build_runner build --delete-conflicting-outputs  # After Drift/Freezed changes
+flutter gen-l10n                                          # Regenerate localization after ARB changes
 ```
 
 ### Dependencies
 ```bash
-# Get dependencies after modifying pubspec.yaml
-flutter pub get
-
-# Upgrade dependencies
-flutter pub upgrade
-
-# Check for outdated packages
-flutter pub outdated
+flutter pub get                           # Install dependencies
+flutter pub upgrade                       # Upgrade dependencies
 ```
 
 ### Running the App
 ```bash
-# Run on connected device/emulator
-flutter run
-
-# Run in debug mode with hot reload
-flutter run --debug
-
-# Run in release mode
-flutter run --release
+flutter run                               # Run on connected device
+flutter run -d ios                        # Run on iOS simulator
+flutter run -d android                    # Run on Android emulator
 ```
 
-### Building
+### Linting & Analysis
 ```bash
-# Build Android APK
-flutter build apk
-
-# Build Android App Bundle
-flutter build appbundle
-
-# Build iOS (macOS only)
-flutter build ios
+flutter analyze                           # Run static analysis
+dart fix --dry-run                        # Preview available fixes
+dart fix --apply                          # Apply automated fixes
 ```
 
-### Integration Tests
-```bash
-# Run integration tests
-flutter test integration_test/
-```
-
-## System Commands (Darwin/macOS)
-
-### Git Operations
-```bash
-git status
-git add <files>
-git commit -m "commit message"
-git push origin ralph/trip-wallet-v2
-git pull origin ralph/trip-wallet-v2
-```
-
-### File System
-```bash
-ls -la                    # List files with details
-find . -name "*.dart"     # Find Dart files
-grep -r "pattern" lib/    # Search in lib directory
-```
-
-## Pre-Commit Checklist
-1. `flutter analyze` - zero warnings
-2. `flutter test` - zero failures
-3. Code generation up to date (if Drift/Freezed changed)
+## macOS-Specific Notes
+- System: Darwin (macOS)
+- Standard Unix commands available: git, ls, cd, grep, find, cat, etc.
+- Use `open .` to open current directory in Finder
+- Use `open -a Xcode ios/Runner.xcworkspace` to open iOS project in Xcode

@@ -1,1 +1,1 @@
-Smart travel budget manager with multi-currency support, real-time rates, and visual stats.
+Track your travel expenses and manage budgets across multiple currencies

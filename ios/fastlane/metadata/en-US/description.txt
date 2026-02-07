@@ -1,4 +1,4 @@
-Trip Wallet is a smart expense tracker designed for travelers.
+My Trip Wallet helps you manage travel expenses across multiple currencies with ease.
 
 KEY FEATURES:
 
@@ -26,7 +26,13 @@ See amounts in both original currency and your base currency at a glance.
 • Offline First
 All data is stored locally on your device. No account required, no data uploaded to servers.
 
+• Ad-Free Premium Option
+Remove ads and support development with a one-time in-app purchase.
+
 • Bilingual Support
 Full support for English and Korean languages.
 
-Start your next trip with Trip Wallet and take control of your travel budget!
+PRIVACY:
+Your data stays on your device. We don't collect, store, or transmit any personal information to external servers.
+
+Start your next trip with My Trip Wallet and take control of your travel budget!

@@ -1,32 +1,28 @@
-Trip Wallet is a smart expense tracker designed for travelers.
+My Trip Wallet helps you manage travel expenses across multiple currencies with ease.
 
 KEY FEATURES:
+• Multi-currency support (KRW, USD, EUR, JPY, GBP, AUD, CAD)
+• Real-time exchange rate updates
+• Budget tracking with visual alerts
+• 8 expense categories (Food, Transport, Accommodation, etc.)
+• Multiple payment methods (Cash, Card, Mobile Payment)
+• Beautiful charts and statistics
+• Dual-currency display (original + converted)
+• Offline-first: all data stored locally
+• Ad-free premium option available
 
-• Multi-Currency Support
-Track expenses in 7 major currencies (KRW, USD, EUR, JPY, GBP, AUD, CAD) with automatic conversion.
+PERFECT FOR:
+✓ International travelers
+✓ Business trips
+✓ Budget-conscious tourists
+✓ Multi-country vacations
+✓ Expense tracking enthusiasts
 
-• Real-Time Exchange Rates
-Get up-to-date exchange rates automatically, or set custom rates for your trip.
+PRIVACY:
+Your data stays on your device. We don't collect, store, or transmit any personal information to external servers.
 
-• Smart Budget Tracking
-Set budgets for each trip and monitor your spending with visual progress indicators.
+PREMIUM FEATURES:
+• Remove all ads
+• Support development
 
-• Expense Categories
-Organize expenses into 8 categories: Food, Transportation, Accommodation, Entertainment, Shopping, Activities, Communication, and Miscellaneous.
-
-• Multiple Payment Methods
-Track spending across Cash, Credit Card, Debit Card, Mobile Payment, and more.
-
-• Visual Statistics
-View your spending patterns with beautiful pie charts and bar graphs by category and date.
-
-• Dual Currency Display
-See amounts in both original currency and your base currency at a glance.
-
-• Offline First
-All data is stored locally on your device. No account required, no data uploaded to servers.
-
-• Bilingual Support
-Full support for English and Korean languages.
-
-Start your next trip with Trip Wallet and take control of your travel budget!
+Download My Trip Wallet today and take control of your travel spending!

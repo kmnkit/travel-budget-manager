@@ -53,3 +53,8 @@ android/build/
 
 # App Store Connect API Key
 AuthKey_*.p8
+
+# Keystore / signing
+android/keystore.properties
+*.jks
+*.keystore

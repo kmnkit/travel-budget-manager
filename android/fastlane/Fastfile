@@ -1,0 +1,196 @@
+# Fastfile for TripWallet Android Play Store deployment
+# Usage:
+#   fastlane beta     - Upload to Internal Testing
+#   fastlane release  - Upload to Production
+#   fastlane build    - Build AAB only (no upload)
+
+default_platform(:android)
+
+platform :android do
+  before_all do
+    setup_ci if ENV['CI']
+  end
+
+  desc "Build release AAB"
+  lane :build do
+    # Ensure we're in the android directory
+    Dir.chdir("..") do
+      # Clean and get dependencies
+      sh("flutter clean")
+      sh("flutter pub get")
+      # Build Android release AAB
+      sh("flutter build appbundle --release")
+    end
+
+    UI.success("✓ AAB built successfully at build/app/outputs/bundle/release/app-release.aab")
+  end
+
+  desc "Upload to Play Store Internal Testing"
+  lane :beta do
+    # Build first
+    Dir.chdir("..") do
+      sh("flutter clean")
+      sh("flutter pub get")
+      sh("flutter build appbundle --release")
+    end
+
+    # Upload to Internal Testing track
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+
+    UI.success("✓ Uploaded to Internal Testing")
+  end
+
+  desc "Upload to Play Store Production"
+  lane :release do
+    # Build first
+    Dir.chdir("..") do
+      sh("flutter clean")
+      sh("flutter pub get")
+      sh("flutter build appbundle --release")
+    end
+
+    # Upload to Production track (staged rollout)
+    upload_to_play_store(
+      track: 'production',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      rollout: '0.1',  # 10% rollout
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+
+    UI.success("✓ Uploaded to Production (10% rollout)")
+  end
+
+  desc "Promote Internal Testing to Production"
+  lane :promote do
+    upload_to_play_store(
+      track: 'internal',
+      track_promote_to: 'production',
+      rollout: '1.0',  # 100% rollout
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+
+    UI.success("✓ Promoted to Production (100% rollout)")
+  end
+
+  desc "Upload metadata only (no build)"
+  lane :metadata do
+    upload_to_play_store(
+      track: 'production',
+      skip_upload_aab: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+
+    UI.success("✓ Metadata updated")
+  end
+
+  desc "Upload screenshots only"
+  lane :screenshots do
+    upload_to_play_store(
+      track: 'production',
+      skip_upload_aab: true,
+      skip_upload_metadata: true
+    )
+
+    UI.success("✓ Screenshots updated")
+  end
+
+  desc "Full release with metadata and screenshots"
+  lane :release_full do
+    # Build first
+    Dir.chdir("..") do
+      sh("flutter clean")
+      sh("flutter pub get")
+      sh("flutter build appbundle --release")
+    end
+
+    # Upload everything to production
+    upload_to_play_store(
+      track: 'production',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      rollout: '0.1'  # 10% rollout
+    )
+
+    UI.success("✓ Full release uploaded (10% rollout)")
+  end
+
+  desc "Run tests"
+  lane :test do
+    Dir.chdir("..") do
+      sh("flutter test")
+    end
+  end
+
+  desc "Build and validate AAB"
+  lane :validate do
+    # Build
+    Dir.chdir("..") do
+      sh("flutter clean")
+      sh("flutter pub get")
+      sh("flutter build appbundle --release")
+    end
+
+    # Validate using bundletool (if available)
+    aab_path = File.expand_path("../build/app/outputs/bundle/release/app-release.aab")
+
+    UI.important("AAB built at: #{aab_path}")
+    UI.important("Size: #{File.size(aab_path) / (1024.0 * 1024.0).round(2)} MB")
+
+    # Check if bundletool is available
+    if system("which bundletool > /dev/null 2>&1")
+      sh("bundletool validate --bundle=#{aab_path}")
+      UI.success("✓ AAB validation passed")
+    else
+      UI.warning("bundletool not found - skipping validation")
+    end
+  end
+
+  desc "Generate screenshots for Play Store"
+  lane :screenshots_generate do
+    Dir.chdir("..") do
+      # Clean and prepare
+      sh("flutter clean")
+      sh("flutter pub get")
+
+      # Build debug APK for testing
+      sh("flutter build apk --debug")
+
+      # Run integration test to capture screenshots
+      # Note: Requires an emulator or device to be running
+      sh("flutter drive --driver=test_driver/integration_test.dart --target=integration_test/screenshot_test.dart")
+    end
+
+    UI.success("✓ Screenshots generated")
+    UI.important("Check the screenshots in the emulator/device screenshot directory")
+    UI.important("You may need to manually organize them into fastlane/metadata/android/[locale]/images/phoneScreenshots/")
+  end
+
+  desc "Organize screenshots into fastlane metadata structure"
+  lane :screenshots_organize do
+    # Create directory structure
+    ['en-US', 'ko-KR'].each do |locale|
+      screenshots_dir = "fastlane/metadata/android/#{locale}/images/phoneScreenshots"
+      sh("mkdir -p #{screenshots_dir}")
+    end
+
+    UI.success("✓ Screenshot directories created")
+    UI.important("Copy your screenshots into:")
+    UI.important("  - fastlane/metadata/android/en-US/images/phoneScreenshots/")
+    UI.important("  - fastlane/metadata/android/ko-KR/images/phoneScreenshots/")
+  end
+
+  error do |lane, exception|
+    UI.error("Error in lane #{lane}: #{exception.message}")
+  end
+end

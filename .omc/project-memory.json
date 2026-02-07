@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1770382045723,
-  "projectRoot": "/Users/marcoginger/Documents/develop/travel-budget-manager",
+  "lastScanned": 1770425170730,
+  "projectRoot": "/Users/marcoginger/Documents/develop/feature/ads",
   "techStack": {
     "languages": [],
     "frameworks": [],
@@ -41,12 +41,11 @@
     "android": {
       "path": "android",
       "purpose": null,
-      "fileCount": 5,
-      "lastAccessed": 1770382045713,
+      "fileCount": 4,
+      "lastAccessed": 1770425170719,
       "keyFiles": [
         "build.gradle.kts",
         "gradle.properties",
-        "local.properties",
         "settings.gradle.kts"
       ]
     },
@@ -54,21 +53,14 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 0,
-      "lastAccessed": 1770382045713,
-      "keyFiles": []
-    },
-    "build": {
-      "path": "build",
-      "purpose": "Build output",
-      "fileCount": 0,
-      "lastAccessed": 1770382045713,
+      "lastAccessed": 1770425170720,
       "keyFiles": []
     },
     "docs": {
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 3,
-      "lastAccessed": 1770382045713,
+      "lastAccessed": 1770425170721,
       "keyFiles": [
         "_config.yml",
         "index.md",
@@ -79,7 +71,7 @@
       "path": "integration_test",
       "purpose": null,
       "fileCount": 6,
-      "lastAccessed": 1770382045714,
+      "lastAccessed": 1770425170721,
       "keyFiles": [
         "README.md",
         "app_test.dart",
@@ -91,12 +83,11 @@
     "ios": {
       "path": "ios",
       "purpose": null,
-      "fileCount": 7,
-      "lastAccessed": 1770382045714,
+      "fileCount": 5,
+      "lastAccessed": 1770425170721,
       "keyFiles": [
         "ExportOptions.plist",
         "Gemfile",
-        "Gemfile.lock",
         "Podfile",
         "Podfile.lock"
       ]
@@ -105,7 +96,7 @@
       "path": "lib",
       "purpose": "Library code",
       "fileCount": 3,
-      "lastAccessed": 1770382045714,
+      "lastAccessed": 1770425170721,
       "keyFiles": [
         "AGENTS.md",
         "app.dart",
@@ -116,7 +107,7 @@
       "path": "scripts",
       "purpose": "Build/utility scripts",
       "fileCount": 1,
-      "lastAccessed": 1770382045714,
+      "lastAccessed": 1770425170722,
       "keyFiles": [
         "take_screenshots.sh"
       ]
@@ -125,7 +116,7 @@
       "path": "test",
       "purpose": "Test files",
       "fileCount": 2,
-      "lastAccessed": 1770382045715,
+      "lastAccessed": 1770425170722,
       "keyFiles": [
         "AGENTS.md",
         "widget_test.dart"
@@ -135,7 +126,7 @@
       "path": "test_driver",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1770382045715,
+      "lastAccessed": 1770425170722,
       "keyFiles": [
         "integration_test.dart"
       ]
@@ -143,11 +134,10 @@
     "android/app": {
       "path": "android/app",
       "purpose": "Application code",
-      "fileCount": 2,
-      "lastAccessed": 1770382045715,
+      "fileCount": 1,
+      "lastAccessed": 1770425170722,
       "keyFiles": [
-        "build.gradle.kts",
-        "google-services.json"
+        "build.gradle.kts"
       ]
     }
   },

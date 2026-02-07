@@ -1,26 +1,28 @@
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:trip_wallet/features/ads/domain/entities/ad_config.dart';
+import 'package:trip_wallet/features/ads/domain/entities/ad_type.dart';
 
-/// Abstract repository for ad operations
 abstract class AdRepository {
-  /// Initialize the Mobile Ads SDK
-  Future<void> initialize();
+  /// Get ad configuration for a specific ad type
+  Future<AdConfig> getAdConfig(AdType adType);
 
-  /// Load a banner ad
-  Future<BannerAd?> loadBannerAd({
-    required AdSize adSize,
-    required void Function(Ad) onAdLoaded,
-    required void Function(Ad, LoadAdError) onAdFailedToLoad,
-  });
+  /// Get all ad configurations
+  Future<List<AdConfig>> getAllAdConfigs();
 
-  /// Load an interstitial ad
-  Future<InterstitialAd?> loadInterstitialAd();
+  /// Load and display a banner ad
+  Future<void> loadBannerAd(AdConfig config);
 
-  /// Show interstitial ad if loaded (with frequency cap)
-  Future<bool> showInterstitialAd();
+  /// Load and display an interstitial ad
+  Future<void> loadInterstitialAd(AdConfig config);
 
-  /// Check if ads should be shown (based on consent)
-  bool shouldShowAds();
+  /// Load and display a rewarded ad
+  Future<void> loadRewardedAd(AdConfig config);
 
-  /// Dispose resources
-  void dispose();
+  /// Show a loaded interstitial ad
+  Future<void> showInterstitialAd();
+
+  /// Show a loaded rewarded ad
+  Future<void> showRewardedAd();
+
+  /// Dispose all ad resources
+  Future<void> disposeAds();
 }
