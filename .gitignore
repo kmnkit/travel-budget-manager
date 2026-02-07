@@ -54,6 +54,7 @@ android/build/
 # Firebase config (contains API keys)
 ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
+lib/firebase_options.dart
 
 # App Store Connect API Key
 AuthKey_*.p8
