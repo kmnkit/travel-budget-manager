@@ -15,6 +15,9 @@ void main() async {
   // Initialize MobileAds
   await MobileAds.instance.initialize();
 
+  // Initialize MobileAds
+  await MobileAds.instance.initialize();
+
   // Initialize SharedPreferences
   final prefs = await SharedPreferences.getInstance();
 
