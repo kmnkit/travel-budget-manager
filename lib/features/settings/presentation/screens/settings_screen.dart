@@ -7,6 +7,7 @@ import 'package:trip_wallet/core/extensions/context_extensions.dart';
 import 'package:trip_wallet/core/theme/app_colors.dart';
 import 'package:trip_wallet/features/premium/presentation/providers/premium_providers.dart';
 import 'package:trip_wallet/features/settings/presentation/providers/settings_providers.dart';
+import 'package:trip_wallet/features/consent/presentation/screens/privacy_policy_viewer_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -112,8 +113,11 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(context.l10n.privacyPolicy),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(context.l10n.comingSoon)),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicyViewerScreen(),
+                    ),
                   );
                 },
               ),

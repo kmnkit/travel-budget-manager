@@ -395,6 +395,164 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodCustom => 'Custom';
 
   @override
+  String get budgetForecast => 'Budget Forecast';
+
+  @override
+  String get budgetBurndownChart => 'Budget Burn-down';
+
+  @override
+  String get projectedTotal => 'Projected Total';
+
+  @override
+  String get dailySpending => 'Daily Spending';
+
+  @override
+  String get daysUntilExhaustion => 'Days Until Exhaustion';
+
+  @override
+  String daysUntilExhaustionValue(int days) {
+    return '$days days';
+  }
+
+  @override
+  String get budgetSufficient => 'Budget Sufficient';
+
+  @override
+  String get forecastStatusOnTrack => 'On Track';
+
+  @override
+  String get forecastStatusAtRisk => 'At Risk';
+
+  @override
+  String get forecastStatusOverBudget => 'Over Budget';
+
+  @override
+  String get forecastStatusExhausted => 'Exhausted';
+
+  @override
+  String get actualSpending => 'Actual Spending';
+
+  @override
+  String get projectedSpending => 'Projected';
+
+  @override
+  String get budgetLimit => 'Budget Limit';
+
+  @override
+  String get bestCase => 'Best Case';
+
+  @override
+  String get worstCase => 'Worst Case';
+
+  @override
+  String get confidenceInterval => 'Confidence Interval';
+
+  @override
+  String get noBudgetSet => 'No budget has been set';
+
+  @override
+  String get overallSpendingTrend => 'Overall Spending Trend:';
+
+  @override
+  String get spendingVelocity => 'Spending Velocity';
+
+  @override
+  String get dailyAverage => 'Daily Average';
+
+  @override
+  String get weeklyAverage => 'Weekly Average';
+
+  @override
+  String get velocityStable => 'Stable';
+
+  @override
+  String get velocityIncreasing => 'Increasing';
+
+  @override
+  String get velocityDecreasing => 'Decreasing';
+
+  @override
+  String accelerationLabel(String status) {
+    return 'Acceleration: $status';
+  }
+
+  @override
+  String periodLabel(String period) {
+    return 'Period: $period';
+  }
+
+  @override
+  String get periodComparison => 'Period Comparison';
+
+  @override
+  String get noComparisonData => 'No comparison data available';
+
+  @override
+  String get categoryAnalysis => 'Category Analysis';
+
+  @override
+  String get noCategoryData => 'No category data available';
+
+  @override
+  String get smartInsights => 'Smart Insights';
+
+  @override
+  String confidenceLabel(String value) {
+    return 'Confidence: $value';
+  }
+
+  @override
+  String get dailyExpenses => 'Daily Expenses';
+
+  @override
+  String get expensesByCategory => 'Expenses by Category';
+
+  @override
+  String get expensesByPaymentMethod => 'Expenses by Payment Method';
+
+  @override
+  String get totalExpense => 'Total Expenses';
+
+  @override
+  String get thisWeekVsLastWeek => 'This Week vs Last Week';
+
+  @override
+  String get dashboardEdit => 'Edit Dashboard';
+
+  @override
+  String get resetToDefault => 'Reset to Default';
+
+  @override
+  String get widgetCategoryPieChart => 'Category Spending';
+
+  @override
+  String get widgetDailyBarChart => 'Daily Spending';
+
+  @override
+  String get widgetPaymentMethodChart => 'Payment Method Spending';
+
+  @override
+  String get widgetTrendIndicator => 'Spending Trend';
+
+  @override
+  String get widgetSpendingVelocity => 'Spending Velocity';
+
+  @override
+  String get widgetPeriodComparison => 'Period Comparison';
+
+  @override
+  String get widgetCategoryInsights => 'Category Insights';
+
+  @override
+  String get widgetSmartInsights => 'Smart Insights';
+
+  @override
+  String get widgetBudgetForecast => 'Budget Forecast';
+
+  @override
+  String get widgetBudgetBurndown => 'Budget Burndown';
+
+  @override
   String get allCategories => 'All';
 
   @override
@@ -417,6 +575,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get filterPast => 'Past';
+
+  @override
+  String get clearAllFilters => 'Clear All';
+
+  @override
+  String get filterByCategory => 'Category';
+
+  @override
+  String get filterByPaymentMethod => 'Payment Method';
 
   @override
   String get language => 'Language';
@@ -536,129 +703,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingGetStarted => 'Get Started';
 
   @override
-  String get premium => 'Premium';
+  String get consentTitle => 'Privacy & Data Protection';
 
   @override
-  String get premiumTitle => 'Trip Wallet Premium';
+  String get consentDescription =>
+      'TripWallet stores all your data locally on your device. We do not collect or transmit any personal information. Please review our privacy policy below.';
 
   @override
-  String get unlockPremium => 'Unlock Premium Features';
+  String get consentAccept => 'I Accept';
 
   @override
-  String get premiumSubtitle => 'Enjoy ad-free experience and more';
+  String get consentDecline => 'I Decline';
 
   @override
-  String get upgradeToPremium => 'Upgrade to Premium';
+  String get consentViewFullPolicy => 'View Full Privacy Policy';
 
   @override
-  String get restorePurchase => 'Restore Purchase';
+  String get consentDeclineTitle => 'Consent Required';
 
   @override
-  String get premiumFeatureAdFree => 'Ad-free experience';
+  String get consentDeclineMessage =>
+      'TripWallet requires your consent to process your travel data locally on your device. You can review the privacy policy and accept when ready.';
 
   @override
-  String get premiumFeatureAnalytics => 'Advanced analytics';
+  String get consentDeclineUnderstand => 'I Understand';
 
   @override
-  String get premiumFeatureReports => 'Custom reports';
+  String get consentStatus => 'Privacy Consent Status';
 
   @override
-  String get premiumFeatureSupport => 'Priority support';
-
-  @override
-  String get premiumFeatureExports => 'Unlimited exports';
-
-  @override
-  String premiumPrice(String price) {
-    return '$price per year';
+  String consentAcceptedOn(String date) {
+    return 'Accepted on $date';
   }
 
   @override
-  String get premiumBestValue => 'Best value';
+  String get consentNotGiven => 'Not given yet';
 
   @override
-  String get premiumAutoRenewDisclaimers =>
-      'Subscription renews automatically unless cancelled';
-
-  @override
-  String get premiumPurchaseSuccess => 'Thank you for upgrading!';
-
-  @override
-  String get premiumPurchaseFailed => 'Purchase failed. Please try again.';
-
-  @override
-  String get premiumRestoreSuccess => 'Previous purchases restored';
-
-  @override
-  String get premiumRestoreFailed => 'Failed to restore purchases';
-
-  @override
-  String get premiumAlreadyOwned => 'You already own this feature';
-
-  @override
-  String get whatIncluded => 'What\'s Included';
-
-  @override
-  String get oneYearSubscription => 'One Year Subscription';
-
-  @override
-  String get later => 'Later';
-
-  @override
-  String get upgrade => 'Upgrade';
-
-  @override
-  String get ads => 'Ads';
-
-  @override
-  String get adFree => 'Ad-Free';
-
-  @override
-  String get upgradeForAdFree => 'Upgrade to remove ads';
-
-  @override
-  String get ad => 'Ad';
-
-  @override
-  String get premiumActive => 'Premium Active';
-
-  @override
-  String get removeAds => 'Remove Ads';
-
-  @override
-  String get adFreeExperience => 'Enjoy ad-free experience';
-
-  @override
-  String get supportDevelopment => 'Support development';
-
-  @override
-  String get thankYouForSupport => 'Thank you for your support!';
-
-  @override
-  String get maybeLater => 'Maybe Later';
-
-  @override
-  String get upgradeNow => 'Upgrade Now';
-
-  @override
-  String get oneTimePurchase => 'One-time purchase';
-
-  @override
-  String get featureAdFree => 'Ad-free experience';
-
-  @override
-  String get featureSupportDev => 'Support ongoing development';
-
-  @override
-  String get featurePremiumBadge => 'Premium badge in settings';
-
-  @override
-  String get purchaseSuccess =>
-      'Purchase successful! Thank you for your support.';
-
-  @override
-  String get purchaseFailed => 'Purchase failed. Please try again.';
-
-  @override
-  String get purchaseRestored => 'Purchase restored successfully';
+  String get consentSaveError => 'Failed to save consent. Please try again.';
 }

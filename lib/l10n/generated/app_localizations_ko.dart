@@ -391,6 +391,164 @@ class AppLocalizationsKo extends AppLocalizations {
   String get periodCustom => '직접 설정';
 
   @override
+  String get budgetForecast => '예산 예측';
+
+  @override
+  String get budgetBurndownChart => '예산 소진 차트';
+
+  @override
+  String get projectedTotal => '예상 총 지출';
+
+  @override
+  String get dailySpending => '일일 지출';
+
+  @override
+  String get daysUntilExhaustion => '예산 소진까지';
+
+  @override
+  String daysUntilExhaustionValue(int days) {
+    return '$days일';
+  }
+
+  @override
+  String get budgetSufficient => '예산 충분';
+
+  @override
+  String get forecastStatusOnTrack => '순조로움';
+
+  @override
+  String get forecastStatusAtRisk => '주의 필요';
+
+  @override
+  String get forecastStatusOverBudget => '초과 예상';
+
+  @override
+  String get forecastStatusExhausted => '예산 소진';
+
+  @override
+  String get actualSpending => '실제 지출';
+
+  @override
+  String get projectedSpending => '예측';
+
+  @override
+  String get budgetLimit => '예산 한도';
+
+  @override
+  String get bestCase => '최선';
+
+  @override
+  String get worstCase => '최악';
+
+  @override
+  String get confidenceInterval => '신뢰구간';
+
+  @override
+  String get noBudgetSet => '예산이 설정되지 않았습니다';
+
+  @override
+  String get overallSpendingTrend => '전체 지출 추세:';
+
+  @override
+  String get spendingVelocity => '지출 속도';
+
+  @override
+  String get dailyAverage => '일평균';
+
+  @override
+  String get weeklyAverage => '주평균';
+
+  @override
+  String get velocityStable => '안정';
+
+  @override
+  String get velocityIncreasing => '증가 중';
+
+  @override
+  String get velocityDecreasing => '감소 중';
+
+  @override
+  String accelerationLabel(String status) {
+    return '가속도: $status';
+  }
+
+  @override
+  String periodLabel(String period) {
+    return '기간: $period';
+  }
+
+  @override
+  String get periodComparison => '기간 비교';
+
+  @override
+  String get noComparisonData => '비교할 데이터가 없습니다';
+
+  @override
+  String get categoryAnalysis => '카테고리 분석';
+
+  @override
+  String get noCategoryData => '카테고리 데이터가 없습니다';
+
+  @override
+  String get smartInsights => '스마트 인사이트';
+
+  @override
+  String confidenceLabel(String value) {
+    return '신뢰도: $value';
+  }
+
+  @override
+  String get dailyExpenses => '일별 지출';
+
+  @override
+  String get expensesByCategory => '카테고리별 지출';
+
+  @override
+  String get expensesByPaymentMethod => '결제 수단별 지출';
+
+  @override
+  String get totalExpense => '총 지출';
+
+  @override
+  String get thisWeekVsLastWeek => '이번 주 vs 지난 주';
+
+  @override
+  String get dashboardEdit => '대시보드 편집';
+
+  @override
+  String get resetToDefault => '기본값 복원';
+
+  @override
+  String get widgetCategoryPieChart => '카테고리별 지출';
+
+  @override
+  String get widgetDailyBarChart => '일별 지출';
+
+  @override
+  String get widgetPaymentMethodChart => '결제 수단별 지출';
+
+  @override
+  String get widgetTrendIndicator => '지출 트렌드';
+
+  @override
+  String get widgetSpendingVelocity => '지출 속도';
+
+  @override
+  String get widgetPeriodComparison => '기간 비교';
+
+  @override
+  String get widgetCategoryInsights => '카테고리 인사이트';
+
+  @override
+  String get widgetSmartInsights => '스마트 인사이트';
+
+  @override
+  String get widgetBudgetForecast => '예산 예측';
+
+  @override
+  String get widgetBudgetBurndown => '예산 소진율';
+
+  @override
   String get allCategories => '전체';
 
   @override
@@ -413,6 +571,15 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get filterPast => '완료';
+
+  @override
+  String get clearAllFilters => '전체 초기화';
+
+  @override
+  String get filterByCategory => '카테고리';
+
+  @override
+  String get filterByPaymentMethod => '결제 수단';
 
   @override
   String get language => '언어';
@@ -531,127 +698,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingGetStarted => '시작하기';
 
   @override
-  String get premium => '프리미엄';
+  String get consentTitle => '개인정보 보호 및 데이터 처리';
 
   @override
-  String get premiumTitle => '트립월렛 프리미엄';
+  String get consentDescription =>
+      'TripWallet은 모든 데이터를 기기에 로컬로 저장합니다. 개인정보를 수집하거나 전송하지 않습니다. 아래 개인정보 처리방침을 검토해 주세요.';
 
   @override
-  String get unlockPremium => '프리미엄 기능 잠금 해제';
+  String get consentAccept => '동의합니다';
 
   @override
-  String get premiumSubtitle => '광고 없는 환경과 더 많은 기능을 즐기세요';
+  String get consentDecline => '동의하지 않습니다';
 
   @override
-  String get upgradeToPremium => '프리미엄으로 업그레이드';
+  String get consentViewFullPolicy => '전체 개인정보 처리방침 보기';
 
   @override
-  String get restorePurchase => '구매 복원';
+  String get consentDeclineTitle => '동의 필요';
 
   @override
-  String get premiumFeatureAdFree => '광고 없는 환경';
+  String get consentDeclineMessage =>
+      'TripWallet은 여행 데이터를 기기에 로컬로 처리하기 위해 동의가 필요합니다. 개인정보 처리방침을 검토하신 후 동의해 주세요.';
 
   @override
-  String get premiumFeatureAnalytics => '고급 분석';
+  String get consentDeclineUnderstand => '이해했습니다';
 
   @override
-  String get premiumFeatureReports => '맞춤형 보고서';
+  String get consentStatus => '개인정보 동의 상태';
 
   @override
-  String get premiumFeatureSupport => '우선 지원';
-
-  @override
-  String get premiumFeatureExports => '무제한 내보내기';
-
-  @override
-  String premiumPrice(String price) {
-    return '연 $price';
+  String consentAcceptedOn(String date) {
+    return '$date에 동의함';
   }
 
   @override
-  String get premiumBestValue => '최고의 가치';
+  String get consentNotGiven => '아직 동의하지 않음';
 
   @override
-  String get premiumAutoRenewDisclaimers => '구독은 취소하지 않는 한 자동으로 갱신됩니다';
-
-  @override
-  String get premiumPurchaseSuccess => '업그레이드해주셔서 감사합니다!';
-
-  @override
-  String get premiumPurchaseFailed => '구매에 실패했습니다. 다시 시도해주세요.';
-
-  @override
-  String get premiumRestoreSuccess => '이전 구매가 복원되었습니다';
-
-  @override
-  String get premiumRestoreFailed => '구매 복원에 실패했습니다';
-
-  @override
-  String get premiumAlreadyOwned => '이미 보유한 기능입니다';
-
-  @override
-  String get whatIncluded => '포함된 기능';
-
-  @override
-  String get oneYearSubscription => '1년 구독';
-
-  @override
-  String get later => '나중에';
-
-  @override
-  String get upgrade => '업그레이드';
-
-  @override
-  String get ads => '광고';
-
-  @override
-  String get adFree => '광고 없음';
-
-  @override
-  String get upgradeForAdFree => '프리미엄으로 업그레이드하여 광고 제거';
-
-  @override
-  String get ad => '광고';
-
-  @override
-  String get premiumActive => '프리미엄 활성화';
-
-  @override
-  String get removeAds => '광고 제거';
-
-  @override
-  String get adFreeExperience => '광고 없는 경험을 즐기세요';
-
-  @override
-  String get supportDevelopment => '개발을 지원하세요';
-
-  @override
-  String get thankYouForSupport => '지원해주셔서 감사합니다!';
-
-  @override
-  String get maybeLater => '나중에';
-
-  @override
-  String get upgradeNow => '지금 업그레이드';
-
-  @override
-  String get oneTimePurchase => '일회성 구매';
-
-  @override
-  String get featureAdFree => '광고 없는 경험';
-
-  @override
-  String get featureSupportDev => '지속적인 개발 지원';
-
-  @override
-  String get featurePremiumBadge => '설정에서 프리미엄 배지';
-
-  @override
-  String get purchaseSuccess => '구매 완료! 지원해주셔서 감사합니다.';
-
-  @override
-  String get purchaseFailed => '구매에 실패했습니다. 다시 시도해주세요.';
-
-  @override
-  String get purchaseRestored => '구매를 성공적으로 복원했습니다';
+  String get consentSaveError => '동의 저장에 실패했습니다. 다시 시도해주세요.';
 }
